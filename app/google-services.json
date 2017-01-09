@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "171646645445",
+    "project_id": "tavldemo-1154"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171646645445:android:9ab40c4a262dec98",
+        "android_client_info": {
+          "package_name": "com.example.ghazanfarali.piggyland"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "171646645445-3538ldnc3erfc0ssu739j821rsrvdf1b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ghazanfarali.piggyland",
+            "certificate_hash": "62A41EEAE5C0CA77C1075F5DCD3AA24AD583318F"
+          }
+        },
+        {
+          "client_id": "171646645445-s9jud3rcr37f4fv6921dthj3klojjpmf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCm4XQTNaQpRXH3KsbiYRXxSHumfI18HQU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

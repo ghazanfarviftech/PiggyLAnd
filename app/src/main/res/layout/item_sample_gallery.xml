@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:gravity="center"
+    android:layout_weight="1"
+    android:layout_gravity="center"
+    android:layout_margin="5dp">
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:background="@drawable/rounded"
+        android:src="@drawable/placeholder"
+        android:layout_height="match_parent"/>
+    <ImageView
+        android:id="@+id/tick_image"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignLeft="@+id/image_view"
+        android:layout_alignStart="@+id/image_view"
+        android:layout_alignTop="@+id/image_view"
+        android:layout_marginLeft="5dp"
+
+        android:layout_marginTop="@dimen/_minus80sdp"
+        android:background="@drawable/ticked_image"
+        android:src="@drawable/ic_check_white_24dp"
+        android:visibility="invisible"/>
+</LinearLayout>
+<!--
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="#ededed">
+
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/placeholder"/>
+
+    <ImageView
+        android:id="@+id/tick_image"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignLeft="@+id/image_view"
+        android:layout_alignStart="@+id/image_view"
+        android:layout_alignTop="@+id/image_view"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/ticked_image"
+        android:src="@drawable/ic_check_white_24dp"
+        android:visibility="invisible"/>
+
+
+</RelativeLayout>-->

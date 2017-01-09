@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.ghazanfarali.piggyland.MainActivity">
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/main_linear">
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_new"
+        android:layout_margin="20dp"
+        android:text="New"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_gallery"
+        android:layout_margin="20dp"
+        android:layout_below="@+id/btn_new"
+        android:text="Gallery"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_mall"
+        android:layout_margin="20dp"
+        android:layout_below="@+id/btn_gallery"
+        android:text="Mall"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_share"
+        android:layout_margin="20dp"
+        android:layout_below="@+id/btn_mall"
+        android:text="Share"/>
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/bottomSheetLayout"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="match_parent"
+        android:background="#bcbeb5"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:alpha="50"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/activity_vertical_margin"
+            android:id="@+id/homes"
+            android:orientation="horizontal"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/home"
+                android:textColor="#ffffff"
+                android:text="Profile"/>
+
+            <!-- <ImageView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+
+                 android:src="@drawable/ic_home"
+                 android:id="@+id/imageViewt" />-->
+        </LinearLayout>
+       <!-- <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000000"></View>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/activity_vertical_margin"
+            android:id="@+id/about_uss"
+            android:orientation="horizontal"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/about_us"
+                android:textColor="#ffffff"
+                android:text="New"/>
+
+            <!-- <ImageView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+
+                 android:src="@drawable/ic_info_button"
+                 android:id="@+id/imageViews" />-->
+        </LinearLayout>
+       <!-- <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000000"></View>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/contact_us"
+            android:padding="@dimen/activity_vertical_margin"
+            android:orientation="horizontal"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:text="Gallery"/>
+            <!--   <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+
+                   android:src="@drawable/ic_agenda"
+                   android:id="@+id/imageView1" />-->
+        </LinearLayout>
+     <!--   <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000000"></View>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/mall"
+            android:padding="@dimen/activity_vertical_margin"
+            android:orientation="horizontal"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:text="Mall"/>
+            <!--   <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+
+                   android:src="@drawable/ic_agenda"
+                   android:id="@+id/imageView1" />-->
+        </LinearLayout>
+       <!-- <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000000"></View>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/share"
+            android:padding="@dimen/activity_vertical_margin"
+            android:orientation="horizontal"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:text="Share"/>
+            <!--   <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+
+                   android:src="@drawable/ic_agenda"
+                   android:id="@+id/imageView1" />-->
+        </LinearLayout>
+       <!-- <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000000"></View>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/cart"
+            android:padding="@dimen/activity_vertical_margin"
+            android:orientation="horizontal"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:text="Cart"/>
+            <!--   <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+
+                   android:src="@drawable/ic_agenda"
+                   android:id="@+id/imageView1" />-->
+        </LinearLayout>
+       <!-- <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000000"></View>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/trace"
+            android:padding="@dimen/activity_vertical_margin"
+            android:orientation="horizontal"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:text="Trace"/>
+            <!--   <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+
+                   android:src="@drawable/ic_agenda"
+                   android:id="@+id/imageView1" />-->
+        </LinearLayout>
+      <!--  <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000000"></View>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/cands"
+            android:padding="@dimen/activity_vertical_margin"
+            android:orientation="horizontal"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:text="C &amp; S"/>
+            <!--   <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+
+                   android:src="@drawable/ic_agenda"
+                   android:id="@+id/imageView1" />-->
+        </LinearLayout>
+       <!-- <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000000"></View>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/coupon"
+            android:padding="@dimen/activity_vertical_margin"
+            android:orientation="horizontal"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:text="Coupon"/>
+            <!--   <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+
+                   android:src="@drawable/ic_agenda"
+                   android:id="@+id/imageView1" />-->
+        </LinearLayout>
+       <!-- <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000000"></View>-->
+        <!-- <View
+             android:layout_width="match_parent"
+             android:layout_height="2dp"
+             android:background="#000000"></View>
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_gravity="center"
+     android:padding="@dimen/activity_vertical_margin"
+     android:orientation="horizontal"
+     >
+         <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_weight="1"
+         android:layout_gravity="center"
+         android:textColor="#ffffff"
+         android:text="Terms and Condition"/>
+
+     <ImageView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center"
+
+
+         android:src="@drawable/ic_agenda"
+         android:id="@+id/imageView" />
+ </LinearLayout>-->
+        <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="2dp"-->
+        <!--android:background="#000000"></View>-->
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:padding="@dimen/activity_vertical_margin"-->
+        <!--&gt;-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+
+        <!--android:src="@drawable/ic_facebook_logo"-->
+        <!--android:id="@+id/imageView2" />-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+
+        <!--android:src="@drawable/ic_facebook_logo"-->
+        <!--android:id="@+id/imageView3" />-->
+
+
+
+        <!--</LinearLayout>-->
+
+
+    </LinearLayout>
+</RelativeLayout>
