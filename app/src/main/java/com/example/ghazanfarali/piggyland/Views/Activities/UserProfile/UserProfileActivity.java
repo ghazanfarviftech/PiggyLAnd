@@ -92,6 +92,17 @@ public class UserProfileActivity extends MasterActivity {
             }
         });
 
+
+
+
+        btn_createnew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserProfileActivity.this,MainActivity.class));
+            }
+        });
+
+
     }
 
 

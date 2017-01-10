@@ -1,4 +1,28 @@
 <resources>
+
+
+    <!--App start-->
     <string name="app_name">PiggyLand</string>
     <string name="facebook_app_id">1397246430294774</string>
+    <string name="server_client_id">145897152060-74i2lrrq65bt7ov71fbuosb42u8epref.apps.googleusercontent.com</string>
+
+    <!--Base Acvityti-->
+    <string name="APP_SHARED_PREFS">Saloon_APP_SHARED_PREFS</string>
+
+    <!--Loginscreen-->
+    <string name="Username">Username</string>
+    <string name="password">Password</string>
+    <string name="or">OR</string>
+    <string name="forgot_password">forgot password?</string>
+
+
+
+    <!-- customfonts -->
+    <string name="font_medium">bold.otf</string>
+    <string name="font_bold">Aller_Bd.ttf</string>
+    <string name="open_sans_TypeFace">OpenSans-Semibold.ttf</string>
+    <string name="open_sans_TypeFace_light">OpenSans-Light.ttf</string>
+    <string name="font_light">medium.otf</string>
+    <string name="password_didnot_match">Passwords don’t match. Retry carefully.</string>
+
 </resources>
