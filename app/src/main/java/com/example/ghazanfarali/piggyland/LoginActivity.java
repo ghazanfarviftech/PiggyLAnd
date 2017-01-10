@@ -1,42 +1,25 @@
 package com.example.ghazanfarali.piggyland;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
+import com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookActivity;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -47,32 +30,68 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class LoginActivity extends Activity implements
-        View.OnClickListener,GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener{
+public class LoginActivity extends MasterActivity implements
+        View.OnClickListener, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mProgressDialog;
 
     private SignInButton btnSignIn;
-    private Button btnSignOut,btnRevokeAccess;
+    private Button btnSignOut, btnRevokeAccess, btn_userlogin;
     private static final int RC_SIGN_IN = 007;
     private static final String TAG = MainActivity.class.getSimpleName();
     ImageView imgProfilePic;
+    CallbackManager callbackManager;
+    LoginButton loginButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
+        initUI();
+        initListner();
 
-        CallbackManager callbackManager = CallbackManager.Factory.create();
-        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+    }
+
+
+    @Override
+    public void initUI() {
+        super.initUI();
+
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.hide();
+
+        callbackManager = CallbackManager.Factory.create();
+        loginButton = (LoginButton) findViewById(R.id.facebook_login_button);
+
+        btn_userlogin = (Button) findViewById(R.id.btn_userlogin);
+        btnSignIn = (SignInButton) findViewById(R.id.google_login_button);
+        btnSignOut = (Button) findViewById(R.id.btn_sign_out);
+        btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
+        imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
+        btnSignIn.setOnClickListener(this);
+        btnSignOut.setOnClickListener(this);
+    }
+
+
+    public void initListner() {
+        btn_userlogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+            }
+        });
+
+
+// facebook login
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Intent i = new Intent(LoginActivity.this,MainActivity.class);
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
             }
 
@@ -86,40 +105,23 @@ public class LoginActivity extends Activity implements
 
             }
         });
-       // FacebookSdk.sdkInitialize(getApplicationContext());
-        /*AppEventsLogger.activateApp(this);
-        Button btn_fb = (Button)findViewById(R.id.login_button);
-        btn_fb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
 
-                Intent intent = new Intent(LoginActivity.this, FacebookActivity.class);
-                startActivity(intent);
-            }
-        });*/
-
-
-        btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
-        btnSignOut = (Button) findViewById(R.id.btn_sign_out);
-        btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
-        imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
-        btnSignIn.setOnClickListener(this);
-        btnSignOut.setOnClickListener(this);
-        //btnRevokeAccess.setOnClickListener(this);
-
+// google login
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(LoginActivity.this.getResources().getString(R.string.server_client_id))
                 .requestEmail()
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                //.enableAutoManage(this, this)
+                //  .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
         // Customizing G+ button
         btnSignIn.setSize(SignInButton.SIZE_STANDARD);
         btnSignIn.setScopes(gso.getScopeArray());
+
     }
 
     @Override
@@ -127,7 +129,7 @@ public class LoginActivity extends Activity implements
         int id = v.getId();
 
         switch (id) {
-            case R.id.btn_sign_in:
+            case R.id.google_login_button:
                 signIn();
                 break;
 
@@ -140,6 +142,7 @@ public class LoginActivity extends Activity implements
                 break;*/
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -166,16 +169,17 @@ public class LoginActivity extends Activity implements
             // If the user has not previously signed in on this device or the sign-in has expired,
             // this asynchronous branch will attempt to sign in the user silently.  Cross-device
             // single sign-on will occur in this branch.
-           // showProgressDialog();
+            // showProgressDialog();
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
                 public void onResult(GoogleSignInResult googleSignInResult) {
-                   // hideProgressDialog();
+                    // hideProgressDialog();
                     handleSignInResult(googleSignInResult);
                 }
             });
         }
     }
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
@@ -204,7 +208,7 @@ public class LoginActivity extends Activity implements
             btnSignIn.setVisibility(View.GONE);
             btnSignOut.setVisibility(View.VISIBLE);
             btnRevokeAccess.setVisibility(View.VISIBLE);
-           // llProfileLayout.setVisibility(View.VISIBLE);
+            // llProfileLayout.setVisibility(View.VISIBLE);
         } else {
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
@@ -242,6 +246,7 @@ public class LoginActivity extends Activity implements
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
+            Toast.makeText(this, "login success", Toast.LENGTH_LONG).show();
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
 
@@ -251,11 +256,11 @@ public class LoginActivity extends Activity implements
             //String personPhotoUrl = acct.getPhotoUrl().toString();
             String email = acct.getEmail();
 
-          //  Log.e(TAG, "Name: " + personName + ", email: " + email
+            //  Log.e(TAG, "Name: " + personName + ", email: " + email
             //        + ", Image: " + personPhotoUrl);
 
-           // txtName.setText(personName);
-           // txtEmail.setText(email);
+            // txtName.setText(personName);
+            // txtEmail.setText(email);
             /*Glide.with(getApplicationContext()).load(personPhotoUrl)
                     .thumbnail(0.5f)
                     .crossFade()
@@ -279,4 +284,5 @@ public class LoginActivity extends Activity implements
     public void onConnectionSuspended(int i) {
 
     }
+
 }

@@ -3,7 +3,8 @@ package com.example.ghazanfarali.piggyland.Helper;
 import android.content.Context;
 import android.graphics.Typeface;
 
-import com.example.amirjehangir.myandroidarticture.R;
+import com.example.ghazanfarali.piggyland.R;
+
 
 /**
  * Created by Amir.jehangir on 1/2/2017.
