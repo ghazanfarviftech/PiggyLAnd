@@ -6,12 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorbg"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:paddingBottom="@dimen/x5"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/x5"
-    android:fitsSystemWindows="true"
     tools:context="com.example.ghazanfarali.piggyland.LoginActivity">
 
 
@@ -21,15 +21,16 @@
         android:orientation="vertical">
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x100">
+            android:layout_height="@dimen/x100"
+            android:layout_marginTop="@dimen/x20">
+
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:src="@drawable/piggyland_logo" />
         </LinearLayout>
-
 
 
         <RelativeLayout
@@ -37,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/x10"
             android:fitsSystemWindows="true"
             android:orientation="vertical">
 
@@ -93,12 +95,12 @@
 
             <LinearLayout
                 android:id="@+id/lv_forgot"
-                android:layout_below="@+id/ed_password"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ed_password"
                 android:gravity="right"
                 android:paddingEnd="@dimen/x30"
-                android:paddingStart="@dimen/x30"
-                android:layout_height="wrap_content">
+                android:paddingStart="@dimen/x30">
 
 
                 <TextView
@@ -112,21 +114,21 @@
 
             </LinearLayout>
 
-<!--<TextView-->
-    <!--android:id="@+id/forgotpassword"-->
-    <!--android:layout_below="@+id/ed_password"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="forgot password"-->
-  <!--android:gravity="center_horizontal"-->
-    <!--/>-->
-
+            <!--<TextView-->
+            <!--android:id="@+id/forgotpassword"-->
+            <!--android:layout_below="@+id/ed_password"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="forgot password"-->
+            <!--android:gravity="center_horizontal"-->
+            <!--/>-->
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lv_forgot"
+                android:layout_marginBottom="@dimen/x20"
                 android:orientation="vertical"
                 android:paddingEnd="@dimen/x30"
                 android:paddingStart="@dimen/x30">
@@ -139,41 +141,36 @@
                     android:layout_below="@+id/ed_password"
                     android:layout_marginTop="@dimen/x20"
                     android:background="@color/colorblack"
-                    android:text="Login"
-                    android:textColor="@color/colorwhite"
                     android:paddingEnd="@dimen/x30"
-                    android:paddingStart="@dimen/x30" />
+                    android:paddingStart="@dimen/x30"
+                    android:text="Login"
+                    android:textColor="@color/colorwhite" />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/x40"
                     android:gravity="center"
-                    android:textColor="@color/colorwhite"
-                    android:text="@string/or" />
-
-
-
+                    android:text="@string/or"
+                    android:textColor="@color/colorwhite" />
 
 
                 <com.facebook.login.widget.LoginButton
                     android:id="@+id/facebook_login_button"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/x120"
-                    android:text="Log in with Facebook"
-                    android:paddingTop="@dimen/x20"
                     android:paddingBottom="@dimen/x20"
-                    />
+                    android:paddingTop="@dimen/x20"
+                    android:text="Log in with Facebook" />
 
                 <com.google.android.gms.common.SignInButton
                     android:id="@+id/google_login_button"
+                    style="@style/FacebookLoginButton"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/x60"
                     android:layout_marginTop="@dimen/x6"
-                    android:textColor="@color/colorwhite"
-                    android:textAllCaps="false"
                     android:text="Log in with Gmail"
-                    style="@style/FacebookLoginButton"
-                    />
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorwhite" />
 
 
             </LinearLayout>
@@ -185,15 +182,15 @@
 
 
     <!--<com.facebook.login.widget.LoginButton-->
-        <!--android:id="@+id/login_button"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignLeft="@+id/button5"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignStart="@+id/button5"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_marginTop="30dp" />-->
+    <!--android:id="@+id/login_button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignLeft="@+id/button5"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_alignStart="@+id/button5"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:layout_marginTop="30dp" />-->
 
     <ImageView
         android:id="@+id/imgProfilePic"
@@ -202,10 +199,10 @@
         android:layout_weight="1" />
 
     <!--<com.google.android.gms.common.SignInButton-->
-        <!--android:id="@+id/btn_sign_in"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="20dp" />-->
+    <!--android:id="@+id/btn_sign_in"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="20dp" />-->
 
     <Button
         android:id="@+id/btn_sign_out"

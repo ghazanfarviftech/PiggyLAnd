@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import com.example.ghazanfarali.piggyland.MainActivity;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
+import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.MyGallery;
 
 /**
  * Created by Amir.jehangir on 1/10/2017.
@@ -98,7 +99,7 @@ public class UserProfileActivity extends MasterActivity {
         btn_createnew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UserProfileActivity.this,MainActivity.class));
+                startActivity(new Intent(UserProfileActivity.this,MyGallery.class));
             }
         });
 

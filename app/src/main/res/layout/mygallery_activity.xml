@@ -1,0 +1,22 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorwhite"
+    android:clickable="true"
+    android:gravity="top"
+    android:orientation="vertical">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_listview_mygallary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_home_dashboard_divider"
+        android:clickable="true"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="none" />
+
+
+
+</RelativeLayout>

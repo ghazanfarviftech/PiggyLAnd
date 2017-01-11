@@ -9,4 +9,7 @@
     <color name="colorblue">#5970EE</color>
     <color name="colorlightblue">#3BB3FD</color>
     <color name="colorwhite">#ffffff</color>
+
+    <color name="splashbg">#6BD50B</color>
+    <color name="gray_home_dashboard_divider">#CACACA</color>
 </resources>

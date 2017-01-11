@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +48,9 @@ public class LoginActivity extends MasterActivity implements
     CallbackManager callbackManager;
     LoginButton loginButton;
 
+    TextInputLayout til_username, til_password;
+    TextInputEditText tie_username,tei_password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +71,10 @@ public class LoginActivity extends MasterActivity implements
 
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.facebook_login_button);
+        til_username = (TextInputLayout) findViewById(R.id.ed_username);
+        til_password = (TextInputLayout) findViewById(R.id.ed_password);
+        tie_username= (TextInputEditText)findViewById(R.id.tie_username);
+        tei_password= (TextInputEditText)findViewById(R.id.tei_password);
 
         btn_userlogin = (Button) findViewById(R.id.btn_userlogin);
         btnSignIn = (SignInButton) findViewById(R.id.google_login_button);
@@ -82,7 +91,16 @@ public class LoginActivity extends MasterActivity implements
             @Override
             public void onClick(View v) {
                // startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+
+                if(tie_username.getText().toString().contains("admin")  || tei_password.getText().toString().contains("admin")){
+hideKeyBoard();
+                    startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+
+                }else{
+                    Toast.makeText(LoginActivity.this,"Please Enter username & password",Toast.LENGTH_LONG).show();
+                }
+
+
             }
         });
 
