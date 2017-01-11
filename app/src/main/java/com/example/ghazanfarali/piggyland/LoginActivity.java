@@ -49,7 +49,7 @@ public class LoginActivity extends MasterActivity implements
     LoginButton loginButton;
 
     TextInputLayout til_username, til_password;
-    TextInputEditText tie_username,tei_password;
+    TextInputEditText tie_username, tei_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +73,8 @@ public class LoginActivity extends MasterActivity implements
         loginButton = (LoginButton) findViewById(R.id.facebook_login_button);
         til_username = (TextInputLayout) findViewById(R.id.ed_username);
         til_password = (TextInputLayout) findViewById(R.id.ed_password);
-        tie_username= (TextInputEditText)findViewById(R.id.tie_username);
-        tei_password= (TextInputEditText)findViewById(R.id.tei_password);
+        tie_username = (TextInputEditText) findViewById(R.id.tie_username);
+        tei_password = (TextInputEditText) findViewById(R.id.tei_password);
 
         btn_userlogin = (Button) findViewById(R.id.btn_userlogin);
         btnSignIn = (SignInButton) findViewById(R.id.google_login_button);
@@ -90,14 +90,17 @@ public class LoginActivity extends MasterActivity implements
         btn_userlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                // startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
-                if(tie_username.getText().toString().contains("admin")  || tei_password.getText().toString().contains("admin")){
-hideKeyBoard();
+                if (tie_username.getText().toString().contains("admin") || tei_password.getText().toString().contains("admin")) {
+                    hideKeyBoard();
                     startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
 
-                }else{
-                    Toast.makeText(LoginActivity.this,"Please Enter username & password",Toast.LENGTH_LONG).show();
+                    finish();
+
+                } else {
+                  //  startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+                    Toast.makeText(LoginActivity.this, "Please Enter username & password", Toast.LENGTH_LONG).show();
                 }
 
 
@@ -109,7 +112,7 @@ hideKeyBoard();
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                Intent i = new Intent(LoginActivity.this, UserProfileActivity.class);
                 startActivity(i);
             }
 
@@ -264,7 +267,7 @@ hideKeyBoard();
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
-            Toast.makeText(this, "login success", Toast.LENGTH_LONG).show();
+            // Toast.makeText(this, "login success", Toast.LENGTH_LONG).show();
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
 
@@ -284,11 +287,14 @@ hideKeyBoard();
                     .crossFade()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgProfilePic);*/
-
+            startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+            finish();
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
-            updateUI(false);
+            // updateUI(false);
+            startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+            finish();
         }
     }
 
