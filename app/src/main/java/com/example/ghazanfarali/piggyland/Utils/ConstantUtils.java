@@ -18,4 +18,6 @@ public interface ConstantUtils {
     String facebooklogin = "facebook";
     String googlelogin = "google";
 
+    String showBackBtn = "SHOWBACKBTN";
+
 }

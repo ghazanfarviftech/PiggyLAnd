@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="slidingmenu_offset">55dp</dimen>
+    <dimen name="footer_x50">30dp</dimen>
+    <dimen name="footer_x60">35dp</dimen>
+</resources>

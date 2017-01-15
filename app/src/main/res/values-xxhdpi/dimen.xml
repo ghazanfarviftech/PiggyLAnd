@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="footer_x50">50dp</dimen>
+    <dimen name="footer_x60">55dp</dimen>
+</resources>

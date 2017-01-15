@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--<style name="AppTheme" parent="AppBaseTheme">-->
+        <!--<item name="android:windowTranslucentStatus">false</item>-->
+        <!--<item name="android:colorControlHighlight">@color/bg_titlebar</item> -->
+        <!--<item name="android:windowSharedElementsUseOverlay">false</item>-->
+        <!--<item name="android:colorPrimaryDark">@color/bg_titlebar</item>-->
+        <!--&lt;!&ndash;<item name="android:windowDrawsSystemBarBackgrounds">false</item>&ndash;&gt;-->
+        <!--<item name="android:fitsSystemWindows">false</item>-->
+        <!--<item name="android:windowTranslucentNavigation">false</item>-->
+    <!--</style>-->
+</resources>

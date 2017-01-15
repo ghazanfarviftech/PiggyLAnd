@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.ghazanfarali.piggyland.Controls.OnItemClickListener;
 import com.example.ghazanfarali.piggyland.R;
@@ -25,9 +26,9 @@ public class MyGallery extends MasterActivity {
     MygallaryAdapter mygallaryAdapter;
 
 
-    public MyGallery() {
-        // Required empty public constructor
-    }
+//    public MyGallery() {
+//        // Required empty public constructor
+//    }
 
     public static MyGallery newInstance() {
 
@@ -57,7 +58,7 @@ public class MyGallery extends MasterActivity {
         mygallaryAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-               // Toast.makeText(MyGallery.this,smartToolsList.indexOf(position),Toast.LENGTH_LONG).show();
+                Toast.makeText(MyGallery.this,""+position,Toast.LENGTH_LONG).show();
             }
         });
 

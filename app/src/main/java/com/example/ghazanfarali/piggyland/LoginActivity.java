@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity;
@@ -91,17 +90,17 @@ public class LoginActivity extends MasterActivity implements
             @Override
             public void onClick(View v) {
                 // startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
-                if (tie_username.getText().toString().contains("admin") || tei_password.getText().toString().contains("admin")) {
-                    hideKeyBoard();
-                    startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
-
-                    finish();
-
-                } else {
-                  //  startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
-                    Toast.makeText(LoginActivity.this, "Please Enter username & password", Toast.LENGTH_LONG).show();
-                }
+                startActivity(new Intent(LoginActivity.this, Main2Activity.class));
+//                if (tie_username.getText().toString().contains("admin") || tei_password.getText().toString().contains("admin")) {
+//                    hideKeyBoard();
+//                    startActivity(new Intent(LoginActivity.this, Main2Activity.class));
+//
+//                    finish();
+//
+//                } else {
+//                  //  startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+//                    Toast.makeText(LoginActivity.this, "Please Enter username & password", Toast.LENGTH_LONG).show();
+//                }
 
 
             }

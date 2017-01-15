@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="is_tablet"
+        translatable="false">false</string>
+    <string name="slidingmenu_behindWidth" translatable="false">500</string>
+</resources>

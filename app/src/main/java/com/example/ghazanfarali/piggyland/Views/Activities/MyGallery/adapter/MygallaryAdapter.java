@@ -62,7 +62,7 @@ public class MygallaryAdapter extends RecyclerView.Adapter<MygallaryAdapter.View
         Log.e("Title smart",smartToolsList.get(position).getmygallaryTitle()+ " ");
 
         holder.image.setImageResource(smartToolsList.get(position).getmygallaryImageURL());
-        holder.name.setText(smartToolsList.get(position).getmygallaryTitle());
+        holder.name.setText(String.valueOf(smartToolsList.get(position).getmygallaryTitle()));
 //        if (basePreferenceHelper.getApplicationLanguage().equalsIgnoreCase(CommonConstants.LANG_ENGLISH)) {
 //            holder.name.setText(smartToolsList.get(position).getsmartToolsTitle());
 //        } else {
@@ -110,11 +110,15 @@ public class MygallaryAdapter extends RecyclerView.Adapter<MygallaryAdapter.View
         public ImageView image;
         public ImageView line;
         public RelativeLayout container;
+       public ImageView list_edit;
+       public ImageView list_share;
 
         public ViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.title);
             image = (ImageView) view.findViewById(R.id.thumbnail);
+            list_edit = (ImageView)view.findViewById(R.id.list_edit);
+            list_share = (ImageView)view.findViewById(R.id.list_share);
             //line = (ImageView) view.findViewById(R.id.line);
           //  container = (RelativeLayout) view.findViewById(R.id.container);
             view.setOnClickListener(this);

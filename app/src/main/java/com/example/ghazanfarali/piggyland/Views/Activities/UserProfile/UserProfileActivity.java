@@ -5,29 +5,41 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
-import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.MyGallery;
+import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.Views.MyGalleryMultiSelect;
+import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.UserProfile.UserProfileFragment;
 
 /**
  * Created by Amir.jehangir on 1/10/2017.
  */
-public class UserProfileActivity extends MasterActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class UserProfileActivity extends MasterActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    Button btn_sidemenu, btn_createnew;
-    boolean bottom_sheet = false;
+   private Button btn_sidemenu, btn_createnew;
+    RelativeLayout backLayout;
+    RelativeLayout helpLayout;
     DrawerLayout drawer;
-   boolean mSlideState=false;
+    boolean mSlideState = false;
+
+
+    public static UserProfileActivity userProInstance;
+    RelativeLayout headerLayoutID;
+    TextView titleTxt;
+    private String fragmentType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.userprofile_activity);
+
 
         initUI();
         initListner();
@@ -36,102 +48,127 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
 
     @Override
     public void initUI() {
-        super.initUI();
+        userProInstance = this;
 
-        btn_sidemenu = (Button) findViewById(R.id.btn_menuimg);
+        headerLayoutID = (RelativeLayout) findViewById(R.id.headerLayoutID);
+//        headerLayoutID.bringToFront();
+        titleTxt =(TextView)findViewById(R.id.titleTxt);
+        btn_sidemenu = (Button)findViewById(R.id.btn_menuimg);
         btn_createnew = (Button) findViewById(R.id.btn_createnew);
+        backLayout = (RelativeLayout) findViewById(R.id.backLayout);
+        helpLayout = (RelativeLayout) findViewById(R.id.helpLayout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-       drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-       // drawer.setDrawerListener(toggle);
-      //  toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-       // navigationView.setNavigationItemSelectedListener(this);
-    }
 
-    public void initListner() {
+        displayNextFragment();
+
         btn_sidemenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-                drawer.openDrawer(GravityCompat.START);
-
-
-
-
-
-//                if (!bottom_sheet) {
-//                    LinearLayout bottomSheet = (LinearLayout) findViewById(R.id.bottomSheetLayout);
-//                    bottomSheet.setVisibility(View.VISIBLE);
-//
-//                    LinearLayout contact_us = (LinearLayout) bottomSheet.findViewById(R.id.contact_us);
-//                    contact_us.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//
-//                            Intent i = new Intent(UserProfileActivity.this, MainActivity.class);
-//                            startActivity(i);
-//                        }
-//                    });
-//                    LinearLayout about_us = (LinearLayout) bottomSheet.findViewById(R.id.about_uss);
-//                    about_us.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//
-//                            Intent i = new Intent(UserProfileActivity.this, MainActivity.class);
-//                            startActivity(i);
-//                        }
-//                    });
-//
-//                    LinearLayout homes = (LinearLayout) bottomSheet.findViewById(R.id.homes);
-//                    homes.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//
-//                            finish();
-//                            Intent i = new Intent(UserProfileActivity.this, MainActivity.class);
-//                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//                            startActivity(i);
-//                        }
-//                    });
-//
-//                    bottom_sheet = true;
-//                } else {
-//
-//                    LinearLayout bottomSheet = (LinearLayout) findViewById(R.id.bottomSheetLayout);
-//                    bottomSheet.setVisibility(View.INVISIBLE);
-//                    // Adapter.setOnItemClickListener(onItemClickListener);
-//                    bottom_sheet = false;
-//                }
-
+                clickEventSlide();
             }
         });
-
-
 
 
         btn_createnew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UserProfileActivity.this,MyGallery.class));
+              //  startActivity(new Intent(UserProfileActivity.this, MyGallery.class));
+                startActivity(new Intent(UserProfileActivity.this, MyGalleryMultiSelect.class));
             }
         });
+
+        super.initUI();
+        // navigationView.setNavigationItemSelectedListener(this);
+    }
+
+
+
+
+
+    private void displayNextFragment() {
+        Log.v("fragmentIndex", fragmentType + " ");
+
+        Bundle extra = getIntent().getExtras();
+        if (extra != null) {
+            fragmentType = "0";//getIntent().getExtras().getString("fragIndex");
+        }
+
+
+        if (fragmentType != null) {
+            switch (fragmentType) {
+                case "0":
+                    replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, false);
+                    break;
+                case "-1":
+                    replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, false);
+                    break;
+                case "4":
+                    replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, false);
+                    break;
+                case "7":
+//                    Fragment loginFrag = new LoginFragment();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putBoolean(ConstantUtils.showBackBtn, false);
+//                    loginFrag.setArguments(bundle);
+//                    replaceFragmnet(loginFrag, R.id.frameLayout, false);
+                    break;
+
+                default:
+                    replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, false);
+                    break;
+
+            }
+        } else {
+            replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, false);
+        }
+//        }
+    }
+
+
+
+
+    public void initListner() {
+
 
 
     }
 
-    public void clickEventSlide(){
-        if(mSlideState){
-            drawer.closeDrawer(Gravity.END);
-        }else{
-            drawer.openDrawer(Gravity.END);
-        }}
+    public void clickEventSlide() {
+        if (mSlideState) {
+            drawer.closeDrawer(GravityCompat.START);
+            mSlideState = false;
+         //   btn_sidemenu.setVisibility(View.VISIBLE);
+        } else {
+          //  btn_sidemenu.setVisibility(View.GONE);
+            drawer.openDrawer(GravityCompat.START);
+            mSlideState = true;
+        }
+    }
+
+    public static void setUserProInstance(UserProfileActivity regInstance) {
+        UserProfileActivity.userProInstance = regInstance;
+    }
+
+    public static UserProfileActivity getRegInstance() {
+        return userProInstance;
+    }
+
+    public void showHeaderLayout() {
+        headerLayoutID.setVisibility(View.VISIBLE);
+        setHeaderTitle("");
+    }
+
+    public void hideHeaderLayout() {
+        headerLayoutID.setVisibility(View.GONE);
+    }
+
+    public void setHeaderTitle(String title) {
+        titleTxt.setText(title);
+    }
 
 
     @Override

@@ -3,6 +3,9 @@ package com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +21,7 @@ public class MasterActivity extends AppCompatActivity implements BaseInterface {
 
     public SharedPrefrencesManger sharedPrefrencesManger;
     public String userName,userPassword,email,deviceId ;
+    private FragmentTransaction transaction;
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
@@ -26,6 +30,37 @@ public class MasterActivity extends AppCompatActivity implements BaseInterface {
         initUI();
     }
 
+    public void replaceFragmnet(Fragment fragment, int container, boolean addTobackStack) {
+        transaction = getSupportFragmentManager().beginTransaction();
+        FragmentManager fm = getSupportFragmentManager(); // didnot add fragment in back stack twice.
+        for (int entry = 0; entry < fm.getBackStackEntryCount(); entry++) {
+            if (fm.getFragments().get(entry).getClass().equals(fragment.getClass())) {
+                removeExisitingFragment(fragment);
+            }
+        }
+        if (!addTobackStack) {   // if fragment must add to back stack
+            transaction.replace(container, fragment,
+                    "").commit();
+        } else {
+            transaction.replace(container, fragment,
+                    "").addToBackStack(null).commit();
+        }
+        getCurrentFragment();
+    }
+
+    public void removeExisitingFragment(Fragment myFrag) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction trans = manager.beginTransaction();
+        trans.remove(myFrag);
+        trans.commit();
+        manager.popBackStack();
+    }
+
+    private Fragment getCurrentFragment() {
+
+
+        return null;
+    }
 
     public void hideKeyBoard() {
         View view = getCurrentFocus();

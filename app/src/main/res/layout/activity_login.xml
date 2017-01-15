@@ -58,7 +58,7 @@
                     android:layout_gravity="start"
                     android:gravity="start"
                     android:hint="@string/Username"
-                    android:inputType="textPassword"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:textAlignment="viewStart"
                     android:textColor="@android:color/white"
