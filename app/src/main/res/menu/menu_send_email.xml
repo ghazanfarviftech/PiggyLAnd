@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/it_delete"
-        android:icon="@drawable/ic_action_email"
+        android:id="@+id/it_send_email"
+        android:icon="@drawable/ic_action_send_now"
         android:title="Delete"
         app:showAsAction="always"></item>
 

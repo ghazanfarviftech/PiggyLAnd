@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -13,4 +14,18 @@
         android:id="@+id/recyclerview"
         android:layout_marginTop="15dp"
         ></android.support.v7.widget.RecyclerView>
+
+
+    <com.example.ghazanfarali.piggyland.CustomViews.CustomTextView
+        android:id="@+id/tv_no_data_smart_tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/no_data_found_error"
+        android:textColor="@color/colorblack"
+        android:textSize="@dimen/s14"
+        android:visibility="gone"
+        app:fontType="openSansSemibold"
+        />
 </LinearLayout>

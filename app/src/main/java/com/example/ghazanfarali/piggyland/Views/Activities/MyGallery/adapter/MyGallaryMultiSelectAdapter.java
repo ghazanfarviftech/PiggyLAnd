@@ -1,6 +1,8 @@
 package com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,7 +43,7 @@ public class MyGallaryMultiSelectAdapter extends RecyclerView.Adapter<MyGallaryM
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        holder.thumbnail.setImageResource(adapter_list.get(position).getmygallaryImageURL());
+        holder.thumbnail.setImageBitmap(getBit(adapter_list.get(position).getmygallaryImageURL()));
         holder.title.setText(adapter_list.get(position).getmygallaryTitle());
         if (!mainActivity.is_in_action_mode) {
             // holder.checkBox.setVisibility(View.GONE);
@@ -55,6 +57,15 @@ public class MyGallaryMultiSelectAdapter extends RecyclerView.Adapter<MyGallaryM
             holder.ly_share_edit.setVisibility(View.GONE);
             holder.ly_select.setVisibility(View.VISIBLE);
         }
+    }
+
+
+    private Bitmap getBit(String getpath){
+
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        Bitmap bitmap = BitmapFactory.decodeFile(getpath,bmOptions);
+     //   bitmap = Bitmap.createScaledBitmap(bitmap,parent.getWidth(),parent.getHeight(),true);
+ return bitmap;
     }
 
     @Override

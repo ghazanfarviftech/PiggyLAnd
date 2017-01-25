@@ -1,12 +1,14 @@
 package com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.beans;
 
+import java.io.Serializable;
+
 /**
  * Created by Amir.jehangir on 1/15/2017.
  */
-public class MyGallaryMultiSelectITems {
+public class MyGallaryMultiSelectITems implements Serializable {
     private String smartToolsTitle;
     private String smartToolsId;
-    private int smartToolsImageURL;
+    private String smartToolsImageURL;
     private boolean smartToolsCheckbox;
 
     public String getmygallaryTitle() {
@@ -25,11 +27,11 @@ public class MyGallaryMultiSelectITems {
         this.smartToolsId = smartToolsId;
     }
 
-    public int getmygallaryImageURL() {
+    public String getmygallaryImageURL() {
         return smartToolsImageURL;
     }
 
-    public void setmygallaryImageURL(int smartToolsImageURL) {
+    public void setmygallaryImageURL(String smartToolsImageURL) {
         this.smartToolsImageURL = smartToolsImageURL;
     }
 

@@ -12,4 +12,6 @@
 
     <color name="splashbg">#6BD50B</color>
     <color name="gray_home_dashboard_divider">#CACACA</color>
+
+    <color name="APPOINTMENT_TIME_BAR">#3e6a99</color>
 </resources>

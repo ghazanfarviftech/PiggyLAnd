@@ -1,5 +1,6 @@
 package com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.Views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,15 +16,21 @@ import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter.MyGallaryITemDecor;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter.MyGallaryMultiSelectAdapter;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.beans.MyGallaryMultiSelectITems;
+import com.example.ghazanfarali.piggyland.Views.Activities.PrintOrder.PrintOrderActivity;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 /**
  * Created by Amir.jehangir on 1/15/2017.
  */
 public class MyGalleryMultiSelect extends AppCompatActivity implements View.OnLongClickListener {
     public boolean is_in_action_mode = false;
-    TextView counterTextView;
+    TextView counterTextView,tv_no_data_smart_tools;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
@@ -41,6 +48,7 @@ public class MyGalleryMultiSelect extends AppCompatActivity implements View.OnLo
         setSupportActionBar(toolbar);
         // initialise recycler view
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        tv_no_data_smart_tools = (TextView)findViewById(R.id.tv_no_data_smart_tools);
      //   layoutManager = new LinearLayoutManager(this);
         lLayout = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(lLayout);
@@ -48,69 +56,68 @@ public class MyGalleryMultiSelect extends AppCompatActivity implements View.OnLo
         recyclerView.addItemDecoration(new MyGallaryITemDecor(this));
         counterTextView = (TextView) findViewById(R.id.cnt_text);
         counterTextView.setVisibility(View.GONE);
-        String [] Name=getResources().getStringArray(R.array.names);
-        int i=0;
-//        for(String NAME:Name)
-//        {
-//            MyGallaryMultiSelectITems contact = new MyGallaryMultiSelectITems();
-//            contact.se
-//            arrayList.add(contact);
-//            i++;
-//        }
-        adapter = new MyGallaryMultiSelectAdapter(prepareListData(),MyGalleryMultiSelect.this);
-        recyclerView.setAdapter(adapter);
+        if(prepareListData() != null){
+
+            adapter = new MyGallaryMultiSelectAdapter(prepareListData(),MyGalleryMultiSelect.this);
+            recyclerView.setAdapter(adapter);
+        }else {
+            tv_no_data_smart_tools.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
+
     }
 
     private ArrayList<MyGallaryMultiSelectITems> prepareListData() {
 
         ArrayList<MyGallaryMultiSelectITems> temp = new ArrayList<>();
+        List<File> files =loadAllFilesFromFolder(new File(android.os.Environment.getExternalStorageDirectory()+"/","PiggyLand"));
 
         MyGallaryMultiSelectITems mModel = new MyGallaryMultiSelectITems();
         mModel.setmygallaryId("1");
         mModel.setmygallaryTitle("Favorite road trip");
-        mModel.setmygallaryImageURL(R.drawable.piggylandbg);
+        mModel.setmygallaryImageURL(files.get(0).toString());
         mModel.setmygallarycheckbox(true);
         temp.add(mModel);
 
         mModel = new MyGallaryMultiSelectITems();
         mModel.setmygallaryId("2");
         mModel.setmygallaryTitle("Favorite road trip");
-        mModel.setmygallaryImageURL(R.drawable.photodefault);
+        mModel.setmygallaryImageURL(files.get(1).toString());
         mModel.setmygallarycheckbox(true);
         temp.add(mModel);
 
         mModel = new MyGallaryMultiSelectITems();
         mModel.setmygallaryId("3");
         mModel.setmygallaryTitle("Favorite road trip");
-        mModel.setmygallaryImageURL(R.drawable.car_1);
+        mModel.setmygallaryImageURL(files.get(2).toString());
         mModel.setmygallarycheckbox(true);
         temp.add(mModel);
 
         mModel = new MyGallaryMultiSelectITems();
         mModel.setmygallaryId("4");
         mModel.setmygallaryTitle("Favorite road trip");
-        mModel.setmygallaryImageURL(R.drawable.piggylandbg);
+        mModel.setmygallaryImageURL(files.get(3).toString());
         mModel.setmygallarycheckbox(true);
         temp.add(mModel);
 
         mModel = new MyGallaryMultiSelectITems();
         mModel.setmygallaryId("5");
         mModel.setmygallaryTitle("Favorite road trip");
-        mModel.setmygallaryImageURL(R.drawable.photodefault);
+        mModel.setmygallaryImageURL(files.get(4).toString());
         mModel.setmygallarycheckbox(true);
         temp.add(mModel);
 
         mModel = new MyGallaryMultiSelectITems();
         mModel.setmygallaryId("6");
         mModel.setmygallaryTitle("Favorite road trip");
-        mModel.setmygallaryImageURL(R.drawable.car_1);
+        mModel.setmygallaryImageURL(files.get(5).toString());
         mModel.setmygallarycheckbox(true);
         temp.add(mModel);
 
         mModel = new MyGallaryMultiSelectITems();
         mModel.setmygallaryId("7");
         mModel.setmygallaryTitle("Favorite road trip");
-        mModel.setmygallaryImageURL(R.drawable.piggylandbg);
+        mModel.setmygallaryImageURL(files.get(6).toString());
         mModel.setmygallarycheckbox(true);
         temp.add(mModel);
 
@@ -118,6 +125,38 @@ public class MyGalleryMultiSelect extends AppCompatActivity implements View.OnLo
         arrayList.addAll(temp);
         return temp;
     }
+
+//    public void generatePhotosObjects(List<File> files) {
+//        photosList = new ArrayList<>();
+//        for(int i=0;i<files.size();i++)
+//        {
+//            Photo photo1 = new Photo();
+//            photo1.setImageUrl(files.get(i));
+//            photo1.setDescription("Android  Ice Cream Sandwich");
+//            photosList.add(photo1);
+//        }
+//
+//    }
+
+
+    private List<File> loadAllFilesFromFolder(File parentDir)
+    {
+
+
+        List<File> inFiles = new ArrayList<>();
+        Queue<File> files = new LinkedList<>();
+        files.addAll(Arrays.asList(parentDir.listFiles()));
+        while (!files.isEmpty()) {
+            File file = files.remove();
+            if (file.isDirectory()) {
+                files.addAll(Arrays.asList(file.listFiles()));
+            } else if (file.getName().endsWith(".jpg")) {
+                inFiles.add(file);
+            }
+        }
+        return inFiles;
+    }
+
 
 
     //adding menu to toolbar
@@ -173,6 +212,7 @@ public class MyGalleryMultiSelect extends AppCompatActivity implements View.OnLo
 
             MyGallaryMultiSelectAdapter recyclerAdapter = (MyGallaryMultiSelectAdapter) adapter;
             recyclerAdapter.updateAdapter(selectionList);
+            AttachImagestoEmail();
             clearActionM();
         }
         else if(item.getItemId() == android.R.id.home)
@@ -181,6 +221,17 @@ public class MyGalleryMultiSelect extends AppCompatActivity implements View.OnLo
             adapter.notifyDataSetChanged();
         }
         return true;
+    }
+
+    private void AttachImagestoEmail(){
+      //  Gson gson = new Gson();
+       // String myJson = gson.toJson(selectionList);
+
+        Intent i = new Intent(this, PrintOrderActivity.class);
+        i.putExtra("MyClass", selectionList);
+        startActivity(i);
+
+      //  startActivity(new Intent(this, PrintOrderActivity.class));
     }
 
     public void clearActionM()

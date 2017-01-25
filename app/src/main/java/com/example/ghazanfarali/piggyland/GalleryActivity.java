@@ -1,9 +1,7 @@
 package com.example.ghazanfarali.piggyland;
 
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
+import android.support.v7.app.AppCompatActivity;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -1,0 +1,106 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorwhite"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <include layout="@layout/toolbar_layout_sendemail" />
+
+    <LinearLayout
+        android:id="@+id/ll2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/x10">
+
+        <!--<ScrollView-->
+            <!--android:id="@+id/login_form"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/email_login_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.example.ghazanfarali.piggyland.CustomViews.CustomEditText
+                        android:id="@+id/ed_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:focusable="false"
+                        android:hint="To: print@piggyland.co.kr"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/colorblack"
+                        android:textSize="@dimen/textSizeForTextFields"
+
+                        android:textStyle="normal" />
+
+                    <com.example.ghazanfarali.piggyland.CustomViews.CustomEditText
+                        android:id="@+id/ed_subject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:focusable="false"
+                        android:hint="Subject: Request print - (23, 1243)"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/colorblack"
+                        android:textSize="@dimen/textSizeForTextFields"
+                        android:textStyle="normal" />
+
+                    <com.example.ghazanfarali.piggyland.CustomViews.CustomEditText
+                        android:id="@+id/ed_descriptiveText"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|left"
+                        android:inputType="textEmailAddress|textMultiLine"
+                        android:lines="20"
+                        android:minLines="5"
+                        android:scrollHorizontally="false"
+                        android:scrollbars="vertical"
+                        android:singleLine="false"
+                        android:text="please,\n ask us your requirment to print"
+                        android:textColor="@color/com_facebook_button_background_color_focused_disabled" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x50" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_sendImageEmail_attachment"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="@dimen/x3"
+                        android:background="@drawable/box_blue" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+        <!--</ScrollView>-->
+    </LinearLayout>
+
+
+</LinearLayout>
