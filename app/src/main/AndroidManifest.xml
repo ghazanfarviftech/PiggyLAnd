@@ -14,6 +14,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity android:name=".VideoActivity" >
             <intent-filter>
@@ -30,6 +31,14 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".Views.Activities.UserProfile.UserProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
+        <activity android:name=".Views.Activities.MyGallery.MyGallery" />
+        <activity android:name=".Views.Activities.MyGallery.Views.MyGalleryMultiSelect"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity android:name=".Views.Activities.PrintOrder.PrintOrderActivity"
             android:theme="@style/AppTheme.NoActionBar"
             />
         <activity android:name=".MainActivity"
