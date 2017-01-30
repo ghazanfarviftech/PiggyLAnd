@@ -58,4 +58,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.facebook.fresco:fresco:0.10.0'
     compile 'com.facebook.fresco:animated-gif:0.10.0'
+    compile 'com.koushikdutta.ion:ion:2.1.7'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

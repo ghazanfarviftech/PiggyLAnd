@@ -25,6 +25,10 @@ public class MasterFragment extends Fragment implements BaseInterface {
     public SharedPrefrencesManger sharedPrefrencesManger;
    // private RetrofitErrorHandeler retrofitErrorHandeler;
     public ValidationHelper validationHelper;
+    public static MasterFragment newInstance() {
+
+        return new MasterFragment();
+    }
 
     @Nullable
     @Override

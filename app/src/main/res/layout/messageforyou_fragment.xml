@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/colorwhite"
+android:layout_marginTop="?attr/actionBarSize"
+android:clickable="true"
+android:orientation="vertical">
+
+<TextView
+    android:id="@+id/tv_today"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Today"
+android:layout_marginBottom="@dimen/x10"
+    android:textSize="@dimen/textSizeForTextFields"
+    android:textStyle="bold"
+    android:layout_marginLeft="@dimen/x15"
+
+    />
+    
+    
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/rv_listview_mygallary"
+    android:layout_below="@+id/tv_today"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorwhite"
+    android:clickable="true"
+    android:scrollbarStyle="insideOverlay"
+    android:scrollbars="none" />
+
+
+
+</RelativeLayout>

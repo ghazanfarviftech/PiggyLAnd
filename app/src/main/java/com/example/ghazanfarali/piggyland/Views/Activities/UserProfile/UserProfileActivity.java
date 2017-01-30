@@ -1,6 +1,7 @@
 package com.example.ghazanfarali.piggyland.Views.Activities.UserProfile;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,11 +12,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.Views.MyGalleryMultiSelect;
 import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.UserProfile.UserProfileFragment;
+import com.example.ghazanfarali.piggyland.Views.Fragments.MessageforYou.MessageforyouFragment;
 
 /**
  * Created by Amir.jehangir on 1/10/2017.
@@ -62,6 +65,28 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                int id = item.getItemId();
+
+                if (id == R.id.nav_camera) {
+
+                    fragmentType = "4";
+                    displayNextFragment();
+                    headerLayoutID.setBackgroundColor( getResources().getColor(R.color.colorPrimaryDark));
+                    Toast.makeText(UserProfileActivity.this,"this",Toast.LENGTH_LONG).show();
+                    // Handle the camera action
+                } else if (id == R.id.nav_gallery) {
+                    Toast.makeText(UserProfileActivity.this,"this",Toast.LENGTH_LONG).show();
+                } else if (id == R.id.nav_slideshow) {
+                    Toast.makeText(UserProfileActivity.this,"this",Toast.LENGTH_LONG).show();
+                }
+
+                return true;
+            }
+        });
+
         displayNextFragment();
 
         btn_sidemenu.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +132,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, false);
                     break;
                 case "4":
-                    replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, false);
+                    replaceFragmnet(new MessageforyouFragment(), R.id.frameLayout, true);
                     break;
                 case "7":
 //                    Fragment loginFrag = new LoginFragment();
@@ -125,6 +150,8 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
         } else {
             replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, false);
         }
+
+        drawer.closeDrawer(GravityCompat.START);
 //        }
     }
 
@@ -177,11 +204,13 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+
+            Toast.makeText(this,"this",Toast.LENGTH_LONG).show();
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
+            Toast.makeText(this,"this",Toast.LENGTH_LONG).show();
         } else if (id == R.id.nav_slideshow) {
-
+            Toast.makeText(this,"this",Toast.LENGTH_LONG).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -192,7 +221,11 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        finish();
+if(fragmentType == "4"){
+    headerLayoutID.setBackgroundColor(Color.TRANSPARENT);
+}else{
+    finish();
+}
+      //  finish();
     }
 }

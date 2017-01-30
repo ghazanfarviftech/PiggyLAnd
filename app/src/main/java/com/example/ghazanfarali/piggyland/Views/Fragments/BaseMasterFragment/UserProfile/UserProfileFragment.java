@@ -31,7 +31,7 @@ public class UserProfileFragment extends MasterFragment {
         } else {
             if (view != null)
               //  userProfileActivity.hideHeaderLayout();
-            userProfileActivity.setHeaderTitle("");
+            userProfileActivity.setHeaderTitle("Main");
         }
         return view;
 
