@@ -19,6 +19,7 @@ import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.Ma
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.Views.MyGalleryMultiSelect;
 import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.UserProfile.UserProfileFragment;
 import com.example.ghazanfarali.piggyland.Views.Fragments.MessageforYou.MessageforyouFragment;
+import com.example.ghazanfarali.piggyland.Views.Fragments.StartMainFragment.StartScreenFragment;
 
 /**
  * Created by Amir.jehangir on 1/10/2017.
@@ -148,7 +149,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
 
             }
         } else {
-            replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, false);
+            replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
         }
 
         drawer.closeDrawer(GravityCompat.START);

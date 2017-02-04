@@ -79,47 +79,47 @@ public class MyGalleryMultiSelect extends AppCompatActivity implements View.OnLo
         mModel.setmygallarycheckbox(true);
         temp.add(mModel);
 
-        mModel = new MyGallaryMultiSelectITems();
-        mModel.setmygallaryId("2");
-        mModel.setmygallaryTitle("Favorite road trip");
-        mModel.setmygallaryImageURL(files.get(1).toString());
-        mModel.setmygallarycheckbox(true);
-        temp.add(mModel);
+//        mModel = new MyGallaryMultiSelectITems();
+//        mModel.setmygallaryId("2");
+//        mModel.setmygallaryTitle("Favorite road trip");
+//        mModel.setmygallaryImageURL(files.get(1).toString());
+//        mModel.setmygallarycheckbox(true);
+//        temp.add(mModel);
 
-        mModel = new MyGallaryMultiSelectITems();
-        mModel.setmygallaryId("3");
-        mModel.setmygallaryTitle("Favorite road trip");
-        mModel.setmygallaryImageURL(files.get(2).toString());
-        mModel.setmygallarycheckbox(true);
-        temp.add(mModel);
-
-        mModel = new MyGallaryMultiSelectITems();
-        mModel.setmygallaryId("4");
-        mModel.setmygallaryTitle("Favorite road trip");
-        mModel.setmygallaryImageURL(files.get(3).toString());
-        mModel.setmygallarycheckbox(true);
-        temp.add(mModel);
-
-        mModel = new MyGallaryMultiSelectITems();
-        mModel.setmygallaryId("5");
-        mModel.setmygallaryTitle("Favorite road trip");
-        mModel.setmygallaryImageURL(files.get(4).toString());
-        mModel.setmygallarycheckbox(true);
-        temp.add(mModel);
-
-        mModel = new MyGallaryMultiSelectITems();
-        mModel.setmygallaryId("6");
-        mModel.setmygallaryTitle("Favorite road trip");
-        mModel.setmygallaryImageURL(files.get(5).toString());
-        mModel.setmygallarycheckbox(true);
-        temp.add(mModel);
-
-        mModel = new MyGallaryMultiSelectITems();
-        mModel.setmygallaryId("7");
-        mModel.setmygallaryTitle("Favorite road trip");
-        mModel.setmygallaryImageURL(files.get(6).toString());
-        mModel.setmygallarycheckbox(true);
-        temp.add(mModel);
+//        mModel = new MyGallaryMultiSelectITems();
+//        mModel.setmygallaryId("3");
+//        mModel.setmygallaryTitle("Favorite road trip");
+//        mModel.setmygallaryImageURL(files.get(2).toString());
+//        mModel.setmygallarycheckbox(true);
+//        temp.add(mModel);
+//
+//        mModel = new MyGallaryMultiSelectITems();
+//        mModel.setmygallaryId("4");
+//        mModel.setmygallaryTitle("Favorite road trip");
+//        mModel.setmygallaryImageURL(files.get(3).toString());
+//        mModel.setmygallarycheckbox(true);
+//        temp.add(mModel);
+//
+//        mModel = new MyGallaryMultiSelectITems();
+//        mModel.setmygallaryId("5");
+//        mModel.setmygallaryTitle("Favorite road trip");
+//        mModel.setmygallaryImageURL(files.get(4).toString());
+//        mModel.setmygallarycheckbox(true);
+//        temp.add(mModel);
+//
+//        mModel = new MyGallaryMultiSelectITems();
+//        mModel.setmygallaryId("6");
+//        mModel.setmygallaryTitle("Favorite road trip");
+//        mModel.setmygallaryImageURL(files.get(5).toString());
+//        mModel.setmygallarycheckbox(true);
+//        temp.add(mModel);
+//
+//        mModel = new MyGallaryMultiSelectITems();
+//        mModel.setmygallaryId("7");
+//        mModel.setmygallaryTitle("Favorite road trip");
+//        mModel.setmygallaryImageURL(files.get(6).toString());
+//        mModel.setmygallarycheckbox(true);
+//        temp.add(mModel);
 
 
         arrayList.addAll(temp);
