@@ -4,23 +4,23 @@ package com.example.ghazanfarali.piggyland.Views.Activities.Drawing.adapters;
  * Created by ghazanfarali on 25/12/2016.
  */
 
-import java.io.ByteArrayOutputStream;
-import java.util.List;
-import java.util.ArrayList;
-
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.MotionEvent;
+import android.view.View;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 // import android.util.Log;
 // import android.widget.Toast;
 

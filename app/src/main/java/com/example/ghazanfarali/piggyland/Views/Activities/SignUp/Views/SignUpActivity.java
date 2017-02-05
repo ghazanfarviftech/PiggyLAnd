@@ -4,28 +4,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.ghazanfarali.piggyland.MainActivity;
+import com.example.ghazanfarali.piggyland.EndPoint.ApiClient;
+import com.example.ghazanfarali.piggyland.EndPoint.ApiInterface;
+import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.LoginResponse;
 import com.example.ghazanfarali.piggyland.R;
-import com.example.ghazanfarali.piggyland.Services.ApiClient;
-import com.example.ghazanfarali.piggyland.Services.ApiInterface;
-import com.example.ghazanfarali.piggyland.StartActivity;
-
-import com.example.ghazanfarali.piggyland.Views.Activities.Login.GetterSettter.Login;
-import com.example.ghazanfarali.piggyland.Views.Activities.Login.GetterSettter.LoginResponse;
-import com.example.ghazanfarali.piggyland.Views.Activities.Login.GetterSettter.Profile;
-import com.example.ghazanfarali.piggyland.Views.Activities.Login.LoginActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity;
-import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,9 +54,9 @@ public class SignUpActivity extends AppCompatActivity {
                     try {
                         ApiInterface apiService =
                                 ApiClient.getClient().create(ApiInterface.class);
-                        Login task = new Login("fazila", "fazila", "123444");
-                        Gson gson = new Gson();
-                        gson.toJson(task);
+//                        Login task = new Login("fazila", "fazila", "123444");
+//                        Gson gson = new Gson();
+//                        gson.toJson(task);
                         WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
                         WifiInfo info = manager.getConnectionInfo();
                         String address = info.getMacAddress();
@@ -76,7 +69,11 @@ public class SignUpActivity extends AppCompatActivity {
                                 LoginResponse statusCode = response.body();//code();
                                 if(statusCode.getStatus().contentEquals("success"))
                                 {
-                                    startActivity(new Intent(SignUpActivity.this, UserProfileActivity.class));
+                                    Intent in = new Intent(SignUpActivity.this, UserProfileActivity.class);
+                                    in.putExtra("fragmentIndex","0");
+                                    startActivity(in);
+
+                                  //  startActivity(new Intent(SignUpActivity.this, UserProfileActivity.class));
                                 }else{
                                     Toast.makeText(SignUpActivity.this,"Error While Sign Up",Toast.LENGTH_SHORT).show();
                                 }

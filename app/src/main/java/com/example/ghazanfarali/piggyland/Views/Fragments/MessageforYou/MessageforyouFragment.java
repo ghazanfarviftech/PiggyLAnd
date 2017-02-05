@@ -77,6 +77,7 @@ public class MessageforyouFragment extends MasterFragment {
                 Toast.makeText(getActivity(),""+position,Toast.LENGTH_LONG).show();
                 showRelatedDocumentsDialog();
             }
+
         });
     }
     @Override

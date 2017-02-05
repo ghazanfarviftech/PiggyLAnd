@@ -1,22 +1,31 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorwhite"
-    android:clickable="true"
-    android:gravity="top"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
-
+    <include layout="@layout/toolbar_layout_multiselect"></include>
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_listview_mygallary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray_home_dashboard_divider"
-        android:clickable="true"
-        android:scrollbarStyle="insideOverlay"
-        android:scrollbars="none" />
+        android:id="@+id/recyclerview"
+        android:layout_marginTop="15dp"
+        ></android.support.v7.widget.RecyclerView>
 
 
-
-</RelativeLayout>
+    <com.example.ghazanfarali.piggyland.CustomViews.CustomTextView
+        android:id="@+id/tv_no_data_smart_tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="No Data Found"
+        android:textColor="@color/colorblack"
+        android:textSize="@dimen/s14"
+        android:visibility="gone"
+        app:fontType="openSansSemibold"
+        />
+</LinearLayout>

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.ghazanfarali.piggyland.R;
-import com.example.ghazanfarali.piggyland.Views.Activities.ShareArtWork.GetterSetter.ShareArtWork;
+import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.Bean.ShareArtWork;
 
 import java.util.ArrayList;
 import java.util.List;

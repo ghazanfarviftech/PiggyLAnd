@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/colorbg"
-    tools:context="com.example.ghazanfarali.piggyland.Views.Activities.SignUp.SignUpActivity">
+    tools:context="com.example.ghazanfarali.piggyland.Views.Activities.SignUp.Views.SignUpActivity">
 
 
    <!-- <android.support.design.widget.TextInputLayout

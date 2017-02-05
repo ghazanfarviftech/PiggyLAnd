@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import com.example.ghazanfarali.piggyland.Utils.SharedPrefrencesManger;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
+import com.example.ghazanfarali.piggyland.Views.Activities.Login.LoginActivity;
 
 public class SplashActivity extends MasterActivity {
 

@@ -5,11 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -24,11 +26,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.ghazanfarali.piggyland.CanvasView;
+import com.example.ghazanfarali.piggyland.CustomViews.DrawingControls.StickerTextView;
+import com.example.ghazanfarali.piggyland.EndPoint.ApiClient;
+import com.example.ghazanfarali.piggyland.EndPoint.ApiInterface;
+import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.SaveToGalleryResponse;
 import com.example.ghazanfarali.piggyland.R;
-import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter.MygallaryAdapter_Grid;
+import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.Views.SaveDrawingActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.beans.mygallarylist;
-import com.example.ghazanfarali.piggyland.ghajju.CircleShapeView;
-import com.example.ghazanfarali.piggyland.ghajju.StickerTextView;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
@@ -44,8 +48,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Drawing2Activity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+public class Drawing2Activity extends AppCompatActivity {
     private CanvasView canvas = null;
     Button btn_write_text,btn_draw,btn_pallete,btn_undo,btn_save,btn_load_image;
     private int currentBackgroundColor = 0xffffffff;
@@ -192,188 +199,154 @@ public class Drawing2Activity extends AppCompatActivity {
             }
         });
 
-        shapes = (ImageView)findViewById(R.id.shapes);
-        shapes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-              /*  if(!bottom_sheet) {
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                    TextView view_set_basicshapes = (TextView)findViewById(R.id.view_set_basicshapes);
-                    view_set_basicshapes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            LinearLayout View_Accessories = (LinearLayout)findViewById(R.id.View_Accessories);
-                            View_Accessories.setVisibility(View.INVISIBLE);
-                            LinearLayout View_BasicShapes = (LinearLayout)findViewById(R.id.View_BasicShapes);
-                            View_BasicShapes.setVisibility(View.VISIBLE);
-                        }
-                    });
-                    TextView view_set_accessorries = (TextView)findViewById(R.id.view_set_accessorries);
-                    view_set_accessorries.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                        LinearLayout View_Accessories = (LinearLayout)findViewById(R.id.View_Accessories);
-                            View_Accessories.setVisibility(View.VISIBLE);
-                            LinearLayout View_BasicShapes = (LinearLayout)findViewById(R.id.View_BasicShapes);
-                            View_BasicShapes.setVisibility(View.INVISIBLE);
-                        }
-                    });
-                    RecyclerView rv_list_gallary;
-                    GridLayoutManager lLayout;
-                    ArrayList<mygallarylist> smartToolsList;
-                    MygallaryAdapter_Grid mygallaryAdapter;
-                    smartToolsList = new ArrayList<>();
-                    rv_list_gallary = (RecyclerView)findViewById(R.id.rv_listview_mygallary);
-                    rv_list_gallary.addItemDecoration(new MyGallaryITemDecor(Drawing2Activity.this));
-
-                    smartToolsList = prepareListData();
-                    mygallaryAdapter = new MygallaryAdapter_Grid(Drawing2Activity.this,smartToolsList);
-                    rv_list_gallary.setAdapter(mygallaryAdapter);
-
-                    mygallaryAdapter.setOnItemClickListener(new OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            Toast.makeText(Drawing2Activity.this,""+position,Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    lLayout = new GridLayoutManager(Drawing2Activity.this, 4);
-                    rv_list_gallary.setHasFixedSize(true);
-                    rv_list_gallary.setLayoutManager(lLayout);*/
-                    /*TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
-                    TabWidget tw = (TabWidget)tabHost.findViewById(android.R.id.tabs);
-                    for (int i = 0; i < tw.getChildCount(); i++)
-                    {
-                        final View tabView = tw.getChildTabViewAt(i);
-                        final TextView tv = (TextView)tabView.findViewById(android.R.id.title);
-                        tv.setTypeface(null, Typeface.BOLD);
-                        tv.setTextColor(getResources().getColor(R.color.white));
-                    }
-                    tabHost.setup();
-
-                    TabHost.TabSpec spec1 = tabHost.newTabSpec("Basic Shapes");
-                    spec1.setContent(R.id.tab1_Units);
-                    spec1.setIndicator(" " + "Basic Shapes"
-                            + " ");
-
-
-                    TabHost.TabSpec spec2 = tabHost.newTabSpec("Accessories");
-                    spec2.setContent(R.id.tab2_Map);
-                    spec2.setIndicator("  " + "Accessories"
-                            + " ");
-
-
-                    tabHost.addTab(spec1);
-                    tabHost.addTab(spec2);
-
-                    RecyclerView rv_list_gallary;
-                    GridLayoutManager lLayout;
-                    ArrayList<mygallarylist> smartToolsList;
-                    MygallaryAdapter_Grid mygallaryAdapter;
-                    smartToolsList = new ArrayList<>();
-                    rv_list_gallary = (RecyclerView)findViewById(R.id.rv_listview_mygallary);
-                    rv_list_gallary.addItemDecoration(new MyGallaryITemDecor(Drawing2Activity.this));
-
-                    smartToolsList = prepareListData();
-                    mygallaryAdapter = new MygallaryAdapter_Grid(Drawing2Activity.this,smartToolsList);
-                    rv_list_gallary.setAdapter(mygallaryAdapter);
-
-                    mygallaryAdapter.setOnItemClickListener(new OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            Toast.makeText(Drawing2Activity.this,""+position,Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    lLayout = new GridLayoutManager(Drawing2Activity.this, 4);
-                    rv_list_gallary.setHasFixedSize(true);
-                    rv_list_gallary.setLayoutManager(lLayout);
-
-                    ImageView draw_circle = (ImageView) findViewById(R.id.draw_circle);
-                    draw_circle.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            CircleShapeView circleShapeView = new CircleShapeView(Drawing2Activity.this);
-
-                            canvas_frame.addView(circleShapeView);
-                        }
-                    });*/
-                   // bottom_sheet = true;
-               /* }else{
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                    bottom_sheet = false;
-                }*/
-                    /* if(!bottom_sheet)
-                {
-                    LinearLayout bottomSheet = (LinearLayout)findViewById(R.id.bottomSheetLayout);
-                    bottomSheet.setVisibility(View.VISIBLE);
-
-                    TabHost tabHost = (TabHost) bottomSheet.findViewById(R.id.tabHost);
-                    TabWidget tw = (TabWidget)tabHost.findViewById(android.R.id.tabs);
-                    for (int i = 0; i < tw.getChildCount(); ++i)
-                    {
-                        final View tabView = tw.getChildTabViewAt(i);
-                        final TextView tv = (TextView)tabView.findViewById(android.R.id.title);
-                        tv.setTypeface(null, Typeface.BOLD);
-                        tv.setTextColor(getResources().getColor(R.color.white));
-                    }
-                    tabHost.setup();
-
-                    TabHost.TabSpec spec1 = tabHost.newTabSpec("Basic Shapes");
-                    spec1.setContent(R.id.tab1_Units);
-                    spec1.setIndicator(" " + "Basic Shapes"
-                            + " ");
-
-
-                    TabHost.TabSpec spec2 = tabHost.newTabSpec("Accessories");
-                    spec2.setContent(R.id.tab2_Map);
-                    spec2.setIndicator("  " + "Accessories"
-                            + " ");
-
-
-                    tabHost.addTab(spec1);
-                    tabHost.addTab(spec2);
-
-                    RecyclerView rv_list_gallary;
-                    GridLayoutManager lLayout;
-                    ArrayList<mygallarylist> smartToolsList;
-                    MygallaryAdapter_Grid mygallaryAdapter;
-                    smartToolsList = new ArrayList<>();
-                    rv_list_gallary = (RecyclerView)findViewById(R.id.rv_listview_mygallary);
-                    rv_list_gallary.addItemDecoration(new MyGallaryITemDecor(Drawing2Activity.this));
-
-                    smartToolsList = prepareListData();
-                    mygallaryAdapter = new MygallaryAdapter_Grid(Drawing2Activity.this,smartToolsList);
-                    rv_list_gallary.setAdapter(mygallaryAdapter);
-
-                    mygallaryAdapter.setOnItemClickListener(new OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            Toast.makeText(Drawing2Activity.this,""+position,Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    lLayout = new GridLayoutManager(Drawing2Activity.this, 4);
-                    rv_list_gallary.setHasFixedSize(true);
-                    rv_list_gallary.setLayoutManager(lLayout);
-
-                    ImageView draw_circle = (ImageView) findViewById(R.id.draw_circle);
-                    draw_circle.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            CircleShapeView circleShapeView = new CircleShapeView(Drawing2Activity.this);
-
-                            canvas_frame.addView(circleShapeView);
-                        }
-                    });
-
-                    bottom_sheet = true;
-                }else{
-
-                    LinearLayout bottomSheet = (LinearLayout)findViewById(R.id.bottomSheetLayout);
-                    bottomSheet.setVisibility(View.INVISIBLE);
-                    bottom_sheet = false;
-                }*/
-            }
-        });
+//        shapes = (ImageView)findViewById(R.id.shapes);
+//        shapes.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                if(!bottom_sheet) {
+//                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+//                    TextView view_set_basicshapes = (TextView)findViewById(R.id.view_set_basicshapes);
+//                    view_set_basicshapes.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            LinearLayout View_Accessories = (LinearLayout)findViewById(R.id.View_Accessories);
+//                            View_Accessories.setVisibility(View.INVISIBLE);
+//                            LinearLayout View_BasicShapes = (LinearLayout)findViewById(R.id.View_BasicShapes);
+//                            View_BasicShapes.setVisibility(View.VISIBLE);
+//
+//                            ImageView draw_circle = (ImageView)findViewById(R.id.draw_circle);
+//                            draw_circle.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    canvas.setMode(CanvasView.Mode.DRAW);
+//                                    canvas.setDrawer(CanvasView.Drawer.CIRCLE);
+//                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+//                                    bottom_sheet = false;
+//                                }
+//                            });
+//
+//                            ImageView draw_square = (ImageView)findViewById(R.id.draw_square);
+//                            draw_square.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    canvas.setMode(CanvasView.Mode.DRAW);
+//                                    canvas.setDrawer(CanvasView.Drawer.RECTANGLE);
+//                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+//                                    bottom_sheet = false;
+//                                }
+//                            });
+//
+//
+//                            ImageView draw_triangle = (ImageView)findViewById(R.id.draw_triangle);
+//                            draw_triangle.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    canvas.setMode(CanvasView.Mode.DRAW);
+//                                    canvas.setDrawer(CanvasView.Drawer.TRIANGLE);
+//                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+//                                    bottom_sheet = false;
+//                                }
+//                            });
+//
+//                        }
+//                    });
+//                    TextView view_set_accessorries = (TextView)findViewById(R.id.view_set_accessorries);
+//                    view_set_accessorries.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            LinearLayout View_Accessories = (LinearLayout)findViewById(R.id.View_Accessories);
+//                            View_Accessories.setVisibility(View.VISIBLE);
+//                            LinearLayout View_BasicShapes = (LinearLayout)findViewById(R.id.View_BasicShapes);
+//                            View_BasicShapes.setVisibility(View.INVISIBLE);
+//                        }
+//                    });
+//                    RecyclerView rv_list_gallary;
+//                    GridLayoutManager lLayout;
+//                    ArrayList<mygallarylist> smartToolsList;
+//                    MygallaryAdapter_Grid mygallaryAdapter;
+//                    smartToolsList = new ArrayList<>();
+//                    rv_list_gallary = (RecyclerView)findViewById(R.id.rv_listview_mygallary);
+//                    rv_list_gallary.addItemDecoration(new MyGallaryITemDecor(Drawing2Activity.this));
+//
+//                    smartToolsList = prepareListData();
+//                    mygallaryAdapter = new MygallaryAdapter_Grid(Drawing2Activity.this,smartToolsList);
+//                    rv_list_gallary.setAdapter(mygallaryAdapter);
+//
+//                    mygallaryAdapter.setOnItemClickListener(new OnItemClickListener() {
+//                        @Override
+//                        public void onItemClick(View view, int position) {
+//                            Toast.makeText(Drawing2Activity.this,""+position,Toast.LENGTH_LONG).show();
+//                        }
+//                    });
+//                    lLayout = new GridLayoutManager(Drawing2Activity.this, 4);
+//                    rv_list_gallary.setHasFixedSize(true);
+//                    rv_list_gallary.setLayoutManager(lLayout);
+//                    /*TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
+//                    TabWidget tw = (TabWidget)tabHost.findViewById(android.R.id.tabs);
+//                    for (int i = 0; i < tw.getChildCount(); i++)
+//                    {
+//                        final View tabView = tw.getChildTabViewAt(i);
+//                        final TextView tv = (TextView)tabView.findViewById(android.R.id.title);
+//                        tv.setTypeface(null, Typeface.BOLD);
+//                        tv.setTextColor(getResources().getColor(R.color.white));
+//                    }
+//                    tabHost.setup();
+//
+//                    TabHost.TabSpec spec1 = tabHost.newTabSpec("Basic Shapes");
+//                    spec1.setContent(R.id.tab1_Units);
+//                    spec1.setIndicator(" " + "Basic Shapes"
+//                            + " ");
+//
+//
+//                    TabHost.TabSpec spec2 = tabHost.newTabSpec("Accessories");
+//                    spec2.setContent(R.id.tab2_Map);
+//                    spec2.setIndicator("  " + "Accessories"
+//                            + " ");
+//
+//
+//                    tabHost.addTab(spec1);
+//                    tabHost.addTab(spec2);
+//
+//                    RecyclerView rv_list_gallary;
+//                    GridLayoutManager lLayout;
+//                    ArrayList<mygallarylist> smartToolsList;
+//                    MygallaryAdapter_Grid mygallaryAdapter;
+//                    smartToolsList = new ArrayList<>();
+//                    rv_list_gallary = (RecyclerView)findViewById(R.id.rv_listview_mygallary);
+//                    rv_list_gallary.addItemDecoration(new MyGallaryITemDecor(Drawing2Activity.this));
+//
+//                    smartToolsList = prepareListData();
+//                    mygallaryAdapter = new MygallaryAdapter_Grid(Drawing2Activity.this,smartToolsList);
+//                    rv_list_gallary.setAdapter(mygallaryAdapter);
+//
+//                    mygallaryAdapter.setOnItemClickListener(new OnItemClickListener() {
+//                        @Override
+//                        public void onItemClick(View view, int position) {
+//                            Toast.makeText(Drawing2Activity.this,""+position,Toast.LENGTH_LONG).show();
+//                        }
+//                    });
+//                    lLayout = new GridLayoutManager(Drawing2Activity.this, 4);
+//                    rv_list_gallary.setHasFixedSize(true);
+//                    rv_list_gallary.setLayoutManager(lLayout);
+//
+//                    ImageView draw_circle = (ImageView) findViewById(R.id.draw_circle);
+//                    draw_circle.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            CircleShapeView circleShapeView = new CircleShapeView(Drawing2Activity.this);
+//
+//                            canvas_frame.addView(circleShapeView);
+//                        }
+//                    });*/
+//                    // bottom_sheet = true;
+//                }else{
+//                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+//                    bottom_sheet = false;
+//                }
+//
+//            }
+//        });
 
         text_write = (ImageView)findViewById(R.id.text_write);
         text_write.setOnClickListener(new View.OnClickListener() {
@@ -434,9 +407,9 @@ public class Drawing2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addImageDialog.dismiss();
-               // startCameraOrGallery("gallery");
+                // startCameraOrGallery("gallery");
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(pickPhoto , 1);//one can be replaced with any action code
 
             }
@@ -516,11 +489,53 @@ public class Drawing2Activity extends AppCompatActivity {
                 }
                 break;
             case 3:
-                if(imageReturnedIntent.hasExtra("MESSAGE"))
+                if(imageReturnedIntent.hasExtra("Title"))
                 {
                     Bundle bundle = imageReturnedIntent.getExtras();
-                    String imageName = bundle.getString("MESSAGE");
-                    String FullPathimageName = bundle.getString("FullPath");
+                    if(bundle.isEmpty())
+                    {
+
+                    }else {
+                        String imageTitle = bundle.getString("Title");
+                        String Description = bundle.getString("Description");
+                        String FullPath = imageName;//bundle.getString("FullPath");
+
+
+                        try {
+                            ApiInterface apiService =
+                                    ApiClient.getClient().create(ApiInterface.class);
+                           /* *//*Login task = new Login("fazila", "fazila", "123444");*//*
+                            Gson gson = new Gson();
+                            gson.toJson(task);*/
+
+
+
+                            Call<SaveToGalleryResponse> call = apiService.saveImageToServer(encodedImage,FullPath,Description,imageTitle,"1");
+
+                            call.enqueue(new Callback<SaveToGalleryResponse>() {
+                                @Override
+                                public void onResponse(Call<SaveToGalleryResponse> call, Response<SaveToGalleryResponse> response) {
+                                    SaveToGalleryResponse statusCode = response.body();//code();
+                                    if(statusCode.getStatus().contentEquals("success"))
+                                    {
+                                        //startActivity(new Intent(LoginActivity.this, StartActivity.class));
+                                    }else{
+                                        Toast.makeText(Drawing2Activity.this,"UserName/Password Incorrect",Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    //recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
+                                }
+
+                                @Override
+                                public void onFailure(Call<SaveToGalleryResponse> call, Throwable t) {
+                                    // Log error here since request failed
+                                    Log.e("", t.toString());
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.getLocalizedMessage();
+                        }
+                    }
                     /*String[] MainName =FullPathimageName.split("\\.");
                     String image = MainName[0]+"_"+imageName;
                     //byte[] bytes = canvas.getBitmapAsByteArray(Bitmap.CompressFormat.PNG, 100);
@@ -549,15 +564,57 @@ public class Drawing2Activity extends AppCompatActivity {
                 break;
             case 4:
 
-                if(imageReturnedIntent.hasExtra("MESSAGE"))
+                if(imageReturnedIntent.hasExtra("Title"))
                 {
                     Bundle bundle = imageReturnedIntent.getExtras();
-                    String imageName = bundle.getString("MESSAGE");
-                    String FullPathimageName = bundle.getString("FullPath");
+                    if(bundle.isEmpty())
+                    {
+
+                    }else {
+                        String imageTitle = bundle.getString("Title");
+                        String Description = bundle.getString("Description");
+                        String FullPath = imageName;//bundle.getString("FullPath");
+
+
+                        try {
+                            ApiInterface apiService =
+                                    ApiClient.getClient().create(ApiInterface.class);
+                           /* *//*Login task = new Login("fazila", "fazila", "123444");*//*
+                            Gson gson = new Gson();
+                            gson.toJson(task);*/
+
+
+
+                            Call<SaveToGalleryResponse> call = apiService.saveImageToServer(encodedImage,FullPath,Description,imageTitle,"1");
+
+                            call.enqueue(new Callback<SaveToGalleryResponse>() {
+                                @Override
+                                public void onResponse(Call<SaveToGalleryResponse> call, Response<SaveToGalleryResponse> response) {
+                                    SaveToGalleryResponse statusCode = response.body();//code();
+                                    if(statusCode.getStatus().contentEquals("success"))
+                                    {
+                                        //startActivity(new Intent(LoginActivity.this, StartActivity.class));
+                                    }else{
+                                        Toast.makeText(Drawing2Activity.this,"UserName/Password Incorrect",Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    //recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
+                                }
+
+                                @Override
+                                public void onFailure(Call<SaveToGalleryResponse> call, Throwable t) {
+                                    // Log error here since request failed
+                                    Log.e("", t.toString());
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.getLocalizedMessage();
+                        }
+                    }
                     /*String[] MainName =FullPathimageName.split("\\.");
                     String image = MainName[0]+"_"+imageName;
                     //byte[] bytes = canvas.getBitmapAsByteArray(Bitmap.CompressFormat.PNG, 100);
-                    File file = new File(android.os.Environment.getExternalStorageDirectory()+"/","PiggyLand");
+                    File file = new File(android.os.Environment.getExternalStorageDirectory()+"/","PiggyLandShare");
                     File f = null;
                     if(!file.exists()) {
                         file.mkdirs();
@@ -579,47 +636,49 @@ public class Drawing2Activity extends AppCompatActivity {
                     }*/
                     finish();
                 }
-                break;
-        }
-    }
 
-   /* protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
-        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        switch(requestCode) {
-            case 0:
-                if(resultCode == RESULT_OK){
-                    // Uri selectedImage = imageReturnedIntent.getData();
-                    //try {
-                    selectedImagePath = getImagePath();
-                    //imgUser.setImageBitmap(decodeFile(selectedImagePath));
-                    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                    Bitmap bitmap = BitmapFactory.decodeFile(selectedImagePath,bmOptions);
-                    // Bitmap bitmap = null;//MediaStore.Images.Media.getBitmap(this.getContentResolver(),selectedImage);
-                    this.canvas.drawBitmap(bitmap);
-                    *//*} catch (IOException e) {
-                        e.printStackTrace();
+               /* if(imageReturnedIntent.hasExtra("Title"))
+                {
+
+                    Bundle bundle = imageReturnedIntent.getExtras();
+                    if(bundle.isEmpty())
+                    {
+
+                    }else {
+                        String imageName = bundle.getString("Title");
+                        String Description = bundle.getString("Description");
+                        String FullPath = bundle.getString("FullPath");
+                    }
+                    *//*String[] MainName =FullPathimageName.split("\\.");
+                    String image = MainName[0]+"_"+imageName;
+                    //byte[] bytes = canvas.getBitmapAsByteArray(Bitmap.CompressFormat.PNG, 100);
+                    File file = new File(android.os.Environment.getExternalStorageDirectory()+"/","PiggyLand");
+                    File f = null;
+                    if(!file.exists()) {
+                        file.mkdirs();
+                        f = new File(MainName[0], image + ".jpg");
+                    }else{
+                        f = new File(MainName[0], image + ".jpg");
                     }*//*
-                    //imageview.setImageURI(selectedImage);
-                }
-
-                break;
-            case 1:
-                if(resultCode == RESULT_OK){
-                    Uri selectedImage = imageReturnedIntent.getData();
-                    //imageview.setImageURI(selectedImage);
-                    Bitmap bitmap = null;
+                    *//*FileOutputStream fos = null;
                     try {
-                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),selectedImage);
-                        this.canvas.drawBitmap(bitmap);
+                        fos = new FileOutputStream(f);
+                        fos.write(bytes);
+                        fos.flush();
+                        fos.close();
+                        Toast.makeText(Drawing2Activity.this,"File Saved",Toast.LENGTH_SHORT).show();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }
-
-                }
+                    }*//*
+                    finish();
+                }*/
                 break;
         }
     }
-*/
+
+
 
     private ArrayList<mygallarylist> prepareListData() {
 
@@ -671,7 +730,8 @@ public class Drawing2Activity extends AppCompatActivity {
     }
 
 
-    String imageMain;
+    String imageMain,imageName;
+    String encodedImage,encodedImage2;
     public void showAttachmentSave() {
         final Dialog addImageDialog;
         // popup..
@@ -712,14 +772,17 @@ public class Drawing2Activity extends AppCompatActivity {
                 bmMain.compress(Bitmap.CompressFormat.PNG, 100, streambmMain);
 
                 byte[] bytesain = streambmMain.toByteArray();
+                encodedImage = Base64.encodeToString(bytesain, Base64.DEFAULT);
                 // byte[] bytes = canvas.getBitmapAsByteArray(Bitmap.CompressFormat.PNG, 100);
-                File file = new File(Environment.getExternalStorageDirectory()+"/","PiggyLandShare");
+                File file = new File(android.os.Environment.getExternalStorageDirectory()+"/","PiggyLandShare");
                 File f = null;
                 if(!file.exists()) {
                     file.mkdirs();
                     f = new File(file + "/", imageMain + ".jpg");
+                    imageName = f.getName();
                 }else{
                     f = new File(file + "/", imageMain + ".jpg");
+                    imageName = f.getName();
                 }
                 FileOutputStream fos = null;
                 try {
@@ -769,8 +832,8 @@ public class Drawing2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addImageDialog.dismiss();
-               // Intent i = new Intent(Drawing2Activity.this, SaveDrawingActivity.class);
-               // startActivityForResult(i, 4);
+                // Intent i = new Intent(Drawing2Activity.this, SaveDrawingActivity.class);
+                // startActivityForResult(i, 4);
                 imageMain = Long.toString(System.currentTimeMillis());
                 canvas_frame.setDrawingCacheEnabled(true);
                 canvas_frame.buildDrawingCache();
@@ -786,10 +849,12 @@ public class Drawing2Activity extends AppCompatActivity {
                 bmMain.compress(Bitmap.CompressFormat.PNG, 100, streambmMain);
 
                 byte[] bytesain = streambmMain.toByteArray();
+
+                encodedImage2 = Base64.encodeToString(bytesain, Base64.DEFAULT);
                 //byte[] c = new byte[bytes.length + bytess.length];
-               // System.arraycopy(bytes,0,c,0,bytes.length);
+                // System.arraycopy(bytes,0,c,0,bytes.length);
                 //System.arraycopy(bytess,0,c,bytes.length,bytess.length);
-               // List<Byte> list = new ArrayList<Byte>(Arrays.<Byte>asList(bytess));
+                // List<Byte> list = new ArrayList<Byte>(Arrays.<Byte>asList(bytess));
                 //list.addAll(Arrays.<Byte>asList(bytes));
 
                 byte[] combined = ArrayUtils.addAll(bytess,bytes);
@@ -803,21 +868,22 @@ public class Drawing2Activity extends AppCompatActivity {
                     combined[i] = i < one.length ? one[i] : two[i - one.length];
                 }*/
 
-                File file = new File(Environment.getExternalStorageDirectory()+"/","PiggyLand");
+                File file = new File(android.os.Environment.getExternalStorageDirectory()+"/","PiggyLand");
                 File f = null;
                 if(!file.exists()) {
                     file.mkdirs();
                     f = new File(file + "/", imageMain + ".jpg");
-
+                    imageName = f.getName();
                 }else{
                     f = new File(file + "/", imageMain + ".jpg");
+                    imageName = f.getName();
                     main_frame.destroyDrawingCache();
                 }
                 FileOutputStream fos = null;
                 try {
                     fos = new FileOutputStream(f);
                     fos.write(bytesain);
-                   // fos.write(bytes);
+                    // fos.write(bytes);
                     fos.flush();
                     fos.close();
 
@@ -831,7 +897,7 @@ public class Drawing2Activity extends AppCompatActivity {
                 i.putExtra("fileName",f.getAbsolutePath());
                 i.putExtra("fileDir","saveToGallery");
                 startActivityForResult(i, 4);
-              //  finish();
+                //  finish();
             }
         });
 

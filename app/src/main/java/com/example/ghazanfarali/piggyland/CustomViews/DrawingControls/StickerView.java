@@ -23,7 +23,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.example.ghazanfarali.piggyland.R;
-import com.example.ghazanfarali.piggyland.Utils.AutoResizeTextView;
 
 
 public abstract class StickerView extends FrameLayout {

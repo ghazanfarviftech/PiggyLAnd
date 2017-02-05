@@ -12,8 +12,8 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorControlNormal">@android:color/white</item>
-        <item name="colorControlActivated">#D093A2</item>
-        <item name="colorControlHighlight">#D093A2</item>
+        <item name="colorControlActivated">#bfdda0</item>
+        <item name="colorControlHighlight">#bfdda0</item>
 
     </style>
 

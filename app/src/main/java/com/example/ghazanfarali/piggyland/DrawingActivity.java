@@ -1,3 +1,4 @@
+/*
 package com.example.ghazanfarali.piggyland;
 
 import android.app.Dialog;
@@ -247,9 +248,11 @@ public class DrawingActivity extends AppCompatActivity {
                     Bitmap bitmap = BitmapFactory.decodeFile(selectedImagePath,bmOptions);
                        // Bitmap bitmap = null;//MediaStore.Images.Media.getBitmap(this.getContentResolver(),selectedImage);
                         this.canvas.drawBitmap(bitmap);
-                    /*} catch (IOException e) {
+                    */
+/*} catch (IOException e) {
                         e.printStackTrace();
-                    }*/
+                    }*//*
+
                     //imageview.setImageURI(selectedImage);
                 }
 
@@ -271,3 +274,4 @@ public class DrawingActivity extends AppCompatActivity {
         }
     }
 }
+*/

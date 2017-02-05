@@ -1,144 +1,129 @@
 package com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.ghazanfarali.piggyland.Photo;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.MyGallery;
-import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.beans.mygallarylist;
+import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.MasterFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Amir.jehangir on 1/11/2017.
  */
-public class MygallaryAdapter extends RecyclerView.Adapter<MygallaryAdapter.ViewHolder>{
+public class MygallaryAdapter  extends RecyclerView.Adapter<MygallaryAdapter.RecyclerViewHolder>{
+    ArrayList<Photo> adapter_list = new ArrayList<Photo>();
+    MyGallery mainActivity;
+    MasterFragment ctx;
 
-    private List<mygallarylist> smartToolsList;
-    com.example.ghazanfarali.piggyland.Controls.OnItemClickListener onItemClickListener;
-    private MyGallery activity;
+    public MygallaryAdapter(ArrayList<Photo> adapter_list, MasterFragment ctx) {
+        this.adapter_list = adapter_list;
+        this.ctx = ctx;
 
-    public MygallaryAdapter(MyGallery dockActivity, ArrayList<mygallarylist> sections) {
+        mainActivity = (MyGallery) ctx;
 
-        Log.e("Adp",sections.size()+" ");
+    }
+
+    @Override
+    public MygallaryAdapter.RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_layout, parent, false);
+        MygallaryAdapter.RecyclerViewHolder recyclerViewHolder = new MygallaryAdapter.RecyclerViewHolder(view, mainActivity);
+        return recyclerViewHolder;
+    }
 
 
 
-        this.smartToolsList = sections;
+    @Override
+    public void onBindViewHolder(RecyclerViewHolder holder, int position) {
+//        Glide
+//                .with( mainActivity ) // safer!
+//                .load( adapter_list.get(position).getImageUrl().getAbsolutePath() )
+//                .asBitmap()
+//                .into( holder.thumbnail );
+        holder.thumbnail.setImageBitmap(getBit(adapter_list.get(position).getImageUrl().getAbsolutePath()));
+        holder.title.setText(adapter_list.get(position).getDescription());
+        if (!mainActivity.is_in_action_mode) {
+            // holder.checkBox.setVisibility(View.GONE);
+            holder.ly_share_edit.setVisibility(View.VISIBLE);
+            holder.ly_select.setVisibility(View.GONE);
+            holder.checkBox.setChecked(false);
+        } else {
+            //  holder.checkBox.setVisibility(View.VISIBLE);
 
-        for(int i=0;i<smartToolsList.size();i++)
-        {
-            Log.e("adap Title",smartToolsList.get(i).getmygallaryTitle()+" ");
+
+            holder.ly_share_edit.setVisibility(View.GONE);
+            holder.ly_select.setVisibility(View.VISIBLE);
         }
-
-        this.activity = dockActivity;
-
-
-
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
-        final View sView = mInflater.inflate(R.layout.gallery_list_item, parent, false);
-
-        return new ViewHolder(sView);
-    }
-
-    @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-
-
-//        if (eLibraryList.get(position).geteServicesImageURL() != null && !ValidationUtils.testEmpty(eLibraryList.get(position).geteServicesImageURL()))
-//            ImageLoader.getInstance().displayImage(eLibraryList.get(position).geteServicesImageURL(), holder.image);
-
-        Log.e("Title smart",smartToolsList.get(position).getmygallaryTitle()+ " ");
-
-        holder.image.setImageResource(smartToolsList.get(position).getmygallaryImageURL());
-        holder.name.setText(String.valueOf(smartToolsList.get(position).getmygallaryTitle()));
-//        if (basePreferenceHelper.getApplicationLanguage().equalsIgnoreCase(CommonConstants.LANG_ENGLISH)) {
-//            holder.name.setText(smartToolsList.get(position).getsmartToolsTitle());
-//        } else {
-//            holder.name.setText(smartToolsList.get(position).getsmartToolsTitle());
-//        }
-//
-//        if (colorDecider(position) == 1 || colorDecider(position) == 2) {
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                holder.line.setImageResource(R.color.colorblack);
-//            } else {
-//                holder.line.setBackgroundResource(R.color.colorblack);
-//            }
-//        }
-
-//        if (ValidationUtils.testEmpty(smartToolsList.get(position).getmygallaryTitle())) {
-//            holder.name.setVisibility(View.GONE);
-//            holder.image.setVisibility(View.GONE);
-////            holder.line.setVisibility(View.GONE);
-//        } else {
-//            holder.name.setVisibility(View.VISIBLE);
-//            holder.image.setVisibility(View.VISIBLE);
-////            holder.line.setVisibility(View.VISIBLE);
-//        }
-
-
-    }
-
-    int colorDecider(int i) {
-        int colorDecider = i % 4;
-        return colorDecider;
     }
 
 
+    private Bitmap getBit(String getpath){
+
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        Bitmap bitmap = BitmapFactory.decodeFile(getpath,bmOptions);
+        //   bitmap = Bitmap.createScaledBitmap(bitmap,parent.getWidth(),parent.getHeight(),true);
+        return bitmap;
+    }
 
     @Override
     public int getItemCount() {
-        //  Log.e("Count size",smartToolsList.size()+" ");
-        return smartToolsList.size();
+        return adapter_list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView name;
-        public ImageView image;
-        public ImageView line;
-        public RelativeLayout container;
-       public ImageView list_edit;
-       public ImageView list_share;
+    public static class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public ViewHolder(View view) {
-            super(view);
-            name = (TextView) view.findViewById(R.id.title);
-            image = (ImageView) view.findViewById(R.id.thumbnail);
-            list_edit = (ImageView)view.findViewById(R.id.list_edit);
-            list_share = (ImageView)view.findViewById(R.id.list_share);
-            //line = (ImageView) view.findViewById(R.id.line);
-          //  container = (RelativeLayout) view.findViewById(R.id.container);
-            view.setOnClickListener(this);
+        TextView textView;
+        CheckBox checkBox;
+        MyGallery mainActivity;
+        // cardview for long click
+        CardView cardView;
+        LinearLayout ly_share_edit, ly_select;
+        TextView title;
+        ImageView list_edit, list_share,thumbnail;
+
+        public RecyclerViewHolder(View itemview, MyGallery mainActivity) {
+            // mainActivity is used for handling the click events of the checkboxes
+            super(itemview);
+            textView = (TextView) itemview.findViewById(R.id.textView);
+            checkBox = (CheckBox) itemview.findViewById(R.id.checkBox);
+
+            ly_share_edit = (LinearLayout)itemview.findViewById(R.id.ly_share_edit);
+            ly_select = (LinearLayout)itemview.findViewById(R.id.ly_select);
+            title =(TextView)itemview.findViewById(R.id.title);
+            list_edit = (ImageView)itemview.findViewById(R.id.list_edit);
+            list_share = (ImageView)itemview.findViewById(R.id.list_share);
+            thumbnail = (ImageView)itemview.findViewById(R.id.thumbnail);
+
+
+            this.mainActivity = mainActivity;
+            cardView = (CardView) itemview.findViewById(R.id.card_view);
+            cardView.setOnLongClickListener(mainActivity);
+            checkBox.setOnClickListener((View.OnClickListener) this);
         }
-
 
         @Override
-        public void onClick(View view) {
-            if (onItemClickListener != null) {
-                onItemClickListener.onItemClick(view, getPosition());
-            }
+        public void onClick(View v) {
+            mainActivity.prepareselection(v, getAdapterPosition());
         }
     }
 
-    public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
-    }
-
-    public void setOnItemClickListener(final com.example.ghazanfarali.piggyland.Controls.OnItemClickListener mItemClickListener) {
-        this.onItemClickListener = mItemClickListener;
+    public void updateAdapter(ArrayList<Photo> list) {
+        for (Photo contact : list) {
+            adapter_list.remove(contact);
+        }
+        notifyDataSetChanged();
     }
 }
 

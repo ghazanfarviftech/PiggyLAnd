@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class Photo implements Serializable {
     private String description = "";
     private File imageUrl;
-
+    private boolean smartToolsCheckbox;
 
     public Photo(){}
 
@@ -37,5 +37,13 @@ public class Photo implements Serializable {
 
     public void setImageUrl(File imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public boolean getmygallarycheckbox() {
+        return smartToolsCheckbox;
+    }
+
+    public void setmygallarycheckbox(boolean smartToolsTitle) {
+        this.smartToolsCheckbox = smartToolsTitle;
     }
 }

@@ -1,69 +1,251 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_drawing"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/x5"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/x5"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.ghazanfarali.piggyland.Drawing2Activity">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context="com.example.ghazanfarali.piggyland.DrawingActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
-    <HorizontalScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/_45sdp"
+        android:background="#000000"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/_10sdp"
+        android:id="@+id/linearLayout2">
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_weight="1"
+            android:id="@+id/back"
+            android:src="@drawable/left_arrow"/>
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_weight="1"
+            android:id="@+id/undo"
+            android:src="@drawable/undo_button"/>
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_weight="1"
+            android:id="@+id/shapes"
+            android:src="@drawable/geometric"/>
+          <ImageView
+              android:layout_width="@dimen/_20sdp"
+              android:layout_height="@dimen/_20sdp"
+              android:layout_weight="1"
+              android:id="@+id/camera_pick"
+              android:src="@drawable/photo_camera"/>
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_weight="3"
+            android:paddingLeft="@dimen/_45sdp"
+            android:id="@+id/save"
+            android:src="@drawable/uploading_archive"/>
 
-        <LinearLayout
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_56sdp"
+        android:background="#000000"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/_20sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout">
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_weight="1"
+            android:id="@+id/draw"
+            android:src="@drawable/pencil"/>
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_weight="1"
+            android:id="@+id/colorPicker"
+            android:src="@drawable/paint_brush"/>
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_weight="1"
+            android:id="@+id/rubber"
+            android:src="@drawable/rubber"/>
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_weight="1"
+            android:id="@+id/text_write"
+            android:src="@drawable/text"/>
+        <!--   <ImageView
+               android:layout_width="@dimen/_20sdp"
+               android:layout_height="@dimen/_20sdp"
+               android:layout_weight="1"
+               android:src="@drawable/paint_brush"/>-->
+
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_frame"
+        android:layout_gravity="center_horizontal"
+        android:layout_above="@+id/linearLayout"
+        android:layout_below="@+id/linearLayout2">
+        <com.example.ghazanfarali.piggyland.CanvasView
+            android:id="@+id/canvas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_above="@+id/linearLayout"
+            android:layout_below="@+id/linearLayout2" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_above="@+id/linearLayout"
+            android:id="@+id/frame_main"
+            android:layout_below="@+id/linearLayout2">
+
+        </FrameLayout>
+
+    </FrameLayout>
+
+
+    <!--<LinearLayout
+        android:id="@+id/bottomSheetLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_300sdp"
+        android:background="#000000"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_draw"
-                android:text="draw"/>
+            android:text="SHAPES"
+            android:textColor="#ffffff"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textSize="@dimen/_20sdp"
+            />
+        <TabHost
+            android:id="@+id/tabHost"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_palette"
-                android:text="Palette"/>
+            >
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_load_image"
-                android:text="Load Image"/>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical" >
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_save"
-                android:text="Save"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_undo"
-                android:text="Undo"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_write_text"
-                android:text="Text"/>
-        </LinearLayout>
-    </HorizontalScrollView>
+                <HorizontalScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:fillViewport="true"
+                    android:scrollbars="horizontal" >
 
-    <com.example.ghazanfarali.piggyland.CanvasView
-        android:id="@+id/canvas"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal" />
-   <!-- <com.agsw.FabricView.FabricView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/faricView"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true" />-->
-</LinearLayout>
+                    <TabWidget
+                        android:id="@android:id/tabs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </HorizontalScrollView>
+
+                <FrameLayout
+                    android:id="@android:id/tabcontent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent" >
+
+                    <LinearLayout
+                        android:id="@+id/tab1_Units"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/_50sdp"
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Lines and Basic Shapes"
+                            android:textColor="#ffffff"
+                            android:textSize="@dimen/_15sdp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            >
+                            <ImageView
+                                android:layout_width="@dimen/_50sdp"
+                            android:layout_weight="1"
+                                android:layout_height="@dimen/_50sdp"
+                                android:id="@+id/draw_circle"
+                                android:src="@drawable/circle_myshape"/>
+
+                            <ImageView
+                                android:layout_width="@dimen/_50sdp"
+                                android:layout_weight="1"
+                                android:layout_height="@dimen/_50sdp"
+                                android:src="@drawable/square_myimage"/>
+
+                            <ImageView
+                                android:layout_width="@dimen/_50sdp"
+                                android:layout_height="@dimen/_50sdp"
+                                android:layout_weight="1"
+                                android:src="@drawable/triangle_myimage"/>
+                        </LinearLayout>
+
+
+
+
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/tab2_Map"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/_50sdp"
+                        >
+
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_listview_mygallary"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/gray_home_dashboard_divider"
+                            android:clickable="true"
+                            android:scrollbarStyle="insideOverlay"
+                            android:scrollbars="none" />
+
+
+                    </RelativeLayout>
+                </FrameLayout>
+            </LinearLayout>
+
+        </TabHost>
+
+
+    </LinearLayout>-->
+</RelativeLayout>
+    <include layout="@layout/content_bottom_sheet" />
+
+</android.support.design.widget.CoordinatorLayout>

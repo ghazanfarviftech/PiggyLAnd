@@ -37,4 +37,15 @@
     <string name="label_image_delete_msg">Do you want to delete the attachment?</string>
     <string name="alert_button_cancel">Cancel</string>
 
+
+    <!-- nav drawer  -->
+    <string name="new_drawing">New Drawing</string>
+    <string name="gallery">Gallery</string>
+    <string name="order">order</string>
+    <string name="memebers">People In PiggyLand</string>
+    <string name="message">Message For Me</string>
+    <string name="profile">Profile</string>
+    <string name="Logout">Logout</string>
+
+
 </resources>

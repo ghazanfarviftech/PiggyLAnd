@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.ghazanfarali.piggyland.CustomViews.RoundedImageView;
 import com.example.ghazanfarali.piggyland.R;
-import com.example.ghazanfarali.piggyland.Views.Activities.Members.GetterSetter.Contact;
-import com.example.ghazanfarali.piggyland.Views.Activities.Members.RoundedImageView;
+import com.example.ghazanfarali.piggyland.Views.Fragments.PeopleInPiggyLand.Beans.Contact;
 import com.gvillani.pinnedlist.GroupListWrapper;
 import com.gvillani.pinnedlist.PinnedAdapter;
 import com.gvillani.pinnedlist.PinnedListLayout;

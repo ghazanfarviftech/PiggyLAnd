@@ -1,7 +1,10 @@
 package com.example.ghazanfarali.piggyland.Views.Activities.Login;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,10 +14,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.ghazanfarali.piggyland.EndPoint.ApiClient;
+import com.example.ghazanfarali.piggyland.EndPoint.ApiInterface;
+import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.LoginResponse;
+import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.Profile;
 import com.example.ghazanfarali.piggyland.MainActivity;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
+import com.example.ghazanfarali.piggyland.Views.Activities.SignUp.Views.SignUpActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -25,14 +34,16 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends MasterActivity implements
         View.OnClickListener, GoogleApiClient.ConnectionCallbacks,
@@ -42,7 +53,7 @@ public class LoginActivity extends MasterActivity implements
     private ProgressDialog mProgressDialog;
 
     private SignInButton btnSignIn;
-    private Button btnSignOut, btnRevokeAccess, btn_userlogin;
+    private Button btnSignOut, btnRevokeAccess, btn_userlogin,btn_signUp;
     private static final int RC_SIGN_IN = 007;
     private static final String TAG = MainActivity.class.getSimpleName();
     ImageView imgProfilePic;
@@ -78,21 +89,83 @@ public class LoginActivity extends MasterActivity implements
         tei_password = (TextInputEditText) findViewById(R.id.tei_password);
 
         btn_userlogin = (Button) findViewById(R.id.btn_userlogin);
-        btnSignIn = (SignInButton) findViewById(R.id.google_login_button);
-        btnSignOut = (Button) findViewById(R.id.btn_sign_out);
-        btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
-        imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
-        btnSignIn.setOnClickListener(this);
-        btnSignOut.setOnClickListener(this);
+      //  btnSignIn = (SignInButton) findViewById(R.id.google_login_button);
+//        btnSignOut = (Button) findViewById(R.id.btn_sign_out);
+//        btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
+//        imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
+        btn_signUp =  (Button) findViewById(R.id.btn_signUp);
+       // btnSignIn.setOnClickListener(this);
+      //  btnSignOut.setOnClickListener(this);
     }
 
 
     public void initListner() {
+
+        btn_signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+            }
+        });
+
+
+
+
         btn_userlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                if(tie_username.getText().length() > 0  && tei_password.getText().length() > 0){
+                    hideKeyBoard();
+                    try {
+                        ApiInterface apiService =
+                                ApiClient.getClient().create(ApiInterface.class);
+//                        Login task = new Login("fazila", "fazila", "123444");
+//                        Gson gson = new Gson();
+//                        gson.toJson(task);
+
+                        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+                        WifiInfo info = manager.getConnectionInfo();
+                        String address = info.getMacAddress();
+
+                       /* Call<LoginResponse> call = apiService.getLogin(
+                                "test@gmail.com","test","123444");*/
+                        Call<LoginResponse> call = apiService.getLogin(tie_username.getText().toString(),tei_password.getText().toString(),address);
+                        call.enqueue(new Callback<LoginResponse>() {
+                            @Override
+                            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                                LoginResponse statusCode = response.body();//code();
+                                if(statusCode.getStatus().contentEquals("success"))
+                                {
+                                    startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+                                    finish();
+                                }else{
+                                    Toast.makeText(LoginActivity.this,"UserName/Password Incorrect",Toast.LENGTH_SHORT).show();
+                                }
+                                Profile profile = response.body().getProfile();
+                                //recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
+                            }
+
+                            @Override
+                            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                                // Log error here since request failed
+                                Log.e(TAG, t.toString());
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.getLocalizedMessage();
+                    }
+                    //startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+
+                }else{
+                    Toast.makeText(LoginActivity.this,"Please Enter username & password",Toast.LENGTH_LONG).show();
+                }
+
+
+
                 // startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+              //  startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
 //                if (tie_username.getText().toString().contains("admin") || tei_password.getText().toString().contains("admin")) {
 //                    hideKeyBoard();
 //                    startActivity(new Intent(LoginActivity.this, Main2Activity.class));
@@ -130,19 +203,19 @@ public class LoginActivity extends MasterActivity implements
 
 
 // google login
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(LoginActivity.this.getResources().getString(R.string.server_client_id))
-                .requestEmail()
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                //  .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestIdToken(LoginActivity.this.getResources().getString(R.string.server_client_id))
+//                .requestEmail()
+//                .build();
+//
+//        mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                //  .enableAutoManage(this, this)
+//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+//                .build();
 
         // Customizing G+ button
-        btnSignIn.setSize(SignInButton.SIZE_STANDARD);
-        btnSignIn.setScopes(gso.getScopeArray());
+     //   btnSignIn.setSize(SignInButton.SIZE_STANDARD);
+       // btnSignIn.setScopes(gso.getScopeArray());
 
     }
 
@@ -151,13 +224,13 @@ public class LoginActivity extends MasterActivity implements
         int id = v.getId();
 
         switch (id) {
-            case R.id.google_login_button:
-                signIn();
-                break;
+//            case R.id.google_login_button:
+//                signIn();
+//                break;
 
-            case R.id.btn_sign_out:
-                signOut();
-                break;
+//            case R.id.btn_sign_out:
+//                signOut();
+//                break;
 
           /*  case R.id.btn_revoke_access:
                 revokeAccess();
@@ -180,26 +253,26 @@ public class LoginActivity extends MasterActivity implements
     public void onStart() {
         super.onStart();
 
-        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
-        if (opr.isDone()) {
-            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-            // and the GoogleSignInResult will be available instantly.
-            Log.d(TAG, "Got cached sign-in");
-            GoogleSignInResult result = opr.get();
-            handleSignInResult(result);
-        } else {
-            // If the user has not previously signed in on this device or the sign-in has expired,
-            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-            // single sign-on will occur in this branch.
-            // showProgressDialog();
-            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                @Override
-                public void onResult(GoogleSignInResult googleSignInResult) {
-                    // hideProgressDialog();
-                    handleSignInResult(googleSignInResult);
-                }
-            });
-        }
+//        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+//        if (opr.isDone()) {
+//            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+//            // and the GoogleSignInResult will be available instantly.
+//            Log.d(TAG, "Got cached sign-in");
+//            GoogleSignInResult result = opr.get();
+//            handleSignInResult(result);
+//        } else {
+//            // If the user has not previously signed in on this device or the sign-in has expired,
+//            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
+//            // single sign-on will occur in this branch.
+//            // showProgressDialog();
+//            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+//                @Override
+//                public void onResult(GoogleSignInResult googleSignInResult) {
+//                    // hideProgressDialog();
+//                    handleSignInResult(googleSignInResult);
+//                }
+//            });
+//        }
     }
 
     @Override

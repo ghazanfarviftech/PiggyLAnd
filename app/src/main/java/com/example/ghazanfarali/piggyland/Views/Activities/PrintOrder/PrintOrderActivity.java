@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ghazanfarali.piggyland.Controls.OnItemClickListener;
+import com.example.ghazanfarali.piggyland.CustomViews.CustomEditText;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter.MyGallaryITemDecor;
@@ -114,14 +115,15 @@ public class PrintOrderActivity extends MasterActivity implements OnItemClickLis
         if(item.getItemId()==R.id.it_send_email)
         {
             Toast.makeText(this,"send",Toast.LENGTH_LONG).show();
+            CustomEditText ed_subject = (CustomEditText)findViewById(R.id.ed_subject);
 
             Intent emailIntent;
-            emailIntent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
-            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] { "amirjehangir007@gmail.com" });
+            emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "print@piggyland.co.kr" });
             // emailIntent.setType("application/zip");
-            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "mydata");
-            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-                    "Images attach...");
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, ed_subject.getText().toString());
+            emailIntent.putExtra(Intent.EXTRA_TEXT,
+                    ed_descriptiveText.getText().toString());
             ArrayList<Uri> uris = new ArrayList<Uri>();
             for (String  filepath: arrlistImages) {
                 File file = new File(filepath);
@@ -131,11 +133,33 @@ public class PrintOrderActivity extends MasterActivity implements OnItemClickLis
             emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
             emailIntent.setType("text/html");
             try {
-              //  CommonMethods.openGmailAppIntent(this, emailIntent);
+                //  CommonMethods.openGmailAppIntent(this, emailIntent);
                 openGmailAppIntent(this, emailIntent);
             } catch (Exception e) {
 
             }
+
+//            Intent emailIntent;
+//            emailIntent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
+//            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] { "amirjehangir007@gmail.com" });
+//            // emailIntent.setType("application/zip");
+//            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "mydata");
+//            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+//                    "Images attach...");
+//            ArrayList<Uri> uris = new ArrayList<Uri>();
+//            for (String  filepath: arrlistImages) {
+//                File file = new File(filepath);
+//                Uri csvURI = Uri.fromFile(file);
+//                uris.add(csvURI);
+//            }
+//            emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+//            emailIntent.setType("text/html");
+//            try {
+//              //  CommonMethods.openGmailAppIntent(this, emailIntent);
+//                openGmailAppIntent(this, emailIntent);
+//            } catch (Exception e) {
+//
+//            }
 
         }
         return true;
@@ -150,6 +174,7 @@ public class PrintOrderActivity extends MasterActivity implements OnItemClickLis
 
         }
     }
+
 
 
     public static void openGmailAppIntent(Context context, Intent intent) {

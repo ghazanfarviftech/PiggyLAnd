@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.Views.MyGalleryMultiSelect;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.beans.MyGallaryMultiSelectITems;
@@ -43,7 +44,12 @@ public class MyGallaryMultiSelectAdapter extends RecyclerView.Adapter<MyGallaryM
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        holder.thumbnail.setImageBitmap(getBit(adapter_list.get(position).getmygallaryImageURL()));
+        Glide
+                .with( mainActivity ) // safer!
+                .load( adapter_list.get(position).getmygallaryImageURL() )
+                .asBitmap()
+                .into( holder.thumbnail );
+       // holder.thumbnail.setImageBitmap(getBit(adapter_list.get(position).getmygallaryImageURL()));
         holder.title.setText(adapter_list.get(position).getmygallaryTitle());
         if (!mainActivity.is_in_action_mode) {
             // holder.checkBox.setVisibility(View.GONE);

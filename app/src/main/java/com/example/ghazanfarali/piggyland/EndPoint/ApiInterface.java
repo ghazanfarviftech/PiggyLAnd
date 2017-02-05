@@ -5,8 +5,8 @@ package com.example.ghazanfarali.piggyland.EndPoint;
  */
 
 
-import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.GetterSetter.SaveToGalleryResponse;
-import com.example.ghazanfarali.piggyland.Views.Activities.Login.GetterSettter.LoginResponse;
+import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.LoginResponse;
+import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.SaveToGalleryResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;

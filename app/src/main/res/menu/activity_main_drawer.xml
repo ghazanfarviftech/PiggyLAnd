@@ -1,33 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/menu_bottom1"
+        android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_action_edit"
-            android:title="New Drawing" />
+            android:id="@+id/new_drawing"
+            android:icon="@drawable/new_file"
+            android:title="@string/new_drawing" />
+
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_action_view_as_grid"
-            android:title="My Gallery" />
+            android:id="@+id/gallery"
+            android:icon="@drawable/gallery"
+            android:title="@string/gallery" />
+
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_action_upload"
-            android:title="Order to print" />
+            android:id="@+id/order"
+            android:icon="@drawable/icon"
+            android:title="@string/order" />
+
 
     </group>
 
-    <!--<item android:title="Communicate">-->
-        <!--<menu>-->
-            <!--<item-->
-                <!--android:id="@+id/nav_share"-->
-                <!--android:icon="@drawable/ic_menu_share"-->
-                <!--android:title="Share" />-->
-            <!--<item-->
-                <!--android:id="@+id/nav_send"-->
-                <!--android:icon="@drawable/ic_menu_send"-->
-                <!--android:title="Send" />-->
-        <!--</menu>-->
-    <!--</item>-->
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/memebers"
+            android:icon="@drawable/ic_action_person"
+            android:title="@string/memebers" />
+
+        <item
+            android:id="@+id/message"
+            android:icon="@drawable/ic_action_read"
+            android:title="@string/message" />
+        <item
+            android:id="@+id/profile"
+            android:icon="@drawable/usersprofile"
+            android:title="@string/profile" />
+
+        <item
+            android:id="@+id/Logout"
+
+            android:title="@string/Logout" />
+    </group>
 
 </menu>

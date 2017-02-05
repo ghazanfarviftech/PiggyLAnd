@@ -3,8 +3,6 @@ package com.example.ghazanfarali.piggyland.Views.Activities.Drawing.adapters;
 /**
  * Created by Ghazanfar A on 12/27/2016.
  */
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,6 +12,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.example.ghazanfarali.piggyland.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CanvasBrushDrawing extends View {

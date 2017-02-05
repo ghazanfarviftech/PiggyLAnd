@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_alignParentTop="true"
     android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorPrimary"
     android:layoutDirection="ltr">
 
     <RelativeLayout
         android:id="@+id/backLayout"
-        android:layout_width="@dimen/x70"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
 
@@ -27,6 +28,20 @@
             android:background="@drawable/ic_menu_1"
             android:backgroundTint="@color/colorwhite"
             />
+
+        <ImageView
+            android:id="@+id/nav_logo_img"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:visibility="gone"
+            android:layout_alignParentLeft="true"
+            android:layout_toRightOf="@+id/btn_menuimg"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/_50sdp"
+            android:background="@drawable/piggyland_logo"
+
+            />
+
     </RelativeLayout>
 
     <com.example.ghazanfarali.piggyland.CustomViews.CustomTextView
@@ -53,10 +68,12 @@
             android:id="@+id/btn_createnew"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:visibility="gone"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:layout_marginRight="15dp"
-            android:background="@drawable/ic_menu_1"
+            android:background="@drawable/ic_action_edit"
+            android:drawableTint="@color/colorwhite"
             android:backgroundTint="@android:color/white"
             />
     </RelativeLayout>

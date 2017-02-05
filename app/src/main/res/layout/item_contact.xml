@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="6dp">
-    <com.example.ghazanfarali.piggyland.Views.Activities.Members.RoundedImageView
+    <com.example.ghazanfarali.piggyland.CustomViews.RoundedImageView
         android:id="@+id/photo"
         android:layout_width="56dp"
         android:layout_height="56dp"/>

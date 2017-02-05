@@ -6,7 +6,7 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".Views.Activities.Login.LoginActivity">
 
     <include layout="@layout/toolbar_layout_sendemail" />
 
