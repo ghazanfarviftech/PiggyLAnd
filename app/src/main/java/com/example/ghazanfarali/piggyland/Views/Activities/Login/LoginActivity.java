@@ -1,4 +1,4 @@
-package com.example.ghazanfarali.piggyland;
+package com.example.ghazanfarali.piggyland.Views.Activities.Login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.ghazanfarali.piggyland.MainActivity;
+import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity;
 import com.facebook.CallbackManager;
@@ -90,7 +92,7 @@ public class LoginActivity extends MasterActivity implements
             @Override
             public void onClick(View v) {
                 // startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                startActivity(new Intent(LoginActivity.this, Main2Activity.class));
+                startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
 //                if (tie_username.getText().toString().contains("admin") || tei_password.getText().toString().contains("admin")) {
 //                    hideKeyBoard();
 //                    startActivity(new Intent(LoginActivity.this, Main2Activity.class));
