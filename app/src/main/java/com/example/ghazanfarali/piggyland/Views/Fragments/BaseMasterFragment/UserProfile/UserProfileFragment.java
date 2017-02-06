@@ -26,7 +26,7 @@ public class UserProfileFragment extends MasterFragment {
         if (view == null) {
             view = inflater.inflate(R.layout.userprofilefragment, container, false);
             initUI();
-            loadingAnimation();
+            //loadingAnimation();
 //            startService();
         } else {
             if (view != null)

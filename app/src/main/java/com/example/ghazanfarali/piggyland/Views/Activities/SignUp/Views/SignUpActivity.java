@@ -40,9 +40,9 @@ public class SignUpActivity extends AppCompatActivity {
         tei_password= (TextInputEditText)findViewById(R.id.tei_password);
 
         ed_email = (TextInputLayout) findViewById(R.id.ed_email);
-        //ed_contact = (TextInputLayout) findViewById(R.id.ed_contact);
+        ed_contact = (TextInputLayout) findViewById(R.id.ed_password_confrm);
         tei_email= (TextInputEditText)findViewById(R.id.tei_email);
-       // tei_contact= (TextInputEditText)findViewById(R.id.tei_contact);
+        tei_contact= (TextInputEditText)findViewById(R.id.tei_password_cnfrm);
 
         btn_createaccount = (Button)findViewById(R.id.btn_createAccount);
         btn_createaccount.setOnClickListener(new View.OnClickListener() {
@@ -50,46 +50,54 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(tei_email.getText().length() > 0  && tei_password.getText().length() > 0)
                 {
-                    hideKeyBoard();
-                    try {
-                        ApiInterface apiService =
-                                ApiClient.getClient().create(ApiInterface.class);
+                    String confrm = tei_contact.getText().toString();
+                    String password = tei_password.getText().toString();
+                    if(confrm.contentEquals(password))
+                    {
+                        hideKeyBoard();
+                        try {
+                            ApiInterface apiService =
+                                    ApiClient.getClient().create(ApiInterface.class);
 //                        Login task = new Login("fazila", "fazila", "123444");
 //                        Gson gson = new Gson();
 //                        gson.toJson(task);
-                        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-                        WifiInfo info = manager.getConnectionInfo();
-                        String address = info.getMacAddress();
+                            WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+                            WifiInfo info = manager.getConnectionInfo();
+                            String address = info.getMacAddress();
                         /*Call<Task> call = taskService.createTask(task);*/
-                        //Call<LoginResponse> call = apiService.getSignUp(tie_username.getText().toString(),tei_password.getText().toString(),tei_email.getText().toString(),tei_contact.getText().toString(),address);
-                        Call<LoginResponse> call = apiService.getSignUp(tei_email.getText().toString(),tei_password.getText().toString(),address);
-                        call.enqueue(new Callback<LoginResponse>() {
-                            @Override
-                            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                                LoginResponse statusCode = response.body();//code();
-                                if(statusCode.getStatus().contentEquals("success"))
-                                {
-                                    Intent in = new Intent(SignUpActivity.this, UserProfileActivity.class);
-                                    in.putExtra("fragmentIndex","0");
-                                    startActivity(in);
+                            //Call<LoginResponse> call = apiService.getSignUp(tie_username.getText().toString(),tei_password.getText().toString(),tei_email.getText().toString(),tei_contact.getText().toString(),address);
+                            Call<LoginResponse> call = apiService.getSignUp(tei_email.getText().toString(),tei_password.getText().toString(),address);
+                            call.enqueue(new Callback<LoginResponse>() {
+                                @Override
+                                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                                    LoginResponse statusCode = response.body();//code();
+                                    if(statusCode.getStatus().contentEquals("success"))
+                                    {
+                                        Intent in = new Intent(SignUpActivity.this, UserProfileActivity.class);
+                                        in.putExtra("fragmentIndex","0");
+                                        startActivity(in);
 
-                                  //  startActivity(new Intent(SignUpActivity.this, UserProfileActivity.class));
-                                }else{
-                                    Toast.makeText(SignUpActivity.this,"Error While Sign Up",Toast.LENGTH_SHORT).show();
+                                        //  startActivity(new Intent(SignUpActivity.this, UserProfileActivity.class));
+                                    }else{
+                                        Toast.makeText(SignUpActivity.this,"Error While Sign Up",Toast.LENGTH_SHORT).show();
+                                    }
+                                    // Profile profile = response.body().getProfile();
+                                    //recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
                                 }
-                               // Profile profile = response.body().getProfile();
-                                //recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
-                            }
 
-                            @Override
-                            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                                // Log error here since request failed
-                                Log.e(TAG, t.toString());
-                            }
-                        });
-                    } catch (Exception e) {
-                        e.getLocalizedMessage();
+                                @Override
+                                public void onFailure(Call<LoginResponse> call, Throwable t) {
+                                    // Log error here since request failed
+                                    Log.e(TAG, t.toString());
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.getLocalizedMessage();
+                        }
+                    }else{
+                        Toast.makeText(SignUpActivity.this,"Password Does Not Matched",Toast.LENGTH_SHORT).show();
                     }
+
                 }else{
 
                     Toast.makeText(SignUpActivity.this,"Please Fill the fields",Toast.LENGTH_LONG).show();

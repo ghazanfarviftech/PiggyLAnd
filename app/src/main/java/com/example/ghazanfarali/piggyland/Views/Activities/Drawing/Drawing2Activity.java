@@ -10,6 +10,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,12 +29,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.ghazanfarali.piggyland.CanvasView;
+import com.example.ghazanfarali.piggyland.Controls.OnItemClickListener;
 import com.example.ghazanfarali.piggyland.CustomViews.DrawingControls.StickerTextView;
 import com.example.ghazanfarali.piggyland.EndPoint.ApiClient;
 import com.example.ghazanfarali.piggyland.EndPoint.ApiInterface;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.SaveToGalleryResponse;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.Views.SaveDrawingActivity;
+import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.adapters.MygallaryAdapter_Grid;
+import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter.MyGallaryITemDecor;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.beans.mygallarylist;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorSelectedListener;
@@ -199,154 +205,154 @@ public class Drawing2Activity extends AppCompatActivity {
             }
         });
 
-//        shapes = (ImageView)findViewById(R.id.shapes);
-//        shapes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                if(!bottom_sheet) {
-//                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-//                    TextView view_set_basicshapes = (TextView)findViewById(R.id.view_set_basicshapes);
-//                    view_set_basicshapes.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            LinearLayout View_Accessories = (LinearLayout)findViewById(R.id.View_Accessories);
-//                            View_Accessories.setVisibility(View.INVISIBLE);
-//                            LinearLayout View_BasicShapes = (LinearLayout)findViewById(R.id.View_BasicShapes);
-//                            View_BasicShapes.setVisibility(View.VISIBLE);
-//
-//                            ImageView draw_circle = (ImageView)findViewById(R.id.draw_circle);
-//                            draw_circle.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View view) {
-//                                    canvas.setMode(CanvasView.Mode.DRAW);
-//                                    canvas.setDrawer(CanvasView.Drawer.CIRCLE);
-//                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-//                                    bottom_sheet = false;
-//                                }
-//                            });
-//
-//                            ImageView draw_square = (ImageView)findViewById(R.id.draw_square);
-//                            draw_square.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View view) {
-//                                    canvas.setMode(CanvasView.Mode.DRAW);
-//                                    canvas.setDrawer(CanvasView.Drawer.RECTANGLE);
-//                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-//                                    bottom_sheet = false;
-//                                }
-//                            });
-//
-//
-//                            ImageView draw_triangle = (ImageView)findViewById(R.id.draw_triangle);
-//                            draw_triangle.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View view) {
-//                                    canvas.setMode(CanvasView.Mode.DRAW);
-//                                    canvas.setDrawer(CanvasView.Drawer.TRIANGLE);
-//                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-//                                    bottom_sheet = false;
-//                                }
-//                            });
-//
-//                        }
-//                    });
-//                    TextView view_set_accessorries = (TextView)findViewById(R.id.view_set_accessorries);
-//                    view_set_accessorries.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            LinearLayout View_Accessories = (LinearLayout)findViewById(R.id.View_Accessories);
-//                            View_Accessories.setVisibility(View.VISIBLE);
-//                            LinearLayout View_BasicShapes = (LinearLayout)findViewById(R.id.View_BasicShapes);
-//                            View_BasicShapes.setVisibility(View.INVISIBLE);
-//                        }
-//                    });
-//                    RecyclerView rv_list_gallary;
-//                    GridLayoutManager lLayout;
-//                    ArrayList<mygallarylist> smartToolsList;
-//                    MygallaryAdapter_Grid mygallaryAdapter;
-//                    smartToolsList = new ArrayList<>();
-//                    rv_list_gallary = (RecyclerView)findViewById(R.id.rv_listview_mygallary);
-//                    rv_list_gallary.addItemDecoration(new MyGallaryITemDecor(Drawing2Activity.this));
-//
-//                    smartToolsList = prepareListData();
-//                    mygallaryAdapter = new MygallaryAdapter_Grid(Drawing2Activity.this,smartToolsList);
-//                    rv_list_gallary.setAdapter(mygallaryAdapter);
-//
-//                    mygallaryAdapter.setOnItemClickListener(new OnItemClickListener() {
-//                        @Override
-//                        public void onItemClick(View view, int position) {
-//                            Toast.makeText(Drawing2Activity.this,""+position,Toast.LENGTH_LONG).show();
-//                        }
-//                    });
-//                    lLayout = new GridLayoutManager(Drawing2Activity.this, 4);
-//                    rv_list_gallary.setHasFixedSize(true);
-//                    rv_list_gallary.setLayoutManager(lLayout);
-//                    /*TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
-//                    TabWidget tw = (TabWidget)tabHost.findViewById(android.R.id.tabs);
-//                    for (int i = 0; i < tw.getChildCount(); i++)
-//                    {
-//                        final View tabView = tw.getChildTabViewAt(i);
-//                        final TextView tv = (TextView)tabView.findViewById(android.R.id.title);
-//                        tv.setTypeface(null, Typeface.BOLD);
-//                        tv.setTextColor(getResources().getColor(R.color.white));
-//                    }
-//                    tabHost.setup();
-//
-//                    TabHost.TabSpec spec1 = tabHost.newTabSpec("Basic Shapes");
-//                    spec1.setContent(R.id.tab1_Units);
-//                    spec1.setIndicator(" " + "Basic Shapes"
-//                            + " ");
-//
-//
-//                    TabHost.TabSpec spec2 = tabHost.newTabSpec("Accessories");
-//                    spec2.setContent(R.id.tab2_Map);
-//                    spec2.setIndicator("  " + "Accessories"
-//                            + " ");
-//
-//
-//                    tabHost.addTab(spec1);
-//                    tabHost.addTab(spec2);
-//
-//                    RecyclerView rv_list_gallary;
-//                    GridLayoutManager lLayout;
-//                    ArrayList<mygallarylist> smartToolsList;
-//                    MygallaryAdapter_Grid mygallaryAdapter;
-//                    smartToolsList = new ArrayList<>();
-//                    rv_list_gallary = (RecyclerView)findViewById(R.id.rv_listview_mygallary);
-//                    rv_list_gallary.addItemDecoration(new MyGallaryITemDecor(Drawing2Activity.this));
-//
-//                    smartToolsList = prepareListData();
-//                    mygallaryAdapter = new MygallaryAdapter_Grid(Drawing2Activity.this,smartToolsList);
-//                    rv_list_gallary.setAdapter(mygallaryAdapter);
-//
-//                    mygallaryAdapter.setOnItemClickListener(new OnItemClickListener() {
-//                        @Override
-//                        public void onItemClick(View view, int position) {
-//                            Toast.makeText(Drawing2Activity.this,""+position,Toast.LENGTH_LONG).show();
-//                        }
-//                    });
-//                    lLayout = new GridLayoutManager(Drawing2Activity.this, 4);
-//                    rv_list_gallary.setHasFixedSize(true);
-//                    rv_list_gallary.setLayoutManager(lLayout);
-//
-//                    ImageView draw_circle = (ImageView) findViewById(R.id.draw_circle);
-//                    draw_circle.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            CircleShapeView circleShapeView = new CircleShapeView(Drawing2Activity.this);
-//
-//                            canvas_frame.addView(circleShapeView);
-//                        }
-//                    });*/
-//                    // bottom_sheet = true;
-//                }else{
-//                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-//                    bottom_sheet = false;
-//                }
-//
-//            }
-//        });
+        shapes = (ImageView)findViewById(R.id.shapes);
+        shapes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(!bottom_sheet) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    TextView view_set_basicshapes = (TextView)findViewById(R.id.view_set_basicshapes);
+                    view_set_basicshapes.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            LinearLayout View_Accessories = (LinearLayout)findViewById(R.id.View_Accessories);
+                            View_Accessories.setVisibility(View.INVISIBLE);
+                            LinearLayout View_BasicShapes = (LinearLayout)findViewById(R.id.View_BasicShapes);
+                            View_BasicShapes.setVisibility(View.VISIBLE);
+
+                            ImageView draw_circle = (ImageView)findViewById(R.id.draw_circle);
+                            draw_circle.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    canvas.setMode(CanvasView.Mode.DRAW);
+                                    canvas.setDrawer(CanvasView.Drawer.CIRCLE);
+                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                                    bottom_sheet = false;
+                                }
+                            });
+
+                            ImageView draw_square = (ImageView)findViewById(R.id.draw_square);
+                            draw_square.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    canvas.setMode(CanvasView.Mode.DRAW);
+                                    canvas.setDrawer(CanvasView.Drawer.RECTANGLE);
+                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                                    bottom_sheet = false;
+                                }
+                            });
+
+
+                            ImageView draw_triangle = (ImageView)findViewById(R.id.draw_triangle);
+                            draw_triangle.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    canvas.setMode(CanvasView.Mode.DRAW);
+                                    canvas.setDrawer(CanvasView.Drawer.TRIANGLE);
+                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                                    bottom_sheet = false;
+                                }
+                            });
+
+                        }
+                    });
+                    TextView view_set_accessorries = (TextView)findViewById(R.id.view_set_accessorries);
+                    view_set_accessorries.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            LinearLayout View_Accessories = (LinearLayout)findViewById(R.id.View_Accessories);
+                            View_Accessories.setVisibility(View.VISIBLE);
+                            LinearLayout View_BasicShapes = (LinearLayout)findViewById(R.id.View_BasicShapes);
+                            View_BasicShapes.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                    RecyclerView rv_list_gallary;
+                    GridLayoutManager lLayout;
+                    ArrayList<mygallarylist> smartToolsList;
+                    MygallaryAdapter_Grid mygallaryAdapter;
+                    smartToolsList = new ArrayList<>();
+                    rv_list_gallary = (RecyclerView)findViewById(R.id.rv_listview_mygallary);
+                    rv_list_gallary.addItemDecoration(new MyGallaryITemDecor(Drawing2Activity.this));
+
+                    smartToolsList = prepareListData();
+                    mygallaryAdapter = new MygallaryAdapter_Grid(Drawing2Activity.this,smartToolsList);
+                    rv_list_gallary.setAdapter(mygallaryAdapter);
+
+                    mygallaryAdapter.setOnItemClickListener(new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Toast.makeText(Drawing2Activity.this,""+position,Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    lLayout = new GridLayoutManager(Drawing2Activity.this, 4);
+                    rv_list_gallary.setHasFixedSize(true);
+                    rv_list_gallary.setLayoutManager(lLayout);
+                    /*TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
+                    TabWidget tw = (TabWidget)tabHost.findViewById(android.R.id.tabs);
+                    for (int i = 0; i < tw.getChildCount(); i++)
+                    {
+                        final View tabView = tw.getChildTabViewAt(i);
+                        final TextView tv = (TextView)tabView.findViewById(android.R.id.title);
+                        tv.setTypeface(null, Typeface.BOLD);
+                        tv.setTextColor(getResources().getColor(R.color.white));
+                    }
+                    tabHost.setup();
+
+                    TabHost.TabSpec spec1 = tabHost.newTabSpec("Basic Shapes");
+                    spec1.setContent(R.id.tab1_Units);
+                    spec1.setIndicator(" " + "Basic Shapes"
+                            + " ");
+
+
+                    TabHost.TabSpec spec2 = tabHost.newTabSpec("Accessories");
+                    spec2.setContent(R.id.tab2_Map);
+                    spec2.setIndicator("  " + "Accessories"
+                            + " ");
+
+
+                    tabHost.addTab(spec1);
+                    tabHost.addTab(spec2);
+
+                    RecyclerView rv_list_gallary;
+                    GridLayoutManager lLayout;
+                    ArrayList<mygallarylist> smartToolsList;
+                    MygallaryAdapter_Grid mygallaryAdapter;
+                    smartToolsList = new ArrayList<>();
+                    rv_list_gallary = (RecyclerView)findViewById(R.id.rv_listview_mygallary);
+                    rv_list_gallary.addItemDecoration(new MyGallaryITemDecor(Drawing2Activity.this));
+
+                    smartToolsList = prepareListData();
+                    mygallaryAdapter = new MygallaryAdapter_Grid(Drawing2Activity.this,smartToolsList);
+                    rv_list_gallary.setAdapter(mygallaryAdapter);
+
+                    mygallaryAdapter.setOnItemClickListener(new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Toast.makeText(Drawing2Activity.this,""+position,Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    lLayout = new GridLayoutManager(Drawing2Activity.this, 4);
+                    rv_list_gallary.setHasFixedSize(true);
+                    rv_list_gallary.setLayoutManager(lLayout);
+
+                    ImageView draw_circle = (ImageView) findViewById(R.id.draw_circle);
+                    draw_circle.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            CircleShapeView circleShapeView = new CircleShapeView(Drawing2Activity.this);
+
+                            canvas_frame.addView(circleShapeView);
+                        }
+                    });*/
+                    // bottom_sheet = true;
+                }else{
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                    bottom_sheet = false;
+                }
+
+            }
+        });
 
         text_write = (ImageView)findViewById(R.id.text_write);
         text_write.setOnClickListener(new View.OnClickListener() {
@@ -489,7 +495,7 @@ public class Drawing2Activity extends AppCompatActivity {
                 }
                 break;
             case 3:
-                if(imageReturnedIntent.hasExtra("Title"))
+                if(imageReturnedIntent != null)
                 {
                     Bundle bundle = imageReturnedIntent.getExtras();
                     if(bundle.isEmpty())
@@ -516,11 +522,11 @@ public class Drawing2Activity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<SaveToGalleryResponse> call, Response<SaveToGalleryResponse> response) {
                                     SaveToGalleryResponse statusCode = response.body();//code();
-                                    if(statusCode.getStatus().contentEquals("success"))
+                                    if(statusCode.getStatus().contentEquals("Success"))
                                     {
                                         //startActivity(new Intent(LoginActivity.this, StartActivity.class));
                                     }else{
-                                        Toast.makeText(Drawing2Activity.this,"UserName/Password Incorrect",Toast.LENGTH_SHORT).show();
+                                       // Toast.makeText(Drawing2Activity.this,"UserName/Password Incorrect",Toast.LENGTH_SHORT).show();
                                     }
 
                                     //recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
@@ -564,7 +570,7 @@ public class Drawing2Activity extends AppCompatActivity {
                 break;
             case 4:
 
-                if(imageReturnedIntent.hasExtra("Title"))
+                if(imageReturnedIntent != null)
                 {
                     Bundle bundle = imageReturnedIntent.getExtras();
                     if(bundle.isEmpty())
@@ -585,17 +591,17 @@ public class Drawing2Activity extends AppCompatActivity {
 
 
 
-                            Call<SaveToGalleryResponse> call = apiService.saveImageToServer(encodedImage,FullPath,Description,imageTitle,"1");
+                            Call<SaveToGalleryResponse> call = apiService.saveImageToServer(encodedImage2,FullPath,Description,imageTitle,"1");
 
                             call.enqueue(new Callback<SaveToGalleryResponse>() {
                                 @Override
                                 public void onResponse(Call<SaveToGalleryResponse> call, Response<SaveToGalleryResponse> response) {
                                     SaveToGalleryResponse statusCode = response.body();//code();
-                                    if(statusCode.getStatus().contentEquals("success"))
+                                    if(statusCode.getStatus().contentEquals("Success"))
                                     {
                                         //startActivity(new Intent(LoginActivity.this, StartActivity.class));
                                     }else{
-                                        Toast.makeText(Drawing2Activity.this,"UserName/Password Incorrect",Toast.LENGTH_SHORT).show();
+                                       // Toast.makeText(Drawing2Activity.this,"UserName/Password Incorrect",Toast.LENGTH_SHORT).show();
                                     }
 
                                     //recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));

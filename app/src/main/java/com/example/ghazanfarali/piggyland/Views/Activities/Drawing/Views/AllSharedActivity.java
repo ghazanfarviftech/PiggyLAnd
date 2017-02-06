@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ghazanfarali.piggyland.R;
@@ -27,12 +30,19 @@ public class AllSharedActivity extends AppCompatActivity {
     private LinearLayoutManager lLayout;
     ArrayList<ShareArtWork> smartToolsList;
     ShareArtWorkAdapter shareArtWorkAdapter;
-
+    Toolbar toolbar;
+    TextView counterTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadPhotosObjects();
         setContentView(R.layout.activity_all_shared2);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("My Gallary");
+        setSupportActionBar(toolbar);
+        counterTextView = (TextView) findViewById(R.id.cnt_text);
+        counterTextView.setVisibility(View.VISIBLE);
+        counterTextView.setText("Shared Artworks");
         //smartToolsList = new ArrayList<>();
         rv_listview_shareArtWork = (RecyclerView)findViewById(R.id.rv_listview_shareArtWork);
 

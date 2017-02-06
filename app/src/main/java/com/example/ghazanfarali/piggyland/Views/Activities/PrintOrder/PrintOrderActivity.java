@@ -13,7 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.ghazanfarali.piggyland.Controls.OnItemClickListener;
@@ -36,7 +38,7 @@ public class PrintOrderActivity extends MasterActivity implements OnItemClickLis
     Toolbar toolbar;
     EditText ed_subject,ed_email,ed_descriptiveText;
     RecyclerView rv_sendImageEmail_attachment;
-
+    ImageView toolbar_back_sendEmail;
     ArrayList<Attachment> sitePlanList = new ArrayList<>();
     AttachmentAdapter sitePlanAdapter;
     ArrayList<MyGallaryMultiSelectITems> selectionList = new ArrayList<MyGallaryMultiSelectITems>();
@@ -74,6 +76,14 @@ public class PrintOrderActivity extends MasterActivity implements OnItemClickLis
         ed_subject = (EditText)findViewById(R.id.ed_subject);
         ed_descriptiveText = (EditText)findViewById(R.id.ed_descriptiveText);
         rv_sendImageEmail_attachment= (RecyclerView) findViewById(R.id.rv_sendImageEmail_attachment);
+
+        toolbar_back_sendEmail = (ImageView)findViewById(R.id.toolbar_back_sendEmail);
+        toolbar_back_sendEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
 
@@ -114,29 +124,32 @@ public class PrintOrderActivity extends MasterActivity implements OnItemClickLis
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.it_send_email)
         {
-            Toast.makeText(this,"send",Toast.LENGTH_LONG).show();
+            //Toast.makeText(this,"send",Toast.LENGTH_LONG).show();
             CustomEditText ed_subject = (CustomEditText)findViewById(R.id.ed_subject);
+            if(ed_subject.getText().length() > 0 ) {
+                Intent emailIntent;
+                emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"print@piggyland.co.kr"});
+                // emailIntent.setType("application/zip");
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, ed_subject.getText().toString());
+                emailIntent.putExtra(Intent.EXTRA_TEXT,
+                        ed_descriptiveText.getText().toString());
+                ArrayList<Uri> uris = new ArrayList<Uri>();
+                for (String filepath : arrlistImages) {
+                    File file = new File(filepath);
+                    Uri csvURI = Uri.fromFile(file);
+                    uris.add(csvURI);
+                }
+                emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+                emailIntent.setType("text/html");
+                try {
+                    //  CommonMethods.openGmailAppIntent(this, emailIntent);
+                    openGmailAppIntent(this, emailIntent);
+                } catch (Exception e) {
 
-            Intent emailIntent;
-            emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-            emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "print@piggyland.co.kr" });
-            // emailIntent.setType("application/zip");
-            emailIntent.putExtra(Intent.EXTRA_SUBJECT, ed_subject.getText().toString());
-            emailIntent.putExtra(Intent.EXTRA_TEXT,
-                    ed_descriptiveText.getText().toString());
-            ArrayList<Uri> uris = new ArrayList<Uri>();
-            for (String  filepath: arrlistImages) {
-                File file = new File(filepath);
-                Uri csvURI = Uri.fromFile(file);
-                uris.add(csvURI);
-            }
-            emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
-            emailIntent.setType("text/html");
-            try {
-                //  CommonMethods.openGmailAppIntent(this, emailIntent);
-                openGmailAppIntent(this, emailIntent);
-            } catch (Exception e) {
-
+                }
+            }else{
+                Toast.makeText(PrintOrderActivity.this, "Please Update the Subject", Toast.LENGTH_SHORT).show();
             }
 
 //            Intent emailIntent;

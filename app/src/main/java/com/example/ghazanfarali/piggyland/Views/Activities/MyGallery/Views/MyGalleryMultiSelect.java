@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import java.util.Queue;
 public class MyGalleryMultiSelect extends AppCompatActivity implements View.OnLongClickListener {
     public boolean is_in_action_mode = false;
     TextView counterTextView,tv_no_data_smart_tools;
+    Button btn_menuimg;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
@@ -46,7 +48,7 @@ public class MyGalleryMultiSelect extends AppCompatActivity implements View.OnLo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mygallary_multi_select);
 
-        initUI();
+        //initUI();
     }
 
 
@@ -55,24 +57,29 @@ public class MyGalleryMultiSelect extends AppCompatActivity implements View.OnLo
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("My Gallary");
         setSupportActionBar(toolbar);
+
         // initialise recycler view
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         tv_no_data_smart_tools = (TextView)findViewById(R.id.tv_no_data_smart_tools);
+        btn_menuimg = (Button)findViewById(R.id.btn_menuimg);
         //   layoutManager = new LinearLayoutManager(this);
         lLayout = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(lLayout);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new MyGallaryITemDecor(this));
         counterTextView = (TextView) findViewById(R.id.cnt_text);
-        counterTextView.setVisibility(View.GONE);
-        if(prepareListData() != null){
+        counterTextView.setVisibility(View.VISIBLE);
+        counterTextView.setText("My Gallery");
+        adapter = new MyGallaryMultiSelectAdapter(arrayList,MyGalleryMultiSelect.this);
+        recyclerView.setAdapter(adapter);
+       /* if(prepareListData() != null){
 
             adapter = new MyGallaryMultiSelectAdapter(arrayList,MyGalleryMultiSelect.this);
             recyclerView.setAdapter(adapter);
         }else {
             tv_no_data_smart_tools.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
-        }
+        }*/
     }
     private void loadPhotosObjects() {
         arrayList = new ArrayList<>();
@@ -172,7 +179,13 @@ public class MyGalleryMultiSelect extends AppCompatActivity implements View.OnLo
         return temp;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        initUI();
+        //adapter.notifyDataSetChanged();
+    }
 
     //adding menu to toolbar
     @Override
@@ -187,6 +200,9 @@ public class MyGalleryMultiSelect extends AppCompatActivity implements View.OnLo
         toolbar.inflateMenu(R.menu.menu_action_mode);
         is_in_action_mode = true;
         counterTextView.setVisibility(View.VISIBLE);
+        btn_menuimg.setVisibility(View.GONE);
+        counterTextView.setText("0 item selected");
+
         adapter.notifyDataSetChanged();
         // home button on action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -256,8 +272,9 @@ public class MyGalleryMultiSelect extends AppCompatActivity implements View.OnLo
         toolbar.inflateMenu(R.menu.menu_activity_main);
         //remove home button
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        counterTextView.setVisibility(View.GONE);
-        counterTextView.setText("0 item selected");
+        counterTextView.setVisibility(View.VISIBLE);
+        btn_menuimg.setVisibility(View.VISIBLE);
+        counterTextView.setText("My Gallery");
         counter = 0;
         selectionList.clear();
     }

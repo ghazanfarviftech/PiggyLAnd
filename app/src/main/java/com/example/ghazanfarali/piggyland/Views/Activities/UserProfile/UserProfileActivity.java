@@ -39,7 +39,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
 
     public static UserProfileActivity userProInstance;
     RelativeLayout headerLayoutID;
-    TextView titleTxt;
+    TextView titleTxt,text_title;
     private String fragmentType;
     ImageView nav_logo_img, imageView_nav_main_logo;
     LinearLayout nav_header_main_ll;
@@ -60,6 +60,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
         userProInstance = this;
 
         headerLayoutID = (RelativeLayout) findViewById(R.id.headerLayoutID);
+        text_title = (TextView)findViewById(R.id.text_title);
 //        headerLayoutID.bringToFront();
         titleTxt = (TextView) findViewById(R.id.titleTxt);
         btn_sidemenu = (Button) findViewById(R.id.btn_menuimg);
@@ -87,7 +88,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
 //                    Toast.makeText(UserProfileActivity.this,"this",Toast.LENGTH_LONG).show();
                     // Handle the camera action
                 } else if (id == R.id.gallery) {
-                    titleTxt.setText("My Gallary");
+                    //titleTxt.setText("My Gallary");
                     fragmentType = "2";
                     displayNextFragment();
                     // Toast.makeText(UserProfileActivity.this,"this",Toast.LENGTH_LONG).show();
@@ -125,7 +126,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
             @Override
             public void onClick(View v) {
                 //  startActivity(new Intent(UserProfileActivity.this, MyGallery.class));
-                startActivity(new Intent(UserProfileActivity.this, MyGalleryMultiSelect.class));
+                //startActivity(new Intent(UserProfileActivity.this, MyGalleryMultiSelect.class));
             }
         });
 
@@ -172,7 +173,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     startActivity(new Intent(this,MyGalleryMultiSelect.class));
                     break;
                 case "3":
-                    setVisibilities(1);
+                    setVisibilities(4);
                     replaceFragmnet(new PeopleInPiggyLandFragment(), R.id.frameLayout, false);
                     break;
                 case "4":
@@ -180,7 +181,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     replaceFragmnet(new MessageforyouFragment(), R.id.frameLayout, true);
                     break;
                 case "5":
-                    setVisibilities(1);
+                    setVisibilities(5);
                     replaceFragmnet(new MessageforyouFragment(), R.id.frameLayout, false);
                     break;
                 case "6":
@@ -219,17 +220,40 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
             case 1:{
                 headerLayoutID.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 nav_logo_img.setVisibility(View.VISIBLE);
+                text_title.setVisibility(View.GONE);
                 btn_createnew.setVisibility(View.GONE);
             }
             break;
             case 2:{
                 headerLayoutID.setBackgroundColor(Color.TRANSPARENT);
                 nav_logo_img.setVisibility(View.GONE);
+                text_title.setVisibility(View.GONE);
                 btn_createnew.setVisibility(View.VISIBLE);
             }break;
+
+            case 4:{
+                headerLayoutID.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                nav_logo_img.setVisibility(View.GONE);
+                text_title.setVisibility(View.VISIBLE);
+                text_title.setText("Members of PiggyLand");
+                btn_createnew.setVisibility(View.VISIBLE);
+                btn_createnew.setBackgroundResource(R.drawable.ic_action_search);
+            }break;
+
+            case 5:{
+                headerLayoutID.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                nav_logo_img.setVisibility(View.GONE);
+                text_title.setVisibility(View.VISIBLE);
+                text_title.setText("Message for you");
+                btn_createnew.setVisibility(View.VISIBLE);
+                btn_createnew.setBackgroundResource(R.drawable.ic_action_search);
+            }break;
+
+
             default:{
                 headerLayoutID.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 nav_logo_img.setVisibility(View.VISIBLE);
+                text_title.setVisibility(View.GONE);
                 btn_createnew.setVisibility(View.GONE);
             }
         }

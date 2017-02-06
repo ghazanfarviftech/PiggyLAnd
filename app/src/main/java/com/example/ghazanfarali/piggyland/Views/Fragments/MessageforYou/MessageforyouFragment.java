@@ -74,7 +74,7 @@ public class MessageforyouFragment extends MasterFragment {
         mygallaryAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getActivity(),""+position,Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(),""+position,Toast.LENGTH_LONG).show();
                 showRelatedDocumentsDialog();
             }
 

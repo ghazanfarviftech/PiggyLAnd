@@ -158,7 +158,7 @@ public class PeopleInPiggyLandFragment extends MasterFragment{
         mListAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getActivity(),"Members"+position,Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(),"Members"+position,Toast.LENGTH_LONG).show();
             }
         });
         mRecyclerView.setAdapter(mListAdapter);
