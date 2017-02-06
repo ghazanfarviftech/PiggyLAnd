@@ -11,13 +11,27 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_menuimg"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/_1sdp"
+
+            android:background="@drawable/menu_button"
+            android:backgroundTint="@color/colorwhite"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cnt_text"
             android:text="0 item selected"
+            android:layout_toRightOf="@+id/btn_menuimg"
             android:textColor="#fff"
             android:textSize="20dp"
+            android:paddingLeft="@dimen/_10sdp"
+
             android:textStyle="italic|bold"
             />
     </RelativeLayout>

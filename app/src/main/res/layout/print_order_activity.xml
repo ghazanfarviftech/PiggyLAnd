@@ -52,13 +52,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:focusable="false"
+                        android:text="Subject: Request print - (23, 1243)"
                         android:hint="Subject: Request print - (23, 1243)"
                         android:imeOptions="actionUnspecified"
-                        android:inputType="textPassword"
+                        android:inputType="textEmailSubject"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:textColor="@color/colorblack"
+                        android:textColor="@color/com_facebook_button_background_color_focused_disabled"
                         android:textSize="@dimen/textSizeForTextFields"
                         android:textStyle="normal" />
 

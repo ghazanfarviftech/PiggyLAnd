@@ -12,6 +12,13 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_20sdp"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:text="Please Select"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,8 +28,10 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Share to Public"
+                android:text="Share to the public"
+                android:textSize="@dimen/_8sdp"
                 android:textColor="#ffffff"
+                android:padding="@dimen/_30sdp"
                 android:background="@color/colorPrimary"
                 android:id="@+id/shareToPublic"
                 />
@@ -51,8 +60,10 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Save To My Gallery only"
+                android:text="Save into My Gallery only"
+                android:textSize="@dimen/_8sdp"
                 android:textColor="#ffffff"
+                android:padding="@dimen/_30sdp"
                 android:background="@color/colorPrimary"
                 android:id="@+id/saveToGallery"
                 />

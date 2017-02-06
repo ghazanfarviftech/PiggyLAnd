@@ -20,12 +20,13 @@
 
         <Button
             android:id="@+id/btn_menuimg"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/ic_menu_1"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/menu_button"
             android:backgroundTint="@color/colorwhite"
             />
 
@@ -39,6 +40,24 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/_50sdp"
             android:background="@drawable/piggyland_logo"
+
+            />
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:visibility="gone"
+            android:layout_alignParentLeft="true"
+            android:layout_toRightOf="@+id/btn_menuimg"
+            android:layout_centerInParent="true"
+            android:text="Members of PiggyLand"
+            android:textColor="#ffffff"
+            android:paddingTop="@dimen/_8sdp"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/_50sdp"
+
 
             />
 
@@ -71,6 +90,7 @@
             android:visibility="gone"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginRight="15dp"
             android:background="@drawable/ic_action_edit"
             android:drawableTint="@color/colorwhite"

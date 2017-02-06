@@ -37,14 +37,22 @@
             android:textSize="@dimen/s17"
             app:fontType="openSansSemibold" />
     </android.support.design.widget.TextInputLayout>-->
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_20sdp"
+        android:textSize="@dimen/_20sdp"
+        android:text="CREATE YOUR ACCOUNT"
+        android:gravity="center"
+        android:id="@+id/create_acct"
+        android:layout_marginTop="@dimen/_60sdp"
+        android:textColor="#ffffff"/>
     <android.support.design.widget.TextInputLayout
         android:id="@+id/ed_email"
         android:theme="@style/TextLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:layout_marginTop="@dimen/x20"
+        android:layout_below="@+id/create_acct"
+        android:layout_marginTop="@dimen/_60sdp"
         android:paddingEnd="@dimen/x30"
         android:paddingStart="@dimen/x30"
         android:textColorHint="@android:color/white">
@@ -94,6 +102,33 @@
     </android.support.design.widget.TextInputLayout>
 
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/ed_password_confrm"
+        android:theme="@style/TextLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ed_password"
+        android:layout_marginTop="@dimen/x20"
+        android:paddingEnd="@dimen/x30"
+        android:paddingStart="@dimen/x30"
+        android:textColorHint="@android:color/white">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tei_password_cnfrm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="start"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textSize="@dimen/s17"
+            app:fontType="openSansSemibold" />
+    </android.support.design.widget.TextInputLayout>
+
 
 
     <!--<android.support.design.widget.TextInputLayout
@@ -128,7 +163,7 @@
         android:id="@+id/btn_createAccount"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/x60"
-        android:layout_below="@+id/ed_password"
+        android:layout_below="@+id/ed_password_confrm"
         android:layout_marginTop="@dimen/x20"
         android:background="@color/colorblack"
         android:paddingEnd="@dimen/x30"

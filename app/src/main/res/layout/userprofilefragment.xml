@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
+
     tools:context="com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:fitsSystemWindows="true">
 
@@ -22,6 +24,7 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
+
             app:title="@string/Username">
 
             <ImageView
