@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:largeHeap="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity" >
+        <activity android:name=".SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -77,10 +78,14 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".Views.Activities.Drawing.Drawing2Activity" />
-        <activity android:name=".Views.Activities.Drawing.Views.SaveDrawingActivity" />
-        <activity android:name=".Views.Activities.Drawing.Views.AllSharedActivity" />
-        <activity android:name=".Views.Activities.SignUp.Views.SignUpActivity" />
+        <activity android:name=".Views.Activities.Drawing.Drawing2Activity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Views.Activities.Drawing.Views.SaveDrawingActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Views.Activities.Drawing.Views.AllSharedActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Views.Activities.SignUp.Views.SignUpActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

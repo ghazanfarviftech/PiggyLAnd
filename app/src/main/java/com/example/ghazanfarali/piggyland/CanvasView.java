@@ -47,6 +47,7 @@ public class CanvasView extends View {
         CIRCLE,
         ELLIPSE,
         QUADRATIC_BEZIER,
+        TRIANGLE,
         QUBIC_BEZIER;
     }
 
@@ -91,6 +92,9 @@ public class CanvasView extends View {
     private float startY   = 0F;
     private float controlX = 0F;
     private float controlY = 0F;
+
+
+    private int canvasBackgroundColor = Color.WHITE;
 
     /**
      * Copy Constructor
@@ -164,12 +168,13 @@ public class CanvasView extends View {
         }
 
         if (this.mode == Mode.ERASER) {
-            // Eraser
-            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-            paint.setARGB(0, 0, 0, 0);
 
             // paint.setColor(this.baseColor);
             // paint.setShadowLayer(this.blur, 0F, 0F, this.baseColor);
+            paint.setColor(canvasBackgroundColor);
+            paint.setStrokeWidth(30F);
+            paint.setShadowLayer(this.blur, 0F, 0F, this.paintStrokeColor);
+            paint.setAlpha(this.opacity);
         } else {
             // Otherwise
             paint.setColor(this.paintStrokeColor);
@@ -194,9 +199,11 @@ public class CanvasView extends View {
         // Save for ACTION_MOVE
         this.startX = event.getX();
         this.startY = event.getY();
+        System.out.println("createPath before move to position startX "+ event.getX()+" startY "+ event.getY());
 
         path.moveTo(this.startX, this.startY);
 
+        System.out.println("createPath after move to position startX "+ this.startX+" startY "+ this.startY);
         return path;
     }
 
@@ -212,6 +219,7 @@ public class CanvasView extends View {
             this.pathLists.add(path);
             this.paintLists.add(this.createPaint());
             this.historyPointer++;
+            System.out.println("updateHistory to create a new paint and to add path in pathLists "+ path);
         } else {
             // On the way of Undo or Redo
             this.pathLists.set(this.historyPointer, path);
@@ -405,22 +413,41 @@ public class CanvasView extends View {
      * @param event This is argument of onTouchEvent method
      */
     private void onActionDown(MotionEvent event) {
+        System.out.println("onActionDown ");
+        System.out.println("mode "+this.mode);
+
         switch (this.mode) {
             case DRAW   :
             case ERASER :
+                System.out.println("in switch case mode DRAW ERASER "+this.mode);
                 if ((this.drawer != Drawer.QUADRATIC_BEZIER) && (this.drawer != Drawer.QUBIC_BEZIER)) {
+
+                    System.out.println("this.drawer != Drawer.QUADRATIC_BEZIER this.isDown = true");
+
+
                     // Oherwise
                     this.updateHistory(this.createPath(event));
                     this.isDown = true;
                 } else {
+                    System.out.println("Bezier ");
                     // Bezier
                     if ((this.startX == 0F) && (this.startY == 0F)) {
                         // The 1st tap
+
+                        System.out.println("The 1st tap this.startX "+this.startX+" this.startY "+this.startY+
+                                " event getX() "+event.getX()+" event getX() "+event.getY());
+
                         this.updateHistory(this.createPath(event));
                     } else {
                         // The 2nd tap
+                        System.out.println("// The 2nd tap this.startX "+this.startX+" this.startY "+this.startY+
+                                " event getX() "+event.getX()+" event getX() "+event.getY());
+
                         this.controlX = event.getX();
                         this.controlY = event.getY();
+
+                        System.out.println("// The 2nd tap  this.isDown = true this.controlX "+this.controlX+" this.controlY "+this.controlY+
+                                " event getX() "+event.getX()+" event getX() "+event.getY());
 
                         this.isDown = true;
                     }
@@ -446,37 +473,74 @@ public class CanvasView extends View {
         float x = event.getX();
         float y = event.getY();
 
+        System.out.println("onActionMove  event.getX() "+event.getX()+" event.getY() "+event.getY());
+
         switch (this.mode) {
             case DRAW   :
             case ERASER :
 
+                System.out.println("onActionMove  this.mode "+this.mode);
                 if ((this.drawer != Drawer.QUADRATIC_BEZIER) && (this.drawer != Drawer.QUBIC_BEZIER)) {
+
+                    System.out.println("this.drawer != Drawer.QUADRATIC_BEZIER");
+
+
                     if (!isDown) {
+                        System.out.println("this.drawer != Drawer.QUADRATIC_BEZIER isDown "+isDown);
+
                         return;
                     }
 
                     Path path = this.getCurrentPath();
+                    System.out.println("path "+path+" isDown "+isDown);
+
 
                     switch (this.drawer) {
                         case PEN :
                             path.lineTo(x, y);
+
+                            System.out.println("PEN path.lineTo(x, y);"+x+" "+y);
                             break;
                         case LINE :
                             path.reset();
+                            System.out.println("LINE  path.reset()"+x+" "+y);
                             path.moveTo(this.startX, this.startY);
+                            System.out.println("LINE  path.moveTo(this.startX, this.startY)"+this.startX +" "+ this.startY);
                             path.lineTo(x, y);
+
+                            System.out.println("LINE  path.lineTo(x, y)"+x+" "+y);
+
+
                             break;
                         case RECTANGLE :
                             path.reset();
+                            System.out.println("RECTANGLE  path.reset()"+x+" "+y);
                             path.addRect(this.startX, this.startY, x, y, Path.Direction.CCW);
+
+                            System.out.println("LINE  path.addRect(this.startX, this.startY, x, y, Path.Direction.CCW)"+this.startX +" "+ this.startY
+                                    +" "+x+" "+y);
                             break;
                         case CIRCLE :
                             double distanceX = Math.abs((double)(this.startX - x));
+                            System.out.println("CIRCLE  distanceX "+distanceX+ " Math.abs((double)(this.startX - x) "+this.startX+" "+x);
+
                             double distanceY = Math.abs((double)(this.startX - y));
+
+                            System.out.println("CIRCLE  distanceY "+distanceY+ " Math.abs((double)(this.startX - y) "+this.startX+" "+y);
+
+
                             double radius    = Math.sqrt(Math.pow(distanceX, 2.0) + Math.pow(distanceY, 2.0));
 
+                            System.out.println("CIRCLE  radius "+radius+ " Math.sqrt(Math.pow(distanceX, 2.0) + Math.pow(distanceY, 2.0) ");
+
                             path.reset();
+                            System.out.println("CIRCLE   path.reset() ");
                             path.addCircle(this.startX, this.startY, (float)radius, Path.Direction.CCW);
+
+                            System.out.println("CIRCLE    path.addCircle(this.startX, this.startY, (float)radius, Path.Direction.CCW) "+
+                                    this.startX+" "+ this.startY +" " +(float)radius+ " "+ Path.Direction.CCW);
+
+
                             break;
                         case ELLIPSE :
                             RectF rect = new RectF(this.startX, this.startY, x, y);
@@ -484,10 +548,39 @@ public class CanvasView extends View {
                             path.reset();
                             path.addOval(rect, Path.Direction.CCW);
                             break;
+                        case TRIANGLE:
+                            double distanceXT = Math.abs((double)(this.startX - x));
+                            System.out.println("CIRCLE  distanceX "+distanceXT+ " Math.abs((double)(this.startX - x) "+this.startX+" "+x);
+
+                            double distanceYT = Math.abs((double)(this.startY - y));
+
+                            System.out.println("CIRCLE  distanceY "+distanceYT+ " Math.abs((double)(this.startX - y) "+this.startX+" "+y);
+                            Double halfWidth    = Math.sqrt(Math.pow(distanceXT, 2.0) + Math.pow(distanceYT, 2.0));
+                          /*  int halfWidth = */
+                            int i = Integer.valueOf(halfWidth.intValue());//100 / 2;
+                            path.reset();
+                            path.moveTo(this.startX, this.startY - i); // Top
+                            path.lineTo(x - i, y + i); // Bottom left
+                            path.lineTo(x + i, y + i); // Bottom right
+                            path.lineTo(x, y - i); // Back to Top
+                            path.close();
+                           /* Paint paint = new Paint();
+
+                            paint.setAntiAlias(true);
+                            paint.setStyle(this.paintStyle);
+                            paint.setStrokeWidth(this.paintStrokeWidth);
+                            paint.setStrokeCap(this.lineCap);
+                            paint.setStrokeJoin(Paint.Join.MITER);*/
+                            path.addPath(path);//drawPath(path,paint);
+
+                            break;
                         default :
                             break;
                     }
                 } else {
+
+                    System.out.println("isDown "+isDown+"if this.drawer == Drawer.QUADRATIC_BEZIER");
+
                     if (!isDown) {
                         return;
                     }
@@ -497,6 +590,11 @@ public class CanvasView extends View {
                     path.reset();
                     path.moveTo(this.startX, this.startY);
                     path.quadTo(this.controlX, this.controlY, x, y);
+
+                    System.out.println(" path.reset(); "+isDown+"path.moveTo(this.startX, this.startY) "
+                            +this.startX+" "+this.startY+"path.quadTo(this.controlX, this.controlY, x, y) "+this.controlX+" "
+                            +this.controlY +" "+x +" "+y);
+
                 }
 
                 break;
@@ -516,7 +614,9 @@ public class CanvasView extends View {
      * @param event This is argument of onTouchEvent method
      */
     private void onActionUp(MotionEvent event) {
+        System.out.println(" onActionUp ");
         if (isDown) {
+            System.out.println(" onActionUp isDown " + isDown);
             this.startX = 0F;
             this.startY = 0F;
             this.isDown = false;
@@ -561,17 +661,28 @@ public class CanvasView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+
+                System.out.println("MotionEvent.ACTION_DOWN");
+
+
                 this.onActionDown(event);
                 break;
             case MotionEvent.ACTION_MOVE :
+                System.out.println("MotionEvent.ACTION_MOVE");
                 this.onActionMove(event);
                 break;
             case MotionEvent.ACTION_UP :
+
+                System.out.println("MotionEvent.ACTION_UP");
+
+
                 this.onActionUp(event);
                 break;
             default :
                 break;
         }
+
+        System.out.println("this.invalidate()");
 
         // Re draw
         this.invalidate();

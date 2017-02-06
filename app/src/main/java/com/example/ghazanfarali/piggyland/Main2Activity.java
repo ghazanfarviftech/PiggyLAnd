@@ -157,12 +157,7 @@ public class Main2Activity extends ActionBarActivity {
                 startActivity(parentActivityIntent);
                 finish();
                 return true;
-            case R.id.menu_select_all:
-             //   selectAll();
-                return true;
-            case R.id.menu_reset_list:
-               // rebuildList(null);
-                return true;
+
         }
         return false;
     }
