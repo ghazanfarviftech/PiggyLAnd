@@ -319,8 +319,9 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
         super.onBackPressed();
         if (fragmentType == "4") {
             //  headerLayoutID.setBackgroundColor(Color.TRANSPARENT);
-        } else {
-            finish();
+        }
+        else {
+          //  finish();
         }
         //  finish();
     }

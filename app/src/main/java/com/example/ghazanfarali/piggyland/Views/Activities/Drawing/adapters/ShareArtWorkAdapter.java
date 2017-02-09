@@ -27,8 +27,9 @@ public class ShareArtWorkAdapter extends RecyclerView.Adapter<ShareArtWorkAdapte
 
     private List<ShareArtWork> smartToolsList;
     com.example.ghazanfarali.piggyland.Controls.OnItemClickListener onItemClickListener;
+    com.example.ghazanfarali.piggyland.Controls.MultiClickListner onMulticlickListener;
     private Activity activity;
-
+    int a = 0;
     public ShareArtWorkAdapter(Activity dockActivity, ArrayList<ShareArtWork> sections) {
 
         Log.e("Adp",sections.size()+" ");
@@ -111,34 +112,85 @@ public class ShareArtWorkAdapter extends RecyclerView.Adapter<ShareArtWorkAdapte
         public ImageView image;
         public ImageView line;
         public RelativeLayout container;
-        public ImageView list_edit;
-        public ImageView list_share;
+        public ImageView img_share;
+      //  public ImageView list_share;
+        public TextView counter_likes,tv_like,counter_comments,comments;
 
         public ViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.title);
             image = (ImageView) view.findViewById(R.id.thumbnail);
-          //  list_edit = (ImageView)view.findViewById(R.id.list_edit);
+
+            counter_likes =(TextView) view.findViewById(R.id.counter_likes);
+            tv_like =(TextView) view.findViewById(R.id.tv_like);
+            counter_comments=(TextView) view.findViewById(R.id.counter_comments);
+            comments=(TextView) view.findViewById(R.id.comments);
+            img_share = (ImageView)view.findViewById(R.id.img_share);
           //  list_share = (ImageView)view.findViewById(R.id.list_share);
             //line = (ImageView) view.findViewById(R.id.line);
             //  container = (RelativeLayout) view.findViewById(R.id.container);
-            view.setOnClickListener(this);
+            tv_like.setOnClickListener(this);
+            comments.setOnClickListener(this);
+            img_share.setOnClickListener(this);
+
+
         }
 
 
         @Override
         public void onClick(View view) {
-            if (onItemClickListener != null) {
-                onItemClickListener.onItemClick(view, getPosition());
+
+            int id = view.getId();
+            switch (id){
+
+                case R.id.tv_like:
+                    if (onMulticlickListener != null) {
+                        onMulticlickListener.onLikeItemClick(view, getPosition());
+//                        a++;
+//                        counter_likes.setText(""+a );
+                    }
+
+                break;
+                case R.id.comments:
+                    if (onMulticlickListener != null) {
+                        onMulticlickListener.onCommentItemClick(view, getPosition());
+                    }
+
+                break;
+                case R.id.list_edit:
+                    if (onMulticlickListener != null) {
+                        onMulticlickListener.onShareItemClick(view, getPosition());
+                    }
+
+                break;
+                default:{
+                    Log.e("no click","click not identify");
+                }
             }
+
+
         }
     }
 
-    public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
+
+    public interface onMulticlickListener{
+
+        public void onLikeItemClick(View view, int position);
+
+        public void onCommentItemClick(View view, int position);
+
+        public void onShareItemClick(View view, int position);
     }
 
-    public void setOnItemClickListener(final com.example.ghazanfarali.piggyland.Controls.OnItemClickListener mItemClickListener) {
-        this.onItemClickListener = mItemClickListener;
+    public void setonMulticlickListener(final com.example.ghazanfarali.piggyland.Controls.MultiClickListner mItemClickListener) {
+        this.onMulticlickListener = mItemClickListener;
     }
+
+//    public interface OnItemClickListener {
+//        public void onItemClick(View view, int position);
+//    }
+//
+//    public void setOnItemClickListener(final com.example.ghazanfarali.piggyland.Controls.OnItemClickListener mItemClickListener) {
+//        this.onItemClickListener = mItemClickListener;
+//    }
 }

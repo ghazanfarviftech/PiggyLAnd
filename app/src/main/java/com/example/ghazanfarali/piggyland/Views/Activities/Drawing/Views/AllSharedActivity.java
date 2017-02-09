@@ -1,18 +1,24 @@
 package com.example.ghazanfarali.piggyland.Views.Activities.Drawing.Views;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ghazanfarali.piggyland.Controls.MultiClickListner;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.Bean.ShareArtWork;
 import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.adapters.ShareArtWorkAdapter;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter.MyGallaryITemDecor;
+import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.MasterFragment;
+import com.example.ghazanfarali.piggyland.Views.Fragments.SharedArt_Comments_fragment.SharedComment_Fragment;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,93 +30,135 @@ import java.util.Queue;
 /**
  * Created by Amir.jehangir on 2/5/2017.
  */
-public class AllSharedActivity extends AppCompatActivity {
-
+public class AllSharedActivity extends MasterFragment {
+    private View view;
     RecyclerView rv_listview_shareArtWork;
     private LinearLayoutManager lLayout;
     ArrayList<ShareArtWork> smartToolsList;
     ShareArtWorkAdapter shareArtWorkAdapter;
     Toolbar toolbar;
     TextView counterTextView;
+    public TextView counter_likes,tv_like,counter_comments,comments;
+    public ImageView img_share;
+    int a = 0;
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        loadPhotosObjects();
-        setContentView(R.layout.activity_all_shared2);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("My Gallary");
-        setSupportActionBar(toolbar);
-        counterTextView = (TextView) findViewById(R.id.cnt_text);
-        counterTextView.setVisibility(View.VISIBLE);
-        counterTextView.setText("Shared Artworks");
-        //smartToolsList = new ArrayList<>();
-        rv_listview_shareArtWork = (RecyclerView)findViewById(R.id.rv_listview_shareArtWork);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        rv_listview_shareArtWork.addItemDecoration(new MyGallaryITemDecor(this));
-        lLayout = new LinearLayoutManager(this);
-        rv_listview_shareArtWork.setHasFixedSize(true);
-        rv_listview_shareArtWork.setLayoutManager(lLayout);
-        //smartToolsList = prepareListData();
-        shareArtWorkAdapter = new ShareArtWorkAdapter(this,photosList);
+        if (view == null) {
+            view = inflater.inflate(R.layout.activity_all_shared2, container, false);
+            // mContext.getApplicationContext();
+            loadPhotosObjects();
+            initUI();
+        shareArtWorkAdapter = new ShareArtWorkAdapter(getActivity(),photosList);
         rv_listview_shareArtWork.setAdapter(shareArtWorkAdapter);
-
-       /* rv_listview_shareArtWork.setOnItemClickListener(new OnItemClickListener() {
+        shareArtWorkAdapter.setonMulticlickListener(new MultiClickListner() {
             @Override
-            public void onItemClick(View view, int position) {
-                Toast.makeText(AllSharedActivity.this,""+position, Toast.LENGTH_LONG).show();
+            public void onLikeItemClick(View view, int position) {
+                counter_likes = (TextView)view;
+                a++;
+                counter_likes.setText(""+a );
             }
-        });*/
+
+            @Override
+            public void onCommentItemClick(View view, int position) {
+                userProfileActivity.replaceFragmnet(new SharedComment_Fragment(), R.id.frameLayout, true);
+
+            }
+
+            @Override
+            public void onShareItemClick(View view, int position) {
+
+            }
+        });
+//            startService();
+        } else {
+            if (view != null)
+                //  userProfileActivity.hideHeaderLayout();
+                userProfileActivity.setHeaderTitle("");
+        }
+        return view;
 
     }
 
-    /* private ArrayList<ShareArtWork> prepareListData() {
+    @Override
+    public void initUI() {
+        super.initUI();
 
-         ArrayList<ShareArtWork> temp = new ArrayList<>();
+         counter_likes =(TextView) view.findViewById(R.id.counter_likes);
+        tv_like =(TextView) view.findViewById(R.id.tv_like);
+        counter_comments=(TextView) view.findViewById(R.id.counter_comments);
+        comments=(TextView)view.findViewById(R.id.comments);
+        img_share = (ImageView)view.findViewById(R.id.img_share);
+        rv_listview_shareArtWork = (RecyclerView)view.findViewById(R.id.rv_listview_shareArtWork);
 
-         ShareArtWork mModel = new ShareArtWork();
-         //mModel.setmygallaryId("1");
-         mModel.setmygallaryTitle("Drawing");
-         mModel.setmygallaryImageURL(R.drawable.piggylandbg);
-         temp.add(mModel);
+    }
 
-         mModel = new ShareArtWork();
-        // mModel.setmygallaryId("2");
-         mModel.setmygallaryTitle("Drawing");
-         mModel.setmygallaryImageURL(R.drawable.photodefault);
-         temp.add(mModel);
 
-         mModel = new ShareArtWork();
-        // mModel.setmygallaryId("3");
-         mModel.setmygallaryTitle("Drawing");
-         mModel.setmygallaryImageURL(R.drawable.car_1);
-         temp.add(mModel);
+    @Override
+    public void onResume() {
+        super.onResume();
+        rv_listview_shareArtWork.addItemDecoration(new MyGallaryITemDecor(getActivity()));
+        lLayout = new LinearLayoutManager(getActivity());
+        rv_listview_shareArtWork.setHasFixedSize(true);
+        rv_listview_shareArtWork.setLayoutManager(lLayout);
+    }
 
-         mModel = new ShareArtWork();
-       //  mModel.setmygallaryId("4");
-         mModel.setmygallaryTitle("Drawing");
-         mModel.setmygallaryImageURL(R.drawable.piggylandbg);
-         temp.add(mModel);
 
-         mModel = new ShareArtWork();
-         //mModel.setmygallaryId("5");
-         mModel.setmygallaryTitle("Drawing");
-         mModel.setmygallaryImageURL(R.drawable.photodefault);
-         temp.add(mModel);
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        loadPhotosObjects();
+//        setContentView(R.layout.activity_all_shared2);
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.setTitle("My Gallary");
+//        setSupportActionBar(toolbar);
+//        counterTextView = (TextView) findViewById(R.id.cnt_text);
+//        counterTextView.setVisibility(View.VISIBLE);
+//        counterTextView.setText("Shared Artworks");
+//
+//
+//initUI();
+//
+//
+//
+//        //smartToolsList = new ArrayList<>();
+//        rv_listview_shareArtWork = (RecyclerView)findViewById(R.id.rv_listview_shareArtWork);
+//
+//        rv_listview_shareArtWork.addItemDecoration(new MyGallaryITemDecor(this));
+//        lLayout = new LinearLayoutManager(this);
+//        rv_listview_shareArtWork.setHasFixedSize(true);
+//        rv_listview_shareArtWork.setLayoutManager(lLayout);
+//        //smartToolsList = prepareListData();
+//        shareArtWorkAdapter = new ShareArtWorkAdapter(this,photosList);
+//        rv_listview_shareArtWork.setAdapter(shareArtWorkAdapter);
+//
+//        shareArtWorkAdapter.setonMulticlickListener(new MultiClickListner() {
+//            @Override
+//            public void onLikeItemClick(View view, int position) {
+//                tv_like = (TextView)view;
+//                a++;
+//                tv_like.setText(""+a );
+//            }
+//
+//            @Override
+//            public void onCommentItemClick(View view, int position) {
+//
+//            }
+//
+//            @Override
+//            public void onShareItemClick(View view, int position) {
+//
+//            }
+//        });
+//
+//
+//
+//    }
 
-         mModel = new ShareArtWork();
-         //mModel.setmygallaryId("6");
-         mModel.setmygallaryTitle("Drawing");
-         mModel.setmygallaryImageURL(R.drawable.car_1);
-         temp.add(mModel);
 
-         mModel = new ShareArtWork();
-         //mModel.setmygallaryId("7");
-         mModel.setmygallaryTitle("Drawing");
-         mModel.setmygallaryImageURL(R.drawable.piggylandbg);
-         temp.add(mModel);
-
-         return temp;
-     }*/
     private ArrayList<ShareArtWork> photosList;
     private void loadPhotosObjects() {
         photosList = new ArrayList<>();
@@ -119,6 +167,15 @@ public class AllSharedActivity extends AppCompatActivity {
         //photoViewSlider.initializePhotos(photosList);
 
     }
+
+
+//    public void initUI(){
+//        counter_likes =(TextView) findViewById(R.id.counter_likes);
+//        tv_like =(TextView) findViewById(R.id.tv_like);
+//        counter_comments=(TextView) findViewById(R.id.counter_comments);
+//        comments=(TextView) findViewById(R.id.comments);
+//        img_share = (ImageView)findViewById(R.id.img_share);
+//    }
 
     private List<File> loadAllFilesFromFolder(File parentDir)
     {
@@ -146,8 +203,8 @@ public class AllSharedActivity extends AppCompatActivity {
     public void generatePhotosObjects(List<File> files) {
         if(files == null|| files.size() == 0)
         {
-            Toast.makeText(AllSharedActivity.this,"No Image Found",Toast.LENGTH_SHORT).show();
-            finish();
+            Toast.makeText(getActivity(),"No Image Found",Toast.LENGTH_SHORT).show();
+            getActivity().finish();
         }else {
             photosList = new ArrayList<>();
             for (int i = 0; i < files.size(); i++) {
@@ -160,5 +217,6 @@ public class AllSharedActivity extends AppCompatActivity {
         //SampleGalleryAdapter adapter = new SampleGalleryAdapter(Main2Activity.this,photosList);
         //mMultiChoiceRecyclerView.setAdapter(adapter);
     }
+
 }
 

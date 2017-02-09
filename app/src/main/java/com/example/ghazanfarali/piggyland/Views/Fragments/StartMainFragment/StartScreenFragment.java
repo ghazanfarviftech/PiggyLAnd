@@ -33,6 +33,7 @@ public class StartScreenFragment extends MasterFragment {
             // mContext.getApplicationContext();
             initUI();
 
+
 //            startService();
         } else {
             if (view != null)
@@ -79,8 +80,9 @@ public class StartScreenFragment extends MasterFragment {
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), AllSharedActivity.class);
-                startActivity(i);
+//                Intent i = new Intent(getActivity(), AllSharedActivity.class);
+//                startActivity(i);
+                userProfileActivity.replaceFragmnet(new AllSharedActivity(), R.id.frameLayout, true);
             }
         });
     }
