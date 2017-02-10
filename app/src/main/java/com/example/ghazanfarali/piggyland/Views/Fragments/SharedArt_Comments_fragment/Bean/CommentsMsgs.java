@@ -6,7 +6,7 @@ package com.example.ghazanfarali.piggyland.Views.Fragments.SharedArt_Comments_fr
 public class CommentsMsgs {
   //  private String commentsTitle;
     private String commentsId;
-    private String commentsImageURL;
+    private int commentsImageURL;
     private String commentsMessages;
     private String commentsUserName;
 
@@ -27,11 +27,11 @@ public class CommentsMsgs {
         this.commentsId = commentsId;
     }
 
-    public String getcommentsImageURL() {
+    public int getcommentsImageURL() {
         return commentsImageURL;
     }
 
-    public void setcommentsImageURL(String commentsImageURL) {
+    public void setcommentsImageURL(int commentsImageURL) {
         this.commentsImageURL = commentsImageURL;
     }
 

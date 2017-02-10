@@ -182,7 +182,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     break;
                 case "5":
                     setVisibilities(5);
-                    replaceFragmnet(new MessageforyouFragment(), R.id.frameLayout, false);
+                    replaceFragmnet(new MessageforyouFragment(), R.id.frameLayout, true);
                     break;
                 case "6":
                     setVisibilities(2);
@@ -261,15 +261,17 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
 
 
     public void clickEventSlide() {
-        if (mSlideState) {
-            drawer.closeDrawer(GravityCompat.START);
-            mSlideState = false;
-            //   btn_sidemenu.setVisibility(View.VISIBLE);
-        } else {
-            //  btn_sidemenu.setVisibility(View.GONE);
-            drawer.openDrawer(GravityCompat.START);
-            mSlideState = true;
-        }
+        drawer.openDrawer(GravityCompat.START);
+
+//        if (mSlideState) {
+//            drawer.closeDrawer(GravityCompat.START);
+//            mSlideState = false;
+//            //   btn_sidemenu.setVisibility(View.VISIBLE);
+//        } else {
+//            //  btn_sidemenu.setVisibility(View.GONE);
+//            drawer.openDrawer(GravityCompat.START);
+//            mSlideState = true;
+//        }
     }
 
     public static void setUserProInstance(UserProfileActivity regInstance) {
@@ -309,8 +311,8 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
           //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

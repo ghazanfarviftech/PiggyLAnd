@@ -45,7 +45,7 @@ public class commentsAdapter extends RecyclerView.Adapter<commentsAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
-        final View sView = mInflater.inflate(R.layout.messagelistitems, parent, false);
+        final View sView = mInflater.inflate(R.layout.comment_list_item, parent, false);
 
         return new ViewHolder(sView);
     }
@@ -61,7 +61,8 @@ public class commentsAdapter extends RecyclerView.Adapter<commentsAdapter.ViewHo
         Log.e("Title smart",smartToolsList.get(position).getcommentsMessages()+ " ");
 
         //holder.image.setImageResource(smartToolsList.get(position).getcommentsImageURL().toString());
-        holder.name.setText(String.valueOf(smartToolsList.get(position).getcommentsUserName()));
+        holder.firstLine.setText(String.valueOf(smartToolsList.get(position).getcommentsUserName()));
+        holder.title.setText(String.valueOf(smartToolsList.get(position).getcommentsMessages()));
 //        if (basePreferenceHelper.getApplicationLanguage().equalsIgnoreCase(CommonConstants.LANG_ENGLISH)) {
 //            holder.name.setText(smartToolsList.get(position).getsmartToolsTitle());
 //        } else {
@@ -105,17 +106,18 @@ public class commentsAdapter extends RecyclerView.Adapter<commentsAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView name;
+        public TextView firstLine;
         public ImageView image;
-        public ImageView line;
+        public TextView title;
         // public RelativeLayout container;
 //        public ImageView list_edit;
 //        public ImageView list_share;
 
         public ViewHolder(View view) {
             super(view);
-            name = (TextView) view.findViewById(R.id.title);
-            image = (ImageView) view.findViewById(R.id.thumbnail);
+            firstLine = (TextView) view.findViewById(R.id.firstLine);
+            title = (TextView) view.findViewById(R.id.title);
+          //  image = (ImageView) view.findViewById(R.id.thumbnail);
 //            list_edit = (ImageView)view.findViewById(R.id.list_edit);
 //            list_share = (ImageView)view.findViewById(R.id.list_share);
             //line = (ImageView) view.findViewById(R.id.line);
