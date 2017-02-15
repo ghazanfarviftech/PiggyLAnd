@@ -113,7 +113,7 @@ public class ShareArtWorkAdapter extends RecyclerView.Adapter<ShareArtWorkAdapte
         public ImageView line;
         public RelativeLayout container;
         public ImageView img_share;
-        //  public ImageView list_share;
+      //  public ImageView list_share;
         public TextView counter_likes,tv_like,counter_comments,comments;
 
         public ViewHolder(View view) {
@@ -126,7 +126,7 @@ public class ShareArtWorkAdapter extends RecyclerView.Adapter<ShareArtWorkAdapte
             counter_comments=(TextView) view.findViewById(R.id.counter_comments);
             comments=(TextView) view.findViewById(R.id.comments);
             img_share = (ImageView)view.findViewById(R.id.img_share);
-            //  list_share = (ImageView)view.findViewById(R.id.list_share);
+          //  list_share = (ImageView)view.findViewById(R.id.list_share);
             //line = (ImageView) view.findViewById(R.id.line);
             //  container = (RelativeLayout) view.findViewById(R.id.container);
             tv_like.setOnClickListener(this);
@@ -143,26 +143,26 @@ public class ShareArtWorkAdapter extends RecyclerView.Adapter<ShareArtWorkAdapte
             int id = view.getId();
             switch (id){
 
-                case R.id.counter_likes:
+                case R.id.tv_like:
                     if (onMulticlickListener != null) {
                         onMulticlickListener.onLikeItemClick(view, getPosition());
 //                        a++;
 //                        counter_likes.setText(""+a );
                     }
 
-                    break;
+                break;
                 case R.id.comments:
                     if (onMulticlickListener != null) {
                         onMulticlickListener.onCommentItemClick(view, getPosition());
                     }
 
-                    break;
+                break;
                 case R.id.list_edit:
                     if (onMulticlickListener != null) {
                         onMulticlickListener.onShareItemClick(view, getPosition());
                     }
 
-                    break;
+                break;
                 default:{
                     Log.e("no click","click not identify");
                 }

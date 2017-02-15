@@ -1,7 +1,5 @@
 package com.example.ghazanfarali.piggyland.Controls;
 
-
-
 import android.view.View;
 
 /**

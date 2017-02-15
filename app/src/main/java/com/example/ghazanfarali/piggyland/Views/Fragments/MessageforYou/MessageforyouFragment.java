@@ -75,7 +75,7 @@ public class MessageforyouFragment extends MasterFragment {
             @Override
             public void onItemClick(View view, int position) {
                 //Toast.makeText(getActivity(),""+position,Toast.LENGTH_LONG).show();
-               // showRelatedDocumentsDialog();
+                showRelatedDocumentsDialog();
             }
 
         });

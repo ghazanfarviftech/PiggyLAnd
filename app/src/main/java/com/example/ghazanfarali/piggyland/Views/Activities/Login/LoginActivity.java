@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ghazanfarali.piggyland.EndPoint.ApiClient;
@@ -25,8 +24,8 @@ import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.Profile;
 import com.example.ghazanfarali.piggyland.MainActivity;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Utils.MarshmallowPermissions;
+import com.example.ghazanfarali.piggyland.Utils.SharedPrefrencesManger;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
-import com.example.ghazanfarali.piggyland.Views.Activities.Forget_PassActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.SignUp.Views.SignUpActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity;
 import com.facebook.CallbackManager;
@@ -57,7 +56,7 @@ public class LoginActivity extends MasterActivity implements
     private ProgressDialog mProgressDialog;
 
     private SignInButton btnSignIn;
-    private Button btnSignOut, btnRevokeAccess, btn_userlogin,btn_signUp;
+    private Button btnSignOut, btnRevokeAccess, btn_userlogin, btn_signUp;
     private static final int RC_SIGN_IN = 007;
     private static final String TAG = MainActivity.class.getSimpleName();
     ImageView imgProfilePic;
@@ -67,7 +66,9 @@ public class LoginActivity extends MasterActivity implements
     TextInputLayout til_username, til_password;
     TextInputEditText tie_username, tei_password;
     MarshmallowPermissions mp;
-    TextView forgotpassword;
+    public SharedPrefrencesManger sharedPrefrencesManger;
+    String UserName = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,12 +82,15 @@ public class LoginActivity extends MasterActivity implements
             mp.CheckPermission();
         }
 
+
     }
 
 
     @Override
     public void initUI() {
         super.initUI();
+
+        sharedPrefrencesManger = new SharedPrefrencesManger(this);
 
 //        ActionBar actionBar = getSupportActionBar();
 //        actionBar.hide();
@@ -99,21 +103,13 @@ public class LoginActivity extends MasterActivity implements
         tei_password = (TextInputEditText) findViewById(R.id.tei_password);
 
         btn_userlogin = (Button) findViewById(R.id.btn_userlogin);
-      //  btnSignIn = (SignInButton) findViewById(R.id.google_login_button);
+        //  btnSignIn = (SignInButton) findViewById(R.id.google_login_button);
 //        btnSignOut = (Button) findViewById(R.id.btn_sign_out);
 //        btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
 //        imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
-        btn_signUp =  (Button) findViewById(R.id.btn_signUp);
-        forgotpassword = (TextView)findViewById(R.id.forgotpassword);
-        forgotpassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(LoginActivity.this, Forget_PassActivity.class);
-                startActivity(i);
-            }
-        });
-       // btnSignIn.setOnClickListener(this);
-      //  btnSignOut.setOnClickListener(this);
+        btn_signUp = (Button) findViewById(R.id.btn_signUp);
+        // btnSignIn.setOnClickListener(this);
+        //  btnSignOut.setOnClickListener(this);
     }
 
 
@@ -127,14 +123,12 @@ public class LoginActivity extends MasterActivity implements
         });
 
 
-
-
         btn_userlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                if(tie_username.getText().length() > 0  && tei_password.getText().length() > 0){
+                if (tie_username.getText().length() > 0 && tei_password.getText().length() > 0) {
                     hideKeyBoard();
                     try {
                         ApiInterface apiService =
@@ -149,17 +143,19 @@ public class LoginActivity extends MasterActivity implements
 
                        /* Call<LoginResponse> call = apiService.getLogin(
                                 "test@gmail.com","test","123444");*/
-                        Call<LoginResponse> call = apiService.getLogin(tie_username.getText().toString(),tei_password.getText().toString(),address);
+                        Call<LoginResponse> call = apiService.getLogin(tie_username.getText().toString(), tei_password.getText().toString(), address);
                         call.enqueue(new Callback<LoginResponse>() {
                             @Override
                             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                                 LoginResponse statusCode = response.body();//code();
-                                if(statusCode.getStatus().contentEquals("success"))
-                                {
+                                if (statusCode.getStatus().contentEquals("success")) {
+                                    userName = tie_username.getText().toString();
+                                    sharedPrefrencesManger.setEmail(userName);
+
                                     startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
                                     finish();
-                                }else{
-                                    Toast.makeText(LoginActivity.this,"UserName/Password Incorrect",Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "UserName/Password Incorrect", Toast.LENGTH_SHORT).show();
                                 }
                                 Profile profile = response.body().getProfile();
                                 //recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
@@ -176,14 +172,13 @@ public class LoginActivity extends MasterActivity implements
                     }
                     //startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
 
-                }else{
-                    Toast.makeText(LoginActivity.this,"Please Enter username & password",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Please Enter username & password", Toast.LENGTH_LONG).show();
                 }
 
 
-
                 // startActivity(new Intent(LoginActivity.this, MainActivity.class));
-              //  startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+                //  startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
 //                if (tie_username.getText().toString().contains("admin") || tei_password.getText().toString().contains("admin")) {
 //                    hideKeyBoard();
 //                    startActivity(new Intent(LoginActivity.this, Main2Activity.class));
@@ -232,8 +227,8 @@ public class LoginActivity extends MasterActivity implements
 //                .build();
 
         // Customizing G+ button
-     //   btnSignIn.setSize(SignInButton.SIZE_STANDARD);
-       // btnSignIn.setScopes(gso.getScopeArray());
+        //   btnSignIn.setSize(SignInButton.SIZE_STANDARD);
+        // btnSignIn.setScopes(gso.getScopeArray());
 
     }
 

@@ -4,7 +4,7 @@ package com.example.ghazanfarali.piggyland.Views.Fragments.SharedArt_Comments_fr
  * Created by Amir.jehangir on 2/9/2017.
  */
 public class CommentsMsgs {
-    //  private String commentsTitle;
+  //  private String commentsTitle;
     private String commentsId;
     private int commentsImageURL;
     private String commentsMessages;
