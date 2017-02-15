@@ -1,10 +1,7 @@
 package com.example.ghazanfarali.piggyland.Views.Activities.Login;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,12 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.example.ghazanfarali.piggyland.EndPoint.ApiClient;
-import com.example.ghazanfarali.piggyland.EndPoint.ApiInterface;
-import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.LoginResponse;
-import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.Profile;
 import com.example.ghazanfarali.piggyland.MainActivity;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Utils.MarshmallowPermissions;
@@ -43,10 +35,6 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginActivity extends MasterActivity implements
         View.OnClickListener, GoogleApiClient.ConnectionCallbacks,
@@ -72,6 +60,7 @@ public class LoginActivity extends MasterActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
         initUI();
@@ -127,54 +116,56 @@ public class LoginActivity extends MasterActivity implements
             @Override
             public void onClick(View v) {
 
+                startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+                finish();
 
-                if (tie_username.getText().length() > 0 && tei_password.getText().length() > 0) {
-                    hideKeyBoard();
-                    try {
-                        ApiInterface apiService =
-                                ApiClient.getClient().create(ApiInterface.class);
-//                        Login task = new Login("fazila", "fazila", "123444");
-//                        Gson gson = new Gson();
-//                        gson.toJson(task);
-
-                        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-                        WifiInfo info = manager.getConnectionInfo();
-                        String address = info.getMacAddress();
-
-                       /* Call<LoginResponse> call = apiService.getLogin(
-                                "test@gmail.com","test","123444");*/
-                        Call<LoginResponse> call = apiService.getLogin(tie_username.getText().toString(), tei_password.getText().toString(), address);
-                        call.enqueue(new Callback<LoginResponse>() {
-                            @Override
-                            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                                LoginResponse statusCode = response.body();//code();
-                                if (statusCode.getStatus().contentEquals("success")) {
-                                    userName = tie_username.getText().toString();
-                                    sharedPrefrencesManger.setEmail(userName);
-
-                                    startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
-                                    finish();
-                                } else {
-                                    Toast.makeText(LoginActivity.this, "UserName/Password Incorrect", Toast.LENGTH_SHORT).show();
-                                }
-                                Profile profile = response.body().getProfile();
-                                //recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
-                            }
-
-                            @Override
-                            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                                // Log error here since request failed
-                                Log.e(TAG, t.toString());
-                            }
-                        });
-                    } catch (Exception e) {
-                        e.getLocalizedMessage();
-                    }
+//                if (tie_username.getText().length() > 0 && tei_password.getText().length() > 0) {
+//                    hideKeyBoard();
+//                    try {
+//                        ApiInterface apiService =
+//                                ApiClient.getClient().create(ApiInterface.class);
+////                        Login task = new Login("fazila", "fazila", "123444");
+////                        Gson gson = new Gson();
+////                        gson.toJson(task);
+//
+//                        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+//                        WifiInfo info = manager.getConnectionInfo();
+//                        String address = info.getMacAddress();
+//
+//                       /* Call<LoginResponse> call = apiService.getLogin(
+//                                "test@gmail.com","test","123444");*/
+//                        Call<LoginResponse> call = apiService.getLogin(tie_username.getText().toString(), tei_password.getText().toString(), address);
+//                        call.enqueue(new Callback<LoginResponse>() {
+//                            @Override
+//                            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+//                                LoginResponse statusCode = response.body();//code();
+//                                if (statusCode.getStatus().contentEquals("success")) {
+//                                    userName = tie_username.getText().toString();
+//                                    sharedPrefrencesManger.setEmail(userName);
+//
+//                                    startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+//                                    finish();
+//                                } else {
+//                                    Toast.makeText(LoginActivity.this, "UserName/Password Incorrect", Toast.LENGTH_SHORT).show();
+//                                }
+//                                Profile profile = response.body().getProfile();
+//                                //recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<LoginResponse> call, Throwable t) {
+//                                // Log error here since request failed
+//                                Log.e(TAG, t.toString());
+//                            }
+//                        });
+//                    } catch (Exception e) {
+//                        e.getLocalizedMessage();
+//                    }
                     //startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
 
-                } else {
-                    Toast.makeText(LoginActivity.this, "Please Enter username & password", Toast.LENGTH_LONG).show();
-                }
+//                } else {
+//                    Toast.makeText(LoginActivity.this, "Please Enter username & password", Toast.LENGTH_LONG).show();
+//                }
 
 
                 // startActivity(new Intent(LoginActivity.this, MainActivity.class));
