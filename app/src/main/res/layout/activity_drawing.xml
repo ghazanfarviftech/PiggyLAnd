@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.ghazanfarali.piggyland.Drawing2Activity">
+   >
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -76,6 +76,7 @@
             android:layout_height="@dimen/_20sdp"
             android:layout_weight="1"
             android:id="@+id/colorPicker"
+            style="@style/ColorPicker"
             android:src="@drawable/paint_brush"/>
         <ImageView
             android:layout_width="@dimen/_20sdp"
@@ -121,130 +122,42 @@
         </FrameLayout>
 
     </FrameLayout>
-
-
-    <!--<LinearLayout
-        android:id="@+id/bottomSheetLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_300sdp"
-        android:background="#000000"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-        <TextView
-            android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:layout_above="@+id/linearLayout"
+        android:background="@color/colorblack"
+        android:id="@+id/like_bottomsheet">
+
+        <Button
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SHAPES"
-            android:textColor="#ffffff"
-            android:gravity="center_horizontal"
-            android:textStyle="bold"
-            android:textSize="@dimen/_20sdp"
-            />
-        <TabHost
-            android:id="@+id/tabHost"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-
-            >
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_vertical"
-                android:orientation="vertical" >
-
-                <HorizontalScrollView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:fillViewport="true"
-                    android:scrollbars="horizontal" >
-
-                    <TabWidget
-                        android:id="@android:id/tabs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-                </HorizontalScrollView>
-
-                <FrameLayout
-                    android:id="@android:id/tabcontent"
-                    android:layout_width="fill_parent"
-                    android:layout_height="match_parent" >
-
-                    <LinearLayout
-                        android:id="@+id/tab1_Units"
-                        android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="@dimen/_50sdp"
-                        >
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Lines and Basic Shapes"
-                            android:textColor="#ffffff"
-                            android:textSize="@dimen/_15sdp"/>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:orientation="horizontal"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            >
-                            <ImageView
-                                android:layout_width="@dimen/_50sdp"
-                            android:layout_weight="1"
-                                android:layout_height="@dimen/_50sdp"
-                                android:id="@+id/draw_circle"
-                                android:src="@drawable/circle_myshape"/>
-
-                            <ImageView
-                                android:layout_width="@dimen/_50sdp"
-                                android:layout_weight="1"
-                                android:layout_height="@dimen/_50sdp"
-                                android:src="@drawable/square_myimage"/>
-
-                            <ImageView
-                                android:layout_width="@dimen/_50sdp"
-                                android:layout_height="@dimen/_50sdp"
-                                android:layout_weight="1"
-                                android:src="@drawable/triangle_myimage"/>
-                        </LinearLayout>
+            android:layout_weight="1"
+            android:text="Brush"
+            android:id="@+id/brush"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Pen"
+            android:id="@+id/pen"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Caryon"
+            android:id="@+id/crayon"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Paint"
+            android:id="@+id/paint"/>
+    </LinearLayout>
 
 
-
-
-
-                    </LinearLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/tab2_Map"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="@dimen/_50sdp"
-                        >
-
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/rv_listview_mygallary"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/gray_home_dashboard_divider"
-                            android:clickable="true"
-                            android:scrollbarStyle="insideOverlay"
-                            android:scrollbars="none" />
-
-
-                    </RelativeLayout>
-                </FrameLayout>
-            </LinearLayout>
-
-        </TabHost>
-
-
-    </LinearLayout>-->
 </RelativeLayout>
     <include layout="@layout/content_bottom_sheet" />
 

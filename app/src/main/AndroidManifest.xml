@@ -8,43 +8,41 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:largeHeap="true"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity"
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".Views.Activities.Login.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.Activities.UserProfile.UserProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".Views.Activities.UserProfile.UserProfileActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-
-        <!--<activity android:name=".Views.Activities.MyGallery.MyGallery" />-->
-        <activity android:name=".Views.Activities.MyGallery.Views.MyGalleryMultiSelect"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-        <activity android:name=".Views.Activities.PrintOrder.PrintOrderActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-        <activity android:name=".MainActivity"
-            />
+        <!-- <activity android:name=".Views.Activities.MyGallery.MyGallery" /> -->
+        <activity
+            android:name=".Views.Activities.MyGallery.Views.MyGalleryMultiSelect"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.Activities.PrintOrder.PrintOrderActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".MainActivity" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -56,36 +54,53 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <!--<activity-->
-            <!--android:name=".SplashActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/AppTheme.NoActionBar"-->
-            <!--&gt;-->
-           <!-- <intent-filter>
+        <!-- <activity -->
+        <!-- android:name=".SplashActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar" -->
+        <!-- &gt; -->
+        <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        <!--</activity>-->
+            </intent-filter>
+        -->
+        <!-- </activity> -->
         <activity android:name=".GalleryActivity" />
-        <!--<activity android:name=".DrawingActivity" />-->
+        <!-- <activity android:name=".DrawingActivity" /> -->
         <activity
             android:name=".Main2Activity"
             android:theme="@style/CustomActivityTheme" />
-        <activity android:name=".MallActivity"></activity>
+        <activity android:name=".MallActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".Views.Activities.Drawing.Drawing2Activity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Views.Activities.Drawing.Views.SaveDrawingActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Views.Activities.Drawing.Views.AllSharedActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Views.Activities.SignUp.Views.SignUpActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".Views.Activities.Drawing.Drawing2Activity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity
+            android:name=".Views.Activities.Drawing.Views.SaveDrawingActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.Activities.Drawing.Views.AllSharedActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.Activities.SignUp.Views.SignUpActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Views.Activities.Forget_PassActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

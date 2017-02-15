@@ -1,5 +1,4 @@
 package com.example.ghazanfarali.piggyland.Views.Activities.Drawing.Views;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,32 +50,32 @@ public class AllSharedActivity extends MasterFragment {
             // mContext.getApplicationContext();
             loadPhotosObjects();
             initUI();
-        shareArtWorkAdapter = new ShareArtWorkAdapter(getActivity(),photosList);
-        rv_listview_shareArtWork.setAdapter(shareArtWorkAdapter);
-        shareArtWorkAdapter.setonMulticlickListener(new MultiClickListner() {
-            @Override
-            public void onLikeItemClick(View view, int position) {
-                counter_likes = (TextView)view;
-                a++;
-                counter_likes.setText(""+a );
-            }
+            shareArtWorkAdapter = new ShareArtWorkAdapter(getActivity(),photosList);
+            rv_listview_shareArtWork.setAdapter(shareArtWorkAdapter);
+            shareArtWorkAdapter.setonMulticlickListener(new MultiClickListner() {
+                @Override
+                public void onLikeItemClick(View view, int position) {
+                    counter_likes = (TextView)view;
+                    a++;
+                    counter_likes.setText(""+a );
+                }
 
-            @Override
-            public void onCommentItemClick(View view, int position) {
-                userProfileActivity.replaceFragmnet(new SharedComment_Fragment(), R.id.frameLayout, true);
+                @Override
+                public void onCommentItemClick(View view, int position) {
+                    userProfileActivity.replaceFragmnet(new SharedComment_Fragment(), R.id.frameLayout, true);
 
-            }
+                }
 
-            @Override
-            public void onShareItemClick(View view, int position) {
+                @Override
+                public void onShareItemClick(View view, int position) {
 
-            }
-        });
+                }
+            });
 //            startService();
         } else {
-            if (view != null)
+            //if (view != null)
                 //  userProfileActivity.hideHeaderLayout();
-                userProfileActivity.setHeaderTitle("");
+               // userProfileActivity.setHeaderTitle("");
         }
         return view;
 
@@ -86,7 +85,7 @@ public class AllSharedActivity extends MasterFragment {
     public void initUI() {
         super.initUI();
 
-         counter_likes =(TextView) view.findViewById(R.id.counter_likes);
+        counter_likes =(TextView) view.findViewById(R.id.counter_likes);
         tv_like =(TextView) view.findViewById(R.id.tv_like);
         counter_comments=(TextView) view.findViewById(R.id.counter_comments);
         comments=(TextView)view.findViewById(R.id.comments);
@@ -219,4 +218,3 @@ public class AllSharedActivity extends MasterFragment {
     }
 
 }
-

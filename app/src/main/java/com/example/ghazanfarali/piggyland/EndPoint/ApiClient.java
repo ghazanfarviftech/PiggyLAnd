@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "https://drawnow.000webhostapp.com/api/";
+    public static final String BASE_URL = "http://ec2-54-202-186-89.us-west-2.compute.amazonaws.com/piggyland/api/";
     private static Retrofit retrofit = null;
 
 

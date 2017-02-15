@@ -1,5 +1,9 @@
 package com.example.ghazanfarali.piggyland.Utils;
 
+/**
+ * Created by ghazanfarali on 11/02/2017.
+ */
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -27,7 +31,7 @@ public class MarshmallowPermissions {
     private final static int ACCESS_FINE_LOCATION_RESULT  = 105;
     private final static int ACCESS_COARSE_LOCATION_RESULT  = 106;
     private final static int CALL_PHONE_RESULT  = 107;
-  //  private final static int WRITE_EXTERNAL_STORAGE_RESULT  = 108;
+    //  private final static int WRITE_EXTERNAL_STORAGE_RESULT  = 108;
     private final static int ALL_PERMISSIONS_RESULT  = 109;
 
     private final static int INTERNET_RESULT  = 1010;
@@ -80,7 +84,7 @@ public class MarshmallowPermissions {
         else
         {
             Log.e("Mars Permissions","ALL ACCEPTED");
-          //  ThreadFn(act);
+            //  ThreadFn(act);
         }
     }
 
@@ -180,7 +184,7 @@ public class MarshmallowPermissions {
 
                     Log.e("Mars Permissions","SOME ACCEPTED");
 
-                  //  ThreadFn(act);
+                    //  ThreadFn(act);
 
                 }
                 /*if (someRejected) {

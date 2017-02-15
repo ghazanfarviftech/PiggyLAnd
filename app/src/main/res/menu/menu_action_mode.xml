@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/it_delete"
-        android:icon="@drawable/ic_action_email"
+        android:icon="@drawable/ic_action_printer"
         android:title="Delete"
         app:showAsAction="always"></item>
 

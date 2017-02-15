@@ -48,6 +48,8 @@ public class CanvasView extends View {
         ELLIPSE,
         QUADRATIC_BEZIER,
         TRIANGLE,
+        NINTY,
+        OCTAGONE,
         QUBIC_BEZIER;
     }
 
@@ -494,7 +496,8 @@ public class CanvasView extends View {
                     Path path = this.getCurrentPath();
                     System.out.println("path "+path+" isDown "+isDown);
 
-
+                    Double halfWidth;
+                    int i;
                     switch (this.drawer) {
                         case PEN :
                             path.lineTo(x, y);
@@ -555,11 +558,11 @@ public class CanvasView extends View {
                             double distanceYT = Math.abs((double)(this.startY - y));
 
                             System.out.println("CIRCLE  distanceY "+distanceYT+ " Math.abs((double)(this.startX - y) "+this.startX+" "+y);
-                            Double halfWidth    = Math.sqrt(Math.pow(distanceXT, 2.0) + Math.pow(distanceYT, 2.0));
+                            halfWidth    = Math.sqrt(Math.pow(distanceXT, 2.0) + Math.pow(distanceYT, 2.0));
                           /*  int halfWidth = */
-                            int i = Integer.valueOf(halfWidth.intValue());//100 / 2;
+                            i = Integer.valueOf(halfWidth.intValue());//100 / 2;
                             path.reset();
-                            path.moveTo(this.startX, this.startY - i); // Top
+                            path.moveTo(this.startX, this.startX); // Top
                             path.lineTo(x - i, y + i); // Bottom left
                             path.lineTo(x + i, y + i); // Bottom right
                             path.lineTo(x, y - i); // Back to Top
@@ -573,6 +576,45 @@ public class CanvasView extends View {
                             paint.setStrokeJoin(Paint.Join.MITER);*/
                             path.addPath(path);//drawPath(path,paint);
 
+                            break;
+                        case NINTY:
+                            double distanceXNIN = Math.abs((double)(this.startX - x));
+                            System.out.println("CIRCLE  distanceX "+distanceXNIN+ " Math.abs((double)(this.startX - x) "+this.startX+" "+x);
+
+                            double distanceYNIN = Math.abs((double)(this.startY - y));
+
+                            System.out.println("CIRCLE  distanceY "+distanceYNIN+ " Math.abs((double)(this.startX - y) "+this.startX+" "+y);
+                             halfWidth    = Math.sqrt(Math.pow(distanceXNIN, 2.0) + Math.pow(distanceYNIN, 2.0));
+                          /*  int halfWidth = */
+                             i = Integer.valueOf(halfWidth.intValue());//100 / 2;
+                            path.reset();
+                            path.moveTo(this.startX, this.startY); // Top
+                            path.lineTo(x - i, y + i); // Bottom left
+                            path.lineTo(x + i, y + i); // Bottom right
+                            path.lineTo(x, y - i); // Back to Top
+                            path.close();
+
+                            path.addPath(path);
+                            break;
+
+                        case OCTAGONE:
+                            double distanceXOCT = Math.abs((double)(this.startX - x));
+                            System.out.println("CIRCLE  distanceX "+distanceXOCT+ " Math.abs((double)(this.startX - x) "+this.startX+" "+x);
+
+                            double distanceYOCT = Math.abs((double)(this.startY - y));
+
+                            System.out.println("CIRCLE  distanceY "+distanceYOCT+ " Math.abs((double)(this.startX - y) "+this.startX+" "+y);
+                            halfWidth    = Math.sqrt(Math.pow(distanceXOCT, 2.0) + Math.pow(distanceYOCT, 2.0));
+                          /*  int halfWidth = */
+                            i = Integer.valueOf(halfWidth.intValue());//100 / 2;
+                            path.reset();
+                            path.moveTo(this.startX, this.startY); // Top
+                            path.lineTo(this.startX, y + i); // Bottom left
+                            path.lineTo(x + i, y + i); // Bottom right
+                            path.lineTo(x, y - i); // Back to Top
+                            path.close();
+
+                            path.addPath(path);
                             break;
                         default :
                             break;

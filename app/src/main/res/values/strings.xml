@@ -16,7 +16,6 @@
     <string name="forgot_password">forgot password?</string>
 
 
-
     <!-- customfonts -->
     <string name="font_medium">bold.otf</string>
     <string name="font_bold">Aller_Bd.ttf</string>
@@ -24,7 +23,6 @@
     <string name="open_sans_TypeFace_light">OpenSans-Light.ttf</string>
     <string name="font_light">medium.otf</string>
     <string name="password_didnot_match">Passwords don’t match. Retry carefully.</string>
-
 
 
     <!-- multiselect list -->
@@ -40,12 +38,14 @@
 
     <!-- nav drawer  -->
     <string name="new_drawing">New Drawing</string>
-    <string name="gallery">Gallery</string>
-    <string name="order">order</string>
-    <string name="memebers">People In PiggyLand</string>
-    <string name="message">Message For Me</string>
-    <string name="profile">Profile</string>
+    <string name="gallery">My Gallery</string>
+    <string name="order">Order to print</string>
+    <string name="memebers">People in PiggyLand</string>
+    <string name="message">Message for me</string>
+    <string name="profile">My profile</string>
     <string name="Logout">Logout</string>
 
 
+
+    <string name="Email">Email</string>
 </resources>

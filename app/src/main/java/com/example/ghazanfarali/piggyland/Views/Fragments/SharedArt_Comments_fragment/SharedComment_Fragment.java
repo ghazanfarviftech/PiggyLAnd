@@ -46,7 +46,7 @@ public class SharedComment_Fragment extends MasterFragment {
 //            startService();
         } else {
             if (view != null)
-                  userProfileActivity.hideHeaderLayout();
+                userProfileActivity.hideHeaderLayout();
 
 
         }
@@ -83,8 +83,8 @@ public class SharedComment_Fragment extends MasterFragment {
                     mModel.setcommentsId("-1");
                     mModel.setcommentsMessages(newComment);
                     mModel.setcommentsUserName(UserNAme);
-                    mModel.setcommentsImageURL(R.drawable.piggylandbg);
-                   // temp.add(mModel);
+               //     mModel.setcommentsImageURL(R.drawable.piggylandbg);
+                    // temp.add(mModel);
                     commentsArryList.add(mModel);
 
                     commentsAdapter.notifyDataSetChanged();
@@ -129,49 +129,49 @@ public class SharedComment_Fragment extends MasterFragment {
         mModel.setcommentsId("1");
         mModel.setcommentsMessages("very very nice picture");
         mModel.setcommentsUserName("Test1");
-        mModel.setcommentsImageURL(R.drawable.piggylandbg);
+        //mModel.setcommentsImageURL(R.drawable.piggylandbg);
         temp.add(mModel);
 
         mModel = new CommentsMsgs();
         mModel.setcommentsId("2");
         mModel.setcommentsMessages("very very nice picture nice");
         mModel.setcommentsUserName("Test2");
-        mModel.setcommentsImageURL(R.drawable.photodefault);
+       // mModel.setcommentsImageURL(R.drawable.photodefault);
         temp.add(mModel);
 
         mModel = new CommentsMsgs();
         mModel.setcommentsId("3");
         mModel.setcommentsMessages("very very nice picture very very nice");
         mModel.setcommentsUserName("Test3");
-        mModel.setcommentsImageURL(R.drawable.car_1);
+        //mModel.setcommentsImageURL(R.drawable.car_1);
         temp.add(mModel);
 
         mModel = new CommentsMsgs();
         mModel.setcommentsId("4");
         mModel.setcommentsMessages("very very nice picture very very");
         mModel.setcommentsUserName("Test4");
-        mModel.setcommentsImageURL(R.drawable.piggylandbg);
+       // mModel.setcommentsImageURL(R.drawable.piggylandbg);
         temp.add(mModel);
 
         mModel = new CommentsMsgs();
         mModel.setcommentsId("5");
         mModel.setcommentsMessages("very very nice picture and this");
         mModel.setcommentsUserName("Test5");
-        mModel.setcommentsImageURL(R.drawable.photodefault);
+       // mModel.setcommentsImageURL(R.drawable.photodefault);
         temp.add(mModel);
 
         mModel = new CommentsMsgs();
         mModel.setcommentsId("6");
         mModel.setcommentsMessages("very very nice picture piggy ");
         mModel.setcommentsUserName("Test7");
-        mModel.setcommentsImageURL(R.drawable.car_1);
+       // mModel.setcommentsImageURL(R.drawable.car_1);
         temp.add(mModel);
 
         mModel = new CommentsMsgs();
         mModel.setcommentsId("7");
         mModel.setcommentsMessages("very very nice picture piggy land");
         mModel.setcommentsUserName("Test9");
-        mModel.setcommentsImageURL(R.drawable.piggylandbg);
+       // mModel.setcommentsImageURL(R.drawable.piggylandbg);
         temp.add(mModel);
 
         return temp;

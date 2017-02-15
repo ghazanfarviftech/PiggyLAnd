@@ -38,7 +38,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
 
 
     public static UserProfileActivity userProInstance;
-    RelativeLayout headerLayoutID;
+    public RelativeLayout headerLayoutID;
     TextView titleTxt,text_title;
     private String fragmentType;
     ImageView nav_logo_img, imageView_nav_main_logo;
@@ -150,7 +150,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
         Bundle extra = getIntent().getExtras();
         if (extra != null) {
             fragmentType = getIntent().getExtras().getString("fragmentIndex");
-             getIntent().removeExtra("fragmentIndex");
+            getIntent().removeExtra("fragmentIndex");
         }
 
 
@@ -169,7 +169,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     break;
                 case "2":
                     setVisibilities(1);
-                 //   replaceFragmnet(new MyGallery(), R.id.frameLayout, false);
+                    //   replaceFragmnet(new MyGallery(), R.id.frameLayout, false);
                     startActivity(new Intent(this,MyGalleryMultiSelect.class));
                     break;
                 case "3":
@@ -303,12 +303,12 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
 
         if (id == R.id.new_drawing) {
 
-          //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
+            //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
             // Handle the camera action
         } else if (id == R.id.gallery) {
-          //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
+            //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
         } else if (id == R.id.order) {
-          //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
+            //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
         }
 
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -323,7 +323,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
             //  headerLayoutID.setBackgroundColor(Color.TRANSPARENT);
         }
         else {
-          //  finish();
+            //  finish();
         }
         //  finish();
     }

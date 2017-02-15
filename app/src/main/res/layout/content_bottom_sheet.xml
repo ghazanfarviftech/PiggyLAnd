@@ -123,26 +123,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 >
-                <ImageView
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_weight="1"
-                    android:layout_height="@dimen/_50sdp"
-                    android:id="@+id/draw_circle"
-                    android:src="@drawable/circle_myshape"/>
+
+                 <ImageView
+                     android:layout_width="@dimen/_50sdp"
+                     android:layout_weight="1"
+                     android:layout_height="@dimen/_50sdp"
+                     android:id="@+id/draw_circle"
+                     android:src="@drawable/ic_circle_shape_outline_f"/>
 
                 <ImageView
                     android:layout_width="@dimen/_50sdp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/_50sdp"
                     android:id="@+id/draw_square"
-                    android:src="@drawable/square_myimage"/>
+                    android:src="@drawable/ic_blank_check_box_f"/>
 
                 <ImageView
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
                     android:layout_weight="1"
                     android:id="@+id/draw_triangle"
-                    android:src="@drawable/triangle_myimage"/>
+                    android:src="@drawable/ic_bleach_f"/>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -152,57 +153,57 @@
                 />
 
 
-            <LinearLayout
+          <!--  <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 >
                 <ImageView
-                    android:layout_width="@dimen/_50sdp"
+                    android:layout_width="@dimen/_20sdp"
                     android:layout_weight="1"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:id="@+id/draw_ninty"
                     android:src="@drawable/circle_myshape"/>
 
                 <ImageView
-                    android:layout_width="@dimen/_50sdp"
+                    android:layout_width="@dimen/_20sdp"
                     android:layout_weight="1"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:id="@+id/draw_fourangle"
                     android:src="@drawable/square_myimage"/>
 
                 <ImageView
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:layout_weight="1"
                     android:id="@+id/draw_pentagone"
                     android:src="@drawable/triangle_myimage"/>
 
                 <ImageView
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:layout_weight="1"
                     android:id="@+id/draw_sixgone"
                     android:src="@drawable/triangle_myimage"/>
 
                 <ImageView
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:layout_weight="1"
                     android:id="@+id/draw_sevengone"
                     android:src="@drawable/triangle_myimage"/>
 
                 <ImageView
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:layout_weight="1"
                     android:id="@+id/draw_eightgone"
                     android:src="@drawable/triangle_myimage"/>
 
                 <ImageView
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:layout_weight="1"
                     android:id="@+id/draw_ninegone"
                     android:src="@drawable/triangle_myimage"/>
@@ -212,7 +213,7 @@
                 android:layout_height="@dimen/_2sdp"
                 android:background="#ffffff"
                 android:layout_marginTop="@dimen/_5sdp"
-                />
+                />-->
         </LinearLayout>
     </LinearLayout>
     <!--   <TabHost

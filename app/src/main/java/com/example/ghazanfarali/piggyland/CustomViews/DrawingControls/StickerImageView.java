@@ -3,17 +3,22 @@ package com.example.ghazanfarali.piggyland.CustomViews.DrawingControls;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.example.ghazanfarali.piggyland.R;
 
 
 public class StickerImageView extends StickerView {
 
     private String owner_id;
-    private ImageView iv_main;
+    public ImageView iv_main;
     public StickerImageView(Context context) {
         super(context);
     }
@@ -39,6 +44,11 @@ public class StickerImageView extends StickerView {
         if(this.iv_main == null) {
             this.iv_main = new ImageView(getContext());
             this.iv_main.setScaleType(ImageView.ScaleType.FIT_XY);
+            Drawable img = getResources().getDrawable(R.drawable.ic_check_box_empty);
+            this.iv_main.setImageDrawable(img);
+
+            //DrawableCompat.setTint(iv_main.getDrawable(), ContextCompat.getColor(getContext(), R.color.colorblue));
+            //this.iv_main.settint(ContextCompat.getColor(getContext(),R.color.colorAccent));
            /* this.iv_main.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {

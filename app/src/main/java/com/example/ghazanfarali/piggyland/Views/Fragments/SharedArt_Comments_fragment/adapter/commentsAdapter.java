@@ -33,7 +33,7 @@ public class commentsAdapter extends RecyclerView.Adapter<commentsAdapter.ViewHo
 
         for(int i=0;i<smartToolsList.size();i++)
         {
-          //  Log.e("adap Title",smartToolsList.get(i).getmygallaryTitle()+" ");
+            //  Log.e("adap Title",smartToolsList.get(i).getmygallaryTitle()+" ");
         }
 
         this.activity = dockActivity;
@@ -117,7 +117,7 @@ public class commentsAdapter extends RecyclerView.Adapter<commentsAdapter.ViewHo
             super(view);
             firstLine = (TextView) view.findViewById(R.id.firstLine);
             title = (TextView) view.findViewById(R.id.title);
-          //  image = (ImageView) view.findViewById(R.id.thumbnail);
+            //  image = (ImageView) view.findViewById(R.id.thumbnail);
 //            list_edit = (ImageView)view.findViewById(R.id.list_edit);
 //            list_share = (ImageView)view.findViewById(R.id.list_share);
             //line = (ImageView) view.findViewById(R.id.line);
