@@ -524,6 +524,7 @@ public class Drawing2Activity extends AppCompatActivity {
                                     SaveToGalleryResponse statusCode = response.body();//code();
                                     if(statusCode.getStatus().contentEquals("Success"))
                                     {
+                                        Toast.makeText(Drawing2Activity.this,"image send",Toast.LENGTH_LONG).show();
                                         //startActivity(new Intent(LoginActivity.this, StartActivity.class));
                                     }else{
                                        // Toast.makeText(Drawing2Activity.this,"UserName/Password Incorrect",Toast.LENGTH_SHORT).show();
@@ -745,11 +746,9 @@ public class Drawing2Activity extends AppCompatActivity {
         addImageDialog = new Dialog(Drawing2Activity.this);
 
         TextView txt = (TextView) addImageDialog.findViewById(android.R.id.title);
-<<<<<<< HEAD
+
 //        txt.setVisibility(View.GONE);
-=======
-        txt.setVisibility(View.GONE);
->>>>>>> abbc25987c7ccec28a4cfc7de724d91ffdac5ecd
+
         /*addImageDialog.setTitle("Image Picker");*/
         addImageDialog.setContentView(this.getLayoutInflater().inflate(
                 R.layout.dialog_chooser_save, null));

@@ -1,6 +1,5 @@
 package com.example.ghazanfarali.piggyland.Views.Fragments.StartMainFragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,10 +9,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.ghazanfarali.piggyland.R;
-import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.Drawing2Activity;
 import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.Views.AllSharedActivity;
-import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.Views.MyGalleryMultiSelect;
+import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.MyGallery;
 import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.MasterFragment;
+import com.example.ghazanfarali.piggyland.Views.Fragments.DrawingFragment.MainDrawingFragment;
 
 /**
  * Created by Amir.jehangir on 2/3/2017.
@@ -52,8 +51,11 @@ public class StartScreenFragment extends MasterFragment {
         create_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(),Drawing2Activity.class);
-                startActivity(i);
+//                Intent i = new Intent(getActivity(),Drawing2Activity.class);
+//                startActivity(i);
+//
+                userProfileActivity.replaceFragmnet(new MainDrawingFragment(), R.id.frameLayout, true);
+
             }
         });
 
@@ -61,8 +63,9 @@ public class StartScreenFragment extends MasterFragment {
         gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(),MyGalleryMultiSelect.class);
-                startActivity(i);
+                userProfileActivity.replaceFragmnet(new MyGallery(), R.id.frameLayout, true);
+//                Intent i = new Intent(getActivity(),MyGalleryMultiSelect.class);
+//                startActivity(i);
             }
         });
 

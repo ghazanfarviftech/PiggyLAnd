@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -22,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.ghazanfarali.piggyland.Controls.GallaryClickListner;
 import com.example.ghazanfarali.piggyland.Photo;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter.MyGallaryITemDecor;
@@ -42,12 +42,12 @@ import static android.view.View.inflate;
 /**
  * Created by Amir.jehangir on 1/11/2017.
  */
-public class MyGallery extends MasterFragment implements View.OnLongClickListener {
+public class MyGallery extends MasterFragment {
     TextView counterTextView, tv_no_data_smart_tools;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    RecyclerView.Adapter adapter;
-    Toolbar toolbar;
+    MygallaryAdapter adapter;
+
     ArrayList<Photo> photosList = new ArrayList<Photo>();
     ArrayList<Photo> selectionList = new ArrayList<Photo>();
     private GridLayoutManager lLayout;
@@ -118,10 +118,30 @@ public class MyGallery extends MasterFragment implements View.OnLongClickListene
 
             adapter = new MygallaryAdapter(photosList, mContext);
             recyclerView.setAdapter(adapter);
+
+            adapter.setOnItemClickListener(new GallaryClickListner() {
+                @Override
+                public void onItemClick(View view, int position) {
+
+                    is_in_action_mode = true;
+
+                    userProfileActivity.InflateTool();
+
+                    adapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCheckBoxClick(View view, int position) {
+                    prepareselection(view, position);
+                }
+            });
+
+
         } else {
             tv_no_data_smart_tools.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         }
+
         //smartToolsList = new ArrayList<>();
 
         /*rv_list_gallary = (RecyclerView)findViewById(R.id.recyclerview);
@@ -375,30 +395,40 @@ public class MyGallery extends MasterFragment implements View.OnLongClickListene
 //    }
 
 
-    @Override
-    public boolean onLongClick(View v) {
-        toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.menu_action_mode);
-        is_in_action_mode = true;
-        counterTextView.setVisibility(View.VISIBLE);
-        adapter.notifyDataSetChanged();
-        // home button on action bar
-        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        return true;
-    }
+//    @Override
+//    public boolean onLongClick(View v) {
+//     //   userProfileActivity.InflateTool();
+//        is_in_action_mode = true;
+//        counterTextView.setVisibility(View.VISIBLE);
+//        adapter.notifyDataSetChanged();
+//        // home button on action bar
+//        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        return true;
+//    }
 
     public void prepareselection(View view, int position) {
+       // userProfileActivity.InflateTool();
         //change view to checkbox
         if (((CheckBox) view).isChecked()) {
             selectionList.add(photosList.get(position));
-            counter++;
-            updateCnt(counter);
+           // counter++;
+           // updateCnt(counter);
         } else {
             selectionList.remove(photosList.get(position));
-            counter--;
-            updateCnt(counter);
+           // counter--;
+          //  updateCnt(counter);
         }
     }
+
+
+
+    public void SendDataToAttachment(){
+        MygallaryAdapter recyclerAdapter = (MygallaryAdapter) adapter;
+        recyclerAdapter.updateAdapter(selectionList);
+        AttachImagestoEmail();
+       userProfileActivity.clearActionMain();
+    }
+
 
     public void updateCnt(int counter) {
         if (counter == 0) {
@@ -436,8 +466,8 @@ public class MyGallery extends MasterFragment implements View.OnLongClickListene
 
     public void clearActionM() {
         is_in_action_mode = false;
-        toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.menu_activity_main);
+//        toolbar.getMenu().clear();
+//        toolbar.inflateMenu(R.menu.menu_activity_main);
         //remove home button
         //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         counterTextView.setVisibility(View.GONE);

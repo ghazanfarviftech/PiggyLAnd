@@ -1,7 +1,10 @@
 package com.example.ghazanfarali.piggyland.Views.Activities.Login;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,11 +15,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-<<<<<<< HEAD
-=======
 import android.widget.Toast;
->>>>>>> abbc25987c7ccec28a4cfc7de724d91ffdac5ecd
 
+import com.example.ghazanfarali.piggyland.EndPoint.ApiClient;
+import com.example.ghazanfarali.piggyland.EndPoint.ApiInterface;
+import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.LoginResponse;
+import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.Profile;
 import com.example.ghazanfarali.piggyland.MainActivity;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Utils.MarshmallowPermissions;
@@ -39,6 +43,11 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class LoginActivity extends MasterActivity implements
         View.OnClickListener, GoogleApiClient.ConnectionCallbacks,
@@ -123,7 +132,6 @@ public class LoginActivity extends MasterActivity implements
                 startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
                 finish();
 
-<<<<<<< HEAD
 //                if (tie_username.getText().length() > 0 && tei_password.getText().length() > 0) {
 //                    hideKeyBoard();
 //                    try {
@@ -171,7 +179,7 @@ public class LoginActivity extends MasterActivity implements
 //                } else {
 //                    Toast.makeText(LoginActivity.this, "Please Enter username & password", Toast.LENGTH_LONG).show();
 //                }
-=======
+
                 if (tie_username.getText().length() > 0 && tei_password.getText().length() > 0) {
                     hideKeyBoard();
                     try {
@@ -220,7 +228,6 @@ public class LoginActivity extends MasterActivity implements
                     Toast.makeText(LoginActivity.this, "Please Enter username & password", Toast.LENGTH_LONG).show();
                 }
 
->>>>>>> abbc25987c7ccec28a4cfc7de724d91ffdac5ecd
 
                 // startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 //  startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));

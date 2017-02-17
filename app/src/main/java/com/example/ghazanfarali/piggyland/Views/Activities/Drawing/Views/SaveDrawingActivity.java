@@ -24,12 +24,12 @@ public class SaveDrawingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_drawing);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("My Gallary");
-        setSupportActionBar(toolbar);
-        counterTextView = (TextView) findViewById(R.id.cnt_text);
-        counterTextView.setVisibility(View.VISIBLE);
-        counterTextView.setText("Share Your Drawing");
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.setTitle("My Gallary");
+//        setSupportActionBar(toolbar);
+//        counterTextView = (TextView) findViewById(R.id.cnt_text);
+//        counterTextView.setVisibility(View.VISIBLE);
+//        counterTextView.setText("Share Your Drawing");
         ImageView image_preview = (ImageView)findViewById(R.id.image_preview);
         Intent intent= getIntent();
         Bundle bundle = intent.getExtras();

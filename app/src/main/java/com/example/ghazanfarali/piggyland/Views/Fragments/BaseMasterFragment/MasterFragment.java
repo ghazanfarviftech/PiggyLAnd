@@ -46,6 +46,10 @@ public class MasterFragment extends Fragment implements BaseInterface {
     }
 
 
+    public void HideMainHeader(){
+        userProfileActivity.hideHeaderLayout();
+    }
+
     public void hideKeyBoard() {
         if (getActivity() != null) {
             View view = getActivity().getCurrentFocus();

@@ -19,6 +19,7 @@ public interface ConstantUtils {
     String googlelogin = "google";
 
     String showBackBtn = "SHOWBACKBTN";
-  //final  boolean is_in_action_mode = false;
+
+
 
 }

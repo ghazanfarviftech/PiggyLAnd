@@ -26,7 +26,7 @@ public class MygallaryAdapter  extends RecyclerView.Adapter<MygallaryAdapter.Rec
     ArrayList<Photo> adapter_list = new ArrayList<Photo>();
     MyGallery mainActivity;
     MasterFragment ctx;
-
+    com.example.ghazanfarali.piggyland.Controls.GallaryClickListner onItemClickListener;
     public MygallaryAdapter(ArrayList<Photo> adapter_list, MasterFragment ctx) {
         this.adapter_list = adapter_list;
         this.ctx = ctx;
@@ -36,11 +36,18 @@ public class MygallaryAdapter  extends RecyclerView.Adapter<MygallaryAdapter.Rec
     }
 
     @Override
-    public MygallaryAdapter.RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_layout, parent, false);
-        MygallaryAdapter.RecyclerViewHolder recyclerViewHolder = new MygallaryAdapter.RecyclerViewHolder(view, mainActivity);
-        return recyclerViewHolder;
+    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_layout, parent, false);
+//        RecyclerViewHolder recyclerViewHolder = new MygallaryAdapter.RecyclerViewHolder(view, mainActivity);
+//        return recyclerViewHolder;
+
+        final LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
+        final View sView = mInflater.inflate(R.layout.card_view_layout, parent, false);
+
+        return new RecyclerViewHolder(sView,mainActivity);
     }
+
+
 
 
 
@@ -82,7 +89,7 @@ public class MygallaryAdapter  extends RecyclerView.Adapter<MygallaryAdapter.Rec
     }
 
 
-    public static class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         TextView textView;
         CheckBox checkBox;
@@ -109,13 +116,41 @@ public class MygallaryAdapter  extends RecyclerView.Adapter<MygallaryAdapter.Rec
 
             this.mainActivity = mainActivity;
             cardView = (CardView) itemview.findViewById(R.id.card_view);
-            cardView.setOnLongClickListener(mainActivity);
+           // cardView.setOnLongClickListener(mainActivity);
             checkBox.setOnClickListener((View.OnClickListener) this);
+           // itemview.setOnClickListener(this);
+            itemview.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            mainActivity.prepareselection(v, getAdapterPosition());
+           switch (v.getId()){
+
+               case R.id.checkBox : {
+
+                   if (onItemClickListener != null) {
+                       onItemClickListener.onCheckBoxClick(v, getPosition());
+                   }
+
+               }
+
+
+           }
+
+//            mainActivity.prepareselection(v, getAdapterPosition());
+//            if (onItemClickListener != null) {
+//                onItemClickListener.onItemClick(v, getPosition());
+//            }
+        }
+
+
+        @Override
+        public boolean onLongClick(View v) {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(v, getPosition());
+            }
+            return false;
+
         }
     }
 
@@ -125,5 +160,15 @@ public class MygallaryAdapter  extends RecyclerView.Adapter<MygallaryAdapter.Rec
         }
         notifyDataSetChanged();
     }
+
+    public interface OnItemClickListener {
+        public void onItemClick(View view, int position);
+    }
+
+    public void setOnItemClickListener(final com.example.ghazanfarali.piggyland.Controls.GallaryClickListner mItemClickListener) {
+        this.onItemClickListener = mItemClickListener;
+    }
+
+
 }
 

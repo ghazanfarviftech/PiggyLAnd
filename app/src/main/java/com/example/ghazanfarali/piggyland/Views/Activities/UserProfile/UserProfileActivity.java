@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.Login.LoginActivity;
+import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.MyGallery;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.Views.MyGalleryMultiSelect;
 import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.UserProfile.UserProfileFragment;
 import com.example.ghazanfarali.piggyland.Views.Fragments.MessageforYou.MessageforyouFragment;
@@ -35,15 +37,20 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
     RelativeLayout helpLayout;
     DrawerLayout drawer;
     boolean mSlideState = false;
-
+    int hideShow =0;
 
     public static UserProfileActivity userProInstance;
     RelativeLayout headerLayoutID;
     TextView titleTxt,text_title;
-    private String fragmentType;
+    public static String fragmentType;
     ImageView nav_logo_img, imageView_nav_main_logo;
     LinearLayout nav_header_main_ll;
+    Toolbar toolbar;
 
+    TextView counterTextView,tv_no_data_smart_tools;
+    Button btn_menuimg;
+    ImageView btnSelectedImgSend;
+    int counter = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,7 +181,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     break;
                 case "3":
                     setVisibilities(4);
-                    replaceFragmnet(new PeopleInPiggyLandFragment(), R.id.frameLayout, false);
+                    replaceFragmnet(new PeopleInPiggyLandFragment(), R.id.frameLayout, true);
                     break;
                 case "4":
                     setVisibilities(1);
@@ -186,7 +193,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     break;
                 case "6":
                     setVisibilities(2);
-                    replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, false);
+                    replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, true);
                     break;
                 case "7":
                     finish();
@@ -319,12 +326,83 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        if(MyGallery.is_in_action_mode)
+        {
+            showHeaderLayout();
+            clearActionMain();
+          //  adapter.notifyDataSetChanged();
+        }
+
         if (fragmentType == "4") {
             //  headerLayoutID.setBackgroundColor(Color.TRANSPARENT);
         }
         else {
           //  finish();
         }
-        //  finish();
+        if (fragmentType ==  "100"){
+            showHeaderLayout();
+        }
+        if (fragmentType ==  "101"){
+
+            if(hideShow == 0){
+                hideHeaderLayout();
+                hideShow ++;
+            }else {
+
+               //hideShow = 1;
+                showHeaderLayout();
+                hideShow = 0;
+            }
+
+
+        }
     }
+
+    public void clearActionMain()
+    {
+      MyGallery.is_in_action_mode  = false;
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.menu_activity_main);
+        //remove home button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        counterTextView.setVisibility(View.VISIBLE);
+        btn_menuimg.setVisibility(View.VISIBLE);
+        counterTextView.setText("My Gallery");
+      //  counter = 0;
+       // selectionList.clear();
+    }
+
+    public void InflateTool(){
+
+        btn_menuimg = (Button)findViewById(R.id.btn_menuimg);
+
+        counterTextView = (TextView) findViewById(R.id.cnt_text);
+        btnSelectedImgSend = (ImageView) findViewById(R.id.btnSelectedImgSend);
+        btnSelectedImgSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //MyGallery.SendDataToAttachment();
+            }
+        });
+        hideHeaderLayout();
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // toolbar.setTitle("My Gallary");
+        setSupportActionBar(toolbar);
+
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.menu_action_mode);
+
+        counterTextView.setVisibility(View.GONE);
+        btn_menuimg.setVisibility(View.GONE);
+      //  counterTextView.setText("0 item selected");
+
+        //adapter.notifyDataSetChanged();
+        // home button on action bar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       // return true;
+
+    }
+
+
 }
