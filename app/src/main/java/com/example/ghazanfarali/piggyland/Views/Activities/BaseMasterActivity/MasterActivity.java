@@ -30,6 +30,16 @@ public class MasterActivity extends AppCompatActivity implements BaseInterface {
         initUI();
     }
 
+
+
+    public void clearBackStack() {
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager.getBackStackEntryCount() > 0) {
+            FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(0);
+            manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+    }
+
     public void replaceFragmnet(Fragment fragment, int container, boolean addTobackStack) {
         transaction = getSupportFragmentManager().beginTransaction();
         FragmentManager fm = getSupportFragmentManager(); // didnot add fragment in back stack twice.

@@ -28,12 +28,12 @@
 
         <item
             android:id="@+id/memebers"
-            android:icon="@drawable/ic_action_person"
+            android:icon="@drawable/multiple_users"
             android:title="@string/memebers" />
 
         <item
             android:id="@+id/message"
-            android:icon="@drawable/ic_action_read"
+            android:icon="@drawable/message"
             android:title="@string/message" />
         <item
             android:id="@+id/profile"
@@ -42,7 +42,7 @@
 
         <item
             android:id="@+id/Logout"
-
+            android:icon="@drawable/logout"
             android:title="@string/Logout" />
     </group>
 

@@ -7,7 +7,7 @@ import android.view.View;
  */
 public interface MultiClickListner {
 
-    public void onLikeItemClick(View view, int position);
+    public void onLikeItemClick(int position);
 
     public void onCommentItemClick(View view, int position);
 

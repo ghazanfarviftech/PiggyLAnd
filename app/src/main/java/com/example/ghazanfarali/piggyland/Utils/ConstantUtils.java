@@ -18,8 +18,14 @@ public interface ConstantUtils {
     String facebooklogin = "facebook";
     String googlelogin = "google";
 
-    String showBackBtn = "SHOWBACKBTN";
+// Login sessions
+    String LoginuserID = "USERID";
+    String LoginuserPassword = "PASSWORD";
+    String Loginuserauth = "AUTH";
 
-
+// user profile edit
+    String profileMac = "USERID";
+    String profileUserName = "PASSWORD";
+    String ProfileUserImage = "AUTH";
 
 }

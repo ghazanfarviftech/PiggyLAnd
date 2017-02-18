@@ -114,6 +114,47 @@ public void setEmail(String deviceId) {
         return sharedPrefs.getString(ConstantUtils.userProfileImage, "");
     }
 
+//Login response
+public void setuserID(String userid) {
+    prefsEditor.putString(ConstantUtils.LoginuserID, userid);
+    prefsEditor.commit();
+}
+
+    public String getuserID() {
+        return sharedPrefs.getString(ConstantUtils.LoginuserID, "");
+    }
+
+    public void setuserPass(String password) {
+        prefsEditor.putString(ConstantUtils.LoginuserPassword, password);
+        prefsEditor.commit();
+    }
+
+    public String getuserPass() {
+        return sharedPrefs.getString(ConstantUtils.LoginuserPassword, "");
+    }
+
+    public void setuserAuth(String Auth) {
+        prefsEditor.putString(ConstantUtils.Loginuserauth, Auth);
+        prefsEditor.commit();
+    }
+
+    public String getuserAuth() {
+        return sharedPrefs.getString(ConstantUtils.Loginuserauth, "");
+    }
+
+
+
+    // user profile prefrences
+    public void setuserMac(String mac) {
+        prefsEditor.putString(ConstantUtils.profileMac, mac);
+        prefsEditor.commit();
+    }
+
+    public String getuserMac() {
+        return sharedPrefs.getString(ConstantUtils.profileMac, "");
+    }
+
+
 
 
     public void clearSharedPref() {

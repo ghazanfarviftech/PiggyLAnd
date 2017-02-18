@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ghazanfarali.piggyland.R;
-import com.example.ghazanfarali.piggyland.Utils.SharedPrefrencesManger;
 import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.MasterFragment;
 import com.example.ghazanfarali.piggyland.Views.Fragments.SharedArt_Comments_fragment.Bean.CommentsMsgs;
 import com.example.ghazanfarali.piggyland.Views.Fragments.SharedArt_Comments_fragment.adapter.commentsAdapter;
@@ -34,7 +33,7 @@ public class SharedComment_Fragment extends MasterFragment {
     ArrayList<CommentsMsgs> commentsArryList;
     commentsAdapter commentsAdapter;
     MasterFragment mContext;
-    public SharedPrefrencesManger sharedPrefrencesManger;
+
     String UserNAme = "";
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class SharedComment_Fragment extends MasterFragment {
     @Override
     public void initUI() {
         super.initUI();
-        sharedPrefrencesManger = new SharedPrefrencesManger(getActivity());
+       // sharedPrefrencesManger = new SharedPrefrencesManger(getActivity());
         UserNAme = sharedPrefrencesManger.getEmail();
         commentsArryList = new ArrayList<>();
         number_of_like_box = (TextView)view.findViewById(R.id.number_of_like_box);

@@ -1,5 +1,6 @@
 package com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
@@ -12,9 +13,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.ghazanfarali.piggyland.Photo;
+import com.bumptech.glide.Glide;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.MyGallery;
+import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.beans.MyGallaryMultiSelectITems;
 import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.MasterFragment;
 
 import java.util.ArrayList;
@@ -23,15 +25,16 @@ import java.util.ArrayList;
  * Created by Amir.jehangir on 1/11/2017.
  */
 public class MygallaryAdapter  extends RecyclerView.Adapter<MygallaryAdapter.RecyclerViewHolder>{
-    ArrayList<Photo> adapter_list = new ArrayList<Photo>();
-    MyGallery mainActivity;
+    ArrayList<MyGallaryMultiSelectITems> adapter_list = new ArrayList<MyGallaryMultiSelectITems>();
+    Activity mainActivity;
     MasterFragment ctx;
     com.example.ghazanfarali.piggyland.Controls.GallaryClickListner onItemClickListener;
-    public MygallaryAdapter(ArrayList<Photo> adapter_list, MasterFragment ctx) {
-        this.adapter_list = adapter_list;
-        this.ctx = ctx;
 
-        mainActivity = (MyGallery) ctx;
+    public MygallaryAdapter(ArrayList<MyGallaryMultiSelectITems> adapter_list, Activity ctx) {
+        this.adapter_list = adapter_list;
+        this.mainActivity = ctx;
+
+       // mainActivity =  ctx;
 
     }
 
@@ -53,14 +56,14 @@ public class MygallaryAdapter  extends RecyclerView.Adapter<MygallaryAdapter.Rec
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-//        Glide
-//                .with( mainActivity ) // safer!
-//                .load( adapter_list.get(position).getImageUrl().getAbsolutePath() )
-//                .asBitmap()
-//                .into( holder.thumbnail );
-        holder.thumbnail.setImageBitmap(getBit(adapter_list.get(position).getImageUrl().getAbsolutePath()));
-        holder.title.setText(adapter_list.get(position).getDescription());
-        if (!mainActivity.is_in_action_mode) {
+        Glide
+                .with( mainActivity ) // safer!
+                .load( adapter_list.get(position).getmygallaryImageURL())
+                .asBitmap()
+                .into( holder.thumbnail );
+    //    holder.thumbnail.setImageBitmap(getBit(adapter_list.get(position).getmygallaryImageURL().toString()));
+        holder.title.setText(adapter_list.get(position).getmygallaryTitle());
+        if (!MyGallery.is_in_action_mode) {
             // holder.checkBox.setVisibility(View.GONE);
             holder.ly_share_edit.setVisibility(View.VISIBLE);
             holder.ly_select.setVisibility(View.GONE);
@@ -93,14 +96,14 @@ public class MygallaryAdapter  extends RecyclerView.Adapter<MygallaryAdapter.Rec
 
         TextView textView;
         CheckBox checkBox;
-        MyGallery mainActivity;
+        Activity mainActivity;
         // cardview for long click
         CardView cardView;
         LinearLayout ly_share_edit, ly_select;
         TextView title;
         ImageView list_edit, list_share,thumbnail;
 
-        public RecyclerViewHolder(View itemview, MyGallery mainActivity) {
+        public RecyclerViewHolder(View itemview, Activity mainActivity) {
             // mainActivity is used for handling the click events of the checkboxes
             super(itemview);
             textView = (TextView) itemview.findViewById(R.id.textView);
@@ -154,8 +157,8 @@ public class MygallaryAdapter  extends RecyclerView.Adapter<MygallaryAdapter.Rec
         }
     }
 
-    public void updateAdapter(ArrayList<Photo> list) {
-        for (Photo contact : list) {
+    public void updateAdapter(ArrayList<MyGallaryMultiSelectITems> list) {
+        for (MyGallaryMultiSelectITems contact : list) {
             adapter_list.remove(contact);
         }
         notifyDataSetChanged();

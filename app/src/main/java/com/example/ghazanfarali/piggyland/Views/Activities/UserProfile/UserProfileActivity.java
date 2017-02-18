@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,20 +36,16 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
     RelativeLayout helpLayout;
     DrawerLayout drawer;
     boolean mSlideState = false;
-    int hideShow =0;
+    int hideShow = 0;
 
     public static UserProfileActivity userProInstance;
     RelativeLayout headerLayoutID;
-    TextView titleTxt,text_title;
+    TextView titleTxt, text_title;
     public static String fragmentType;
     ImageView nav_logo_img, imageView_nav_main_logo;
     LinearLayout nav_header_main_ll;
-    Toolbar toolbar;
 
-    TextView counterTextView,tv_no_data_smart_tools;
-    Button btn_menuimg;
-    ImageView btnSelectedImgSend;
-    int counter = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,11 +62,17 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
         userProInstance = this;
 
         headerLayoutID = (RelativeLayout) findViewById(R.id.headerLayoutID);
-        text_title = (TextView)findViewById(R.id.text_title);
+        text_title = (TextView) findViewById(R.id.text_title);
 //        headerLayoutID.bringToFront();
         titleTxt = (TextView) findViewById(R.id.titleTxt);
         btn_sidemenu = (Button) findViewById(R.id.btn_menuimg);
         btn_createnew = (Button) findViewById(R.id.btn_createnew);
+//btn_createnew.setOnClickListener(new View.OnClickListener() {
+//    @Override
+//    public void onClick(View v) {
+//       UserProfileFragment.UpdateUserProfile();
+//    }
+//});
         backLayout = (RelativeLayout) findViewById(R.id.backLayout);
         helpLayout = (RelativeLayout) findViewById(R.id.helpLayout);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -88,6 +89,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                 if (id == R.id.new_drawing) {
                     clickEventSlide();
                     fragmentType = "1";
+
                     displayNextFragment();
 //                    fragmentType = "4";
 //                    displayNextFragment();
@@ -108,6 +110,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     fragmentType = "5";
                     displayNextFragment();
                 } else if (id == R.id.profile) {
+                   // hideHeaderLayout();
                     fragmentType = "6";
                     displayNextFragment();
                 } else if (id == R.id.Logout) {
@@ -157,7 +160,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
         Bundle extra = getIntent().getExtras();
         if (extra != null) {
             fragmentType = getIntent().getExtras().getString("fragmentIndex");
-             getIntent().removeExtra("fragmentIndex");
+            getIntent().removeExtra("fragmentIndex");
         }
 
 
@@ -172,12 +175,13 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     break;
                 case "1":
                     setVisibilities(1);
+                    clearBackStack();
                     replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
                     break;
                 case "2":
                     setVisibilities(1);
-                 //   replaceFragmnet(new MyGallery(), R.id.frameLayout, false);
-                    startActivity(new Intent(this,MyGalleryMultiSelect.class));
+                    //   replaceFragmnet(new MyGallery(), R.id.frameLayout, false);
+                    startActivity(new Intent(this, MyGalleryMultiSelect.class));
                     break;
                 case "3":
                     setVisibilities(4);
@@ -193,6 +197,8 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     break;
                 case "6":
                     setVisibilities(2);
+                   // hideHeaderLayout();
+                    fragmentType = "6";
                     replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, true);
                     break;
                 case "7":
@@ -222,42 +228,45 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
     }
 
 
-    public void setVisibilities(int fragNumber){
-        switch (fragNumber){
-            case 1:{
+    public void setVisibilities(int fragNumber) {
+        switch (fragNumber) {
+            case 1: {
                 headerLayoutID.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 nav_logo_img.setVisibility(View.VISIBLE);
                 text_title.setVisibility(View.GONE);
                 btn_createnew.setVisibility(View.GONE);
             }
             break;
-            case 2:{
+            case 2: {
                 headerLayoutID.setBackgroundColor(Color.TRANSPARENT);
                 nav_logo_img.setVisibility(View.GONE);
                 text_title.setVisibility(View.GONE);
                 btn_createnew.setVisibility(View.VISIBLE);
-            }break;
+            }
+            break;
 
-            case 4:{
+            case 4: {
                 headerLayoutID.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 nav_logo_img.setVisibility(View.GONE);
                 text_title.setVisibility(View.VISIBLE);
                 text_title.setText("Members of PiggyLand");
                 btn_createnew.setVisibility(View.VISIBLE);
                 btn_createnew.setBackgroundResource(R.drawable.ic_action_search);
-            }break;
+            }
+            break;
 
-            case 5:{
+            case 5: {
                 headerLayoutID.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 nav_logo_img.setVisibility(View.GONE);
                 text_title.setVisibility(View.VISIBLE);
                 text_title.setText("Message for you");
                 btn_createnew.setVisibility(View.VISIBLE);
                 btn_createnew.setBackgroundResource(R.drawable.ic_action_search);
-            }break;
+            }
+            break;
 
 
-            default:{
+            default: {
                 headerLayoutID.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 nav_logo_img.setVisibility(View.VISIBLE);
                 text_title.setVisibility(View.GONE);
@@ -310,12 +319,12 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
 
         if (id == R.id.new_drawing) {
 
-          //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
+            //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
             // Handle the camera action
         } else if (id == R.id.gallery) {
-          //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
+            //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
         } else if (id == R.id.order) {
-          //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
+            //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
         }
 
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -326,30 +335,36 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(MyGallery.is_in_action_mode)
-        {
+        if (fragmentType == "102") {
             showHeaderLayout();
-            clearActionMain();
-          //  adapter.notifyDataSetChanged();
+            if(MyGallery.is_in_action_mode){
+
+            }else{
+
+            }
         }
 
         if (fragmentType == "4") {
             //  headerLayoutID.setBackgroundColor(Color.TRANSPARENT);
+        } else {
+            //  finish();
         }
-        else {
-          //  finish();
+        if(fragmentType == "6"){
+            setVisibilities(1);
+        }else{
+
         }
-        if (fragmentType ==  "100"){
+        if (fragmentType == "100") {
             showHeaderLayout();
         }
-        if (fragmentType ==  "101"){
+        if (fragmentType == "101") {
 
-            if(hideShow == 0){
+            if (hideShow == 0) {
                 hideHeaderLayout();
-                hideShow ++;
-            }else {
+                hideShow++;
+            } else {
 
-               //hideShow = 1;
+                //hideShow = 1;
                 showHeaderLayout();
                 hideShow = 0;
             }
@@ -358,51 +373,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
         }
     }
 
-    public void clearActionMain()
-    {
-      MyGallery.is_in_action_mode  = false;
-        toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.menu_activity_main);
-        //remove home button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        counterTextView.setVisibility(View.VISIBLE);
-        btn_menuimg.setVisibility(View.VISIBLE);
-        counterTextView.setText("My Gallery");
-      //  counter = 0;
-       // selectionList.clear();
-    }
 
-    public void InflateTool(){
-
-        btn_menuimg = (Button)findViewById(R.id.btn_menuimg);
-
-        counterTextView = (TextView) findViewById(R.id.cnt_text);
-        btnSelectedImgSend = (ImageView) findViewById(R.id.btnSelectedImgSend);
-        btnSelectedImgSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //MyGallery.SendDataToAttachment();
-            }
-        });
-        hideHeaderLayout();
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // toolbar.setTitle("My Gallary");
-        setSupportActionBar(toolbar);
-
-        toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.menu_action_mode);
-
-        counterTextView.setVisibility(View.GONE);
-        btn_menuimg.setVisibility(View.GONE);
-      //  counterTextView.setText("0 item selected");
-
-        //adapter.notifyDataSetChanged();
-        // home button on action bar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       // return true;
-
-    }
 
 
 }

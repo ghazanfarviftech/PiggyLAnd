@@ -22,6 +22,17 @@
             android:background="@drawable/menu_button"
             android:backgroundTint="@color/colorwhite"
             />
+        <Button
+            android:id="@+id/btn_menuBack"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/_1sdp"
+            android:visibility="gone"
+            android:background="@drawable/ic_action_back"
+            android:backgroundTint="@color/colorwhite"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,16 +42,16 @@
             android:textColor="#fff"
             android:textSize="20dp"
             android:paddingLeft="@dimen/_10sdp"
-
+            android:layout_marginLeft="@dimen/_20sdp"
             android:textStyle="italic|bold"
             />
         <ImageView
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/_5sdp"
             android:id="@+id/btnSelectedImgSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_email"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/printer"
             />
     </RelativeLayout>
 </android.support.v7.widget.Toolbar>

@@ -132,6 +132,7 @@ public class ShareArtWorkAdapter extends RecyclerView.Adapter<ShareArtWorkAdapte
             tv_like.setOnClickListener(this);
             comments.setOnClickListener(this);
             img_share.setOnClickListener(this);
+            counter_likes.setOnClickListener(this);
 
 
         }
@@ -145,7 +146,7 @@ public class ShareArtWorkAdapter extends RecyclerView.Adapter<ShareArtWorkAdapte
 
                 case R.id.tv_like:
                     if (onMulticlickListener != null) {
-                        onMulticlickListener.onLikeItemClick(view, getPosition());
+                        onMulticlickListener.onLikeItemClick(getPosition());
 //                        a++;
 //                        counter_likes.setText(""+a );
                     }

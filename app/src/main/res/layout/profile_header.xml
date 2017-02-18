@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customviews="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_alignParentTop="true"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorPrimary"
+    android:layoutDirection="ltr">
+
+    <RelativeLayout
+        android:id="@+id/backLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+
+        android:layout_centerInParent="true"
+
+        android:layoutDirection="ltr">
+
+        <Button
+            android:id="@+id/btn_menuimgprofile"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/menu_button"
+            android:backgroundTint="@color/colorwhite"
+            />
+
+
+
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/helpLayout"
+        android:layout_width="@dimen/x70"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layoutDirection="ltr">
+
+        <Button
+            android:id="@+id/btn_createnewprofile"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/ic_action_edit"
+            android:drawableTint="@color/colorwhite"
+            android:backgroundTint="@android:color/white"
+            />
+    </RelativeLayout>
+</RelativeLayout>

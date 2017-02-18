@@ -236,6 +236,12 @@ public class MyGalleryMultiSelect extends AppCompatActivity implements View.OnLo
         }
     }
 
+
+
+
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.it_delete)
@@ -255,14 +261,14 @@ public class MyGalleryMultiSelect extends AppCompatActivity implements View.OnLo
     }
 
     private void AttachImagestoEmail(){
-      //  Gson gson = new Gson();
-       // String myJson = gson.toJson(selectionList);
+        MyGallaryMultiSelectAdapter recyclerAdapter = (MyGallaryMultiSelectAdapter) adapter;
+        recyclerAdapter.updateAdapter(selectionList);
+
 
         Intent i = new Intent(this, PrintOrderActivity.class);
         i.putExtra("MyClass", selectionList);
         startActivity(i);
-
-      //  startActivity(new Intent(this, PrintOrderActivity.class));
+        clearActionM();
     }
 
     public void clearActionM()

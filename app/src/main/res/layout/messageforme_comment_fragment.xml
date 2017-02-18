@@ -8,8 +8,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/number_of_like_box"
-        android:text="Number of Likes goes here"
+        android:id="@+id/number_of_comments_box"
+        android:text="Total Comments"
         android:maxLines="1"
         android:minLines="1"
         android:layout_margin="16dp"
@@ -23,7 +23,7 @@
         android:layout_weight="0"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/comment_recycler_view"
+        android:id="@+id/M_comment_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
@@ -35,32 +35,6 @@
         android:background="@color/colorblack"
         android:layout_weight="0"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:orientation="horizontal">
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/commentEdittext"
-            android:background="@null"
-            android:paddingLeft="16dp"
-            android:textSize="16sp"
-            android:maxLines="4"
-            android:inputType="textMultiLine"
-            android:hint="Add a comment here" />
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:id="@+id/send_comment"
-            android:tint="@color/colorblack"
-            android:src="@drawable/ic_action_send_now"
-        android:layout_weight="0" />
-
-    </LinearLayout>
 
 </LinearLayout>

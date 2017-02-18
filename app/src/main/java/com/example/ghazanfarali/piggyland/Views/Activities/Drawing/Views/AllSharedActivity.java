@@ -55,8 +55,8 @@ public class AllSharedActivity extends MasterFragment {
         rv_listview_shareArtWork.setAdapter(shareArtWorkAdapter);
         shareArtWorkAdapter.setonMulticlickListener(new MultiClickListner() {
             @Override
-            public void onLikeItemClick(View view, int position) {
-                counter_likes = (TextView)view;
+            public void onLikeItemClick( int position) {
+                counter_likes =(TextView) view.findViewById(R.id.counter_likes);
                 a++;
                 counter_likes.setText(""+a );
             }

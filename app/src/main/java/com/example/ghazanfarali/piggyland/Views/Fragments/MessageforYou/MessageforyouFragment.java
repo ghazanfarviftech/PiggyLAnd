@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.example.ghazanfarali.piggyland.Controls.OnItemClickListener;
 import com.example.ghazanfarali.piggyland.R;
@@ -75,7 +74,8 @@ public class MessageforyouFragment extends MasterFragment {
             @Override
             public void onItemClick(View view, int position) {
                 //Toast.makeText(getActivity(),""+position,Toast.LENGTH_LONG).show();
-                showRelatedDocumentsDialog();
+               // showRelatedDocumentsDialog();
+                userProfileActivity.replaceFragmnet(new Message_Comments_fragment(), R.id.frameLayout, true);
             }
 
         });

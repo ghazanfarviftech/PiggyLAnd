@@ -86,6 +86,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".Views.Activities.SignUp.Views.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Views.Activities.Forget_PassActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

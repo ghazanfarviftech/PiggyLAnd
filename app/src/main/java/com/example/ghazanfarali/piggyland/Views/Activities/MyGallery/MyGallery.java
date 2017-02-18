@@ -10,22 +10,22 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.ghazanfarali.piggyland.Controls.GallaryClickListner;
-import com.example.ghazanfarali.piggyland.Photo;
 import com.example.ghazanfarali.piggyland.R;
+import com.example.ghazanfarali.piggyland.Utils.GlobalUtils;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter.MyGallaryITemDecor;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter.MygallaryAdapter;
+import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.beans.MyGallaryMultiSelectITems;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.beans.mygallarylist;
 import com.example.ghazanfarali.piggyland.Views.Activities.PrintOrder.PrintOrderActivity;
 import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.MasterFragment;
@@ -48,12 +48,14 @@ public class MyGallery extends MasterFragment {
     RecyclerView.LayoutManager layoutManager;
     MygallaryAdapter adapter;
 
-    ArrayList<Photo> photosList = new ArrayList<Photo>();
-    ArrayList<Photo> selectionList = new ArrayList<Photo>();
+    ArrayList<MyGallaryMultiSelectITems> photosList = new ArrayList<MyGallaryMultiSelectITems>();
+    ArrayList<MyGallaryMultiSelectITems> selectionList = new ArrayList<MyGallaryMultiSelectITems>();
     private GridLayoutManager lLayout;
     int counter = 0;
     MasterFragment mContext;
     public static boolean is_in_action_mode = false;
+    Button btn_menuimg,btn_menuBack;
+    ImageView btnSelectedImgSend;
 
     //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ public class MyGallery extends MasterFragment {
         if (view == null) {
             view = inflater.inflate(R.layout.mygallery_activity, container, false);
             // mContext.getApplicationContext();
+            userProfileActivity.fragmentType = "102";
             recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
             tv_no_data_smart_tools = (TextView) view.findViewById(R.id.tv_no_data_smart_tools);
             lLayout = new GridLayoutManager(getActivity(), 2);
@@ -79,7 +82,31 @@ public class MyGallery extends MasterFragment {
             recyclerView.addItemDecoration(new MyGallaryITemDecor(getActivity()));
             counterTextView = (TextView) view.findViewById(R.id.cnt_text);
             counterTextView.setVisibility(View.GONE);
+            btn_menuimg = (Button) view.findViewById(R.id.btn_menuimg);
+            btn_menuBack = (Button) view.findViewById(R.id.btn_menuBack);
+            btn_menuBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clearActionM();
+                }
+            });
+            btnSelectedImgSend = (ImageView) view.findViewById(R.id.btnSelectedImgSend);
+            btn_menuimg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    userProfileActivity.clickEventSlide();
+                }
+            });
+
+            btnSelectedImgSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   // AttachImagestoEmail();
+                    SendDataToAttachment();
+                }
+            });
             initUI();
+
 
 //            startService();
         } else {
@@ -109,14 +136,10 @@ public class MyGallery extends MasterFragment {
     public void initUI() {
         super.initUI();
         loadPhotosObjects();
-//        toolbar = (Toolbar)view.findViewById(R.id.toolbar);
-//        toolbar.setTitle("My Gallary");
-//        setSupportActionBar(toolbar);
-        // initialise recycler view
 
         if (prepareListData() != null) {
 
-            adapter = new MygallaryAdapter(photosList, mContext);
+            adapter = new MygallaryAdapter(photosList, getActivity());
             recyclerView.setAdapter(adapter);
 
             adapter.setOnItemClickListener(new GallaryClickListner() {
@@ -125,8 +148,11 @@ public class MyGallery extends MasterFragment {
 
                     is_in_action_mode = true;
 
-                    userProfileActivity.InflateTool();
-
+                    //  userProfileActivity.InflateTool();
+                    counterTextView.setVisibility(View.VISIBLE);
+                    btn_menuimg.setVisibility(View.GONE);
+                    btn_menuBack.setVisibility(View.VISIBLE);
+                    counterTextView.setText("0 " + R.string.itemSelectedMYGallary);
                     adapter.notifyDataSetChanged();
                 }
 
@@ -141,37 +167,6 @@ public class MyGallery extends MasterFragment {
             tv_no_data_smart_tools.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         }
-
-        //smartToolsList = new ArrayList<>();
-
-        /*rv_list_gallary = (RecyclerView)findViewById(R.id.recyclerview);
-        rv_list_gallary.addItemDecoration(new MyGallaryITemDecor(this));
-
-      //  smartToolsList = prepareListData();
-        mygallaryAdapter = new MygallaryAdapter(photosList,this);
-        rv_list_gallary.setAdapter(mygallaryAdapter);*/
-
-        /*mygallaryAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                // Toast.makeText(MyGallery.this,smartToolsList.indexOf(position),Toast.LENGTH_LONG).show();
-                generatePhotoDetail();
-                Photo image = photosList.get(position);
-                showImage(image.getImageUrl().getAbsolutePath(),image.getDescription(),position);
-            }
-        });*/
-
-
-//                .setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                if (position == 0) {
-//                    //getDockActivity().addDockableFragment(getString(R.string.Smarttool), new QrReaderFragment().newInstance());
-//                    Toast.makeText(MyGallery.this,smartToolsList.indexOf(position),Toast.LENGTH_LONG).show();
-//
-//                }
-//            }
-//        });
 
 
     }
@@ -203,92 +198,8 @@ public class MyGallery extends MasterFragment {
 
     int currentPosition = 0;
 
-    private void showImage(String url, String description, int currentPositions) {
-        txtDescriptionGallery.setText(description);
-        txtCurrentPosition.setText(String.valueOf(currentPositions + 1));
-        txtPhotosTotal.setText(String.valueOf(photosList.size()));
 
-        Glide
-                .with(MyGallery.this) // safer!
-                .load(url)
-                .asBitmap()
-                .into(imgPhoto);
 
-       /* BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-        Bitmap bitmap = BitmapFactory.decodeFile(url, options);
-        //selected_photo.setImageBitmap(bitmap);
-        imgPhoto.setImageBitmap(bitmap);*/
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        viewDialog.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                int action = motionEvent.getAction();
-
-                if (action == MotionEvent.ACTION_DOWN) {
-                    dx = motionEvent.getX();
-                    dy = motionEvent.getY();
-                    return true;
-
-                } else if (action == MotionEvent.ACTION_UP) {
-                    ux = motionEvent.getX();
-                    uy = motionEvent.getY();
-
-                    float deltaX = dx - ux;
-                    float deltaY = dy - uy;
-
-                    if (Math.abs(deltaX) > Math.abs(deltaY))
-                        if (Math.abs(deltaX) > MIN_DISTANCE)
-                            // Before
-                            if (deltaX < 0) {
-                                if (currentPosition == 0)
-                                    currentPosition = photosList.size() - 1;
-                                else
-                                    currentPosition--;
-
-                                Photo photo = photosList.get(currentPosition);
-                                showImage(photo.getImageUrl().getAbsolutePath(), photo.getDescription(), currentPosition);
-                                return true;
-                            }
-
-                    // Next
-                    if (deltaX > 0) {
-                        if (currentPosition == photosList.size() - 1)
-                            currentPosition = 0;
-                        else
-                            currentPosition++;
-
-                        Photo photo = photosList.get(currentPosition);
-                        showImage(photo.getImageUrl().getAbsolutePath(), photo.getDescription(), currentPosition);
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-
-        builder.setContentView(viewDialog);
-        builder.show();
-
-    }
-   /* @Override
-    public void onResume() {
-        super.onResume();
-        lLayout = new GridLayoutManager(this, 2);
-        rv_list_gallary.setHasFixedSize(true);
-        rv_list_gallary.setLayoutManager(lLayout);
-//        int viewHeight = (int) (getResources().getDimension(R.dimen.x150) * 2);
-//        rv_list_gallary.getLayoutParams().height = viewHeight;
-
-//        if (prefHelper.getApplicationLanguage().equalsIgnoreCase(CommonConstants.LANG_ARABIC)) {
-//            lLayout.setReverseLayout(true);
-//        }
-    }*/
 
     private ArrayList<mygallarylist> prepareListData() {
 
@@ -376,65 +287,48 @@ public class MyGallery extends MasterFragment {
         } else {
             photosList = new ArrayList<>();
             for (int i = 0; i < files.size(); i++) {
-                Photo photo1 = new Photo();
-                photo1.setImageUrl(files.get(i));
-                photo1.setDescription("Android");
+                MyGallaryMultiSelectITems photo1 = new MyGallaryMultiSelectITems();
+                photo1.setmygallaryImageURL(files.get(i).toString());
+                photo1.setmygallaryTitle("Android");
                 photo1.setmygallarycheckbox(true);
                 photosList.add(photo1);
             }
         }
-        //SampleGalleryAdapter adapter = new SampleGalleryAdapter(Main2Activity.this,photosList);
-        //mMultiChoiceRecyclerView.setAdapter(adapter);
+
     }
 
-    //adding menu to toolbar
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_activity_main, menu);
-//        return true;
-//    }
 
-
-//    @Override
-//    public boolean onLongClick(View v) {
-//     //   userProfileActivity.InflateTool();
-//        is_in_action_mode = true;
-//        counterTextView.setVisibility(View.VISIBLE);
-//        adapter.notifyDataSetChanged();
-//        // home button on action bar
-//        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        return true;
-//    }
 
     public void prepareselection(View view, int position) {
-       // userProfileActivity.InflateTool();
+        // userProfileActivity.InflateTool();
         //change view to checkbox
         if (((CheckBox) view).isChecked()) {
             selectionList.add(photosList.get(position));
-           // counter++;
-           // updateCnt(counter);
+             counter++;
+             updateCnt(counter);
         } else {
             selectionList.remove(photosList.get(position));
-           // counter--;
-          //  updateCnt(counter);
+             counter--;
+              updateCnt(counter);
         }
     }
 
 
+    public void SendDataToAttachment() {
 
-    public void SendDataToAttachment(){
         MygallaryAdapter recyclerAdapter = (MygallaryAdapter) adapter;
         recyclerAdapter.updateAdapter(selectionList);
         AttachImagestoEmail();
-       userProfileActivity.clearActionMain();
+        clearActionM();
+        //  userProfileActivity.clearActionMain();
     }
 
 
     public void updateCnt(int counter) {
         if (counter == 0) {
-            counterTextView.setText("0 item selected");
+            counterTextView.setText("0 " + R.string.itemSelectedMYGallary);
         } else {
-            counterTextView.setText(counter + " item selected");
+            counterTextView.setText(counter + " "+ R.string.itemSelectedMYGallary);
         }
     }
 
@@ -456,38 +350,34 @@ public class MyGallery extends MasterFragment {
     private void AttachImagestoEmail() {
         //  Gson gson = new Gson();
         // String myJson = gson.toJson(selectionList);
+if(selectionList.size() >0){
+    MygallaryAdapter recyclerAdapter = (MygallaryAdapter) adapter;
+    recyclerAdapter.updateAdapter(selectionList);
 
-        Intent i = new Intent(getActivity(), PrintOrderActivity.class);
-        i.putExtra("MyClass", selectionList);
-        startActivity(i);
+
+    Intent i = new Intent(getActivity(), PrintOrderActivity.class);
+    i.putExtra("MyClass", selectionList);
+    startActivity(i);
+    clearActionM();
+}else {
+    GlobalUtils.showErrorDialog(getActivity(),"Please Select Image","Alert");
+}
 
         //  startActivity(new Intent(this, PrintOrderActivity.class));
     }
 
     public void clearActionM() {
         is_in_action_mode = false;
-//        toolbar.getMenu().clear();
-//        toolbar.inflateMenu(R.menu.menu_activity_main);
-        //remove home button
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        btn_menuimg.setVisibility(View.VISIBLE);
+        btn_menuBack.setVisibility(View.GONE);
         counterTextView.setVisibility(View.GONE);
         counterTextView.setText("0 item selected");
         counter = 0;
         selectionList.clear();
+        adapter.notifyDataSetChanged();
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if(is_in_action_mode)
-//        {
-//            clearActionM();
-//            adapter.notifyDataSetChanged();
-//        }
-//        else {
-//            super.onBackPressed();
-//        }
-//
-//    }
+
 
 }
 

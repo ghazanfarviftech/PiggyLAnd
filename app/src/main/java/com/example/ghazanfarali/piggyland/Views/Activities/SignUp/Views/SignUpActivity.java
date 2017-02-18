@@ -7,7 +7,6 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -18,13 +17,14 @@ import com.example.ghazanfarali.piggyland.EndPoint.ApiClient;
 import com.example.ghazanfarali.piggyland.EndPoint.ApiInterface;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.LoginResponse;
 import com.example.ghazanfarali.piggyland.R;
+import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends MasterActivity {
 
     Button btn_createaccount;
     TextInputLayout til_username, til_password,ed_email,ed_contact;
@@ -50,6 +50,9 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(tei_email.getText().length() > 0  && tei_password.getText().length() > 0)
                 {
+
+
+
                     String confrm = tei_contact.getText().toString();
                     String password = tei_password.getText().toString();
                     if(confrm.contentEquals(password))
@@ -64,8 +67,11 @@ public class SignUpActivity extends AppCompatActivity {
                             WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
                             WifiInfo info = manager.getConnectionInfo();
                             String address = info.getMacAddress();
-                        /*Call<Task> call = taskService.createTask(task);*/
-                            //Call<LoginResponse> call = apiService.getSignUp(tie_username.getText().toString(),tei_password.getText().toString(),tei_email.getText().toString(),tei_contact.getText().toString(),address);
+
+                            sharedPrefrencesManger.setEmail(tei_email.getText().toString());
+                            sharedPrefrencesManger.setPassword(tei_password.getText().toString());
+                            sharedPrefrencesManger.setuserMac(address);
+
                             Call<LoginResponse> call = apiService.getSignUp(tei_email.getText().toString(),tei_password.getText().toString(),address);
                             call.enqueue(new Callback<LoginResponse>() {
                                 @Override
@@ -73,6 +79,8 @@ public class SignUpActivity extends AppCompatActivity {
                                     LoginResponse statusCode = response.body();//code();
                                     if(statusCode.getStatus().contentEquals("success"))
                                     {
+
+                                        Log.e("Sign up response",response.body().getStatus());
                                         Intent in = new Intent(SignUpActivity.this, UserProfileActivity.class);
                                         in.putExtra("fragmentIndex","0");
                                         startActivity(in);

@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ghazanfarali.piggyland.EndPoint.ApiClient;
@@ -26,6 +27,7 @@ import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Utils.MarshmallowPermissions;
 import com.example.ghazanfarali.piggyland.Utils.SharedPrefrencesManger;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
+import com.example.ghazanfarali.piggyland.Views.Activities.Forget_PassActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.SignUp.Views.SignUpActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity;
 import com.facebook.CallbackManager;
@@ -69,6 +71,7 @@ public class LoginActivity extends MasterActivity implements
     MarshmallowPermissions mp;
     public SharedPrefrencesManger sharedPrefrencesManger;
     String UserName = "";
+    TextView forgotpassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,12 +113,20 @@ public class LoginActivity extends MasterActivity implements
 //        btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
 //        imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
         btn_signUp = (Button) findViewById(R.id.btn_signUp);
+        forgotpassword = (TextView)findViewById(R.id.forgotpassword);
         // btnSignIn.setOnClickListener(this);
         //  btnSignOut.setOnClickListener(this);
     }
 
 
     public void initListner() {
+
+        forgotpassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,Forget_PassActivity.class));
+            }
+        });
 
         btn_signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,7 +213,11 @@ public class LoginActivity extends MasterActivity implements
                                 LoginResponse statusCode = response.body();//code();
                                 if (statusCode.getStatus().contentEquals("success")) {
                                     userName = tie_username.getText().toString();
+                                    userPassword = tei_password.getText().toString();
                                     sharedPrefrencesManger.setEmail(userName);
+                                    sharedPrefrencesManger.setuserID(response.body().getProfile().getId());
+                                    sharedPrefrencesManger.setPassword(userPassword);
+                                    sharedPrefrencesManger.setuserAuth(response.body().getAuth());
 
                                     startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
                                     finish();

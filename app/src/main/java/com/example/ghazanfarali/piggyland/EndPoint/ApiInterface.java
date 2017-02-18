@@ -5,6 +5,8 @@ package com.example.ghazanfarali.piggyland.EndPoint;
  */
 
 
+import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.EditProfileResponse;
+import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.ForgotPsswordResponse;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.LoginResponse;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.SaveToGalleryResponse;
 
@@ -33,7 +35,10 @@ public interface ApiInterface {
 //https://drawnow.000webhostapp.com/api/index.php?menu=editProfile
     @FormUrlEncoded
     @POST("index.php?menu=editProfile")
-    Call<String> editProfile(@Field("username") String username, @Field("email") String email, @Field("image") String image, @Field("imgName") String imgName, @Field("contact") String contact, @Field("mac") String mac);
+    Call<EditProfileResponse> editProfile(@Field("username") String username, @Field("email") String email, @Field("image") String image, @Field("imgName") String imgName, @Field("contact") String contact, @Field("mac") String mac);
 
+    @FormUrlEncoded
+    @POST("index.php?menu=forgetPassword")
+    Call<ForgotPsswordResponse> forgetPassword(@Field("email") String username);
 
 }

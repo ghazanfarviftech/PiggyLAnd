@@ -63,6 +63,7 @@ public class StartScreenFragment extends MasterFragment {
         gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                userProfileActivity.hideHeaderLayout();
                 userProfileActivity.replaceFragmnet(new MyGallery(), R.id.frameLayout, true);
 //                Intent i = new Intent(getActivity(),MyGalleryMultiSelect.class);
 //                startActivity(i);

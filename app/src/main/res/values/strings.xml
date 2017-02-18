@@ -48,4 +48,8 @@
     <string name="Logout">Logout</string>
 
 
+    <!-- my gallery  -->
+    <string name="itemSelectedMYGallary">item selected</string>
+    <string name="pleaseselectImages">Please Select Image</string>
+
 </resources>

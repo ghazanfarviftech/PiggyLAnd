@@ -1,5 +1,6 @@
 package com.example.ghazanfarali.piggyland.Views.Fragments.DrawingFragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +26,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.ghazanfarali.piggyland.CanvasView;
 import com.example.ghazanfarali.piggyland.Controls.OnItemClickListener;
 import com.example.ghazanfarali.piggyland.EndPoint.ApiClient;
@@ -32,7 +36,6 @@ import com.example.ghazanfarali.piggyland.EndPoint.ApiInterface;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.SaveToGalleryResponse;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Utils.Defines;
-import com.example.ghazanfarali.piggyland.Utils.GlobalUtils;
 import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.adapters.MygallaryAdapter_Grid;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter.MyGallaryITemDecor;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.beans.mygallarylist;
@@ -63,11 +66,11 @@ import retrofit2.Response;
 public class MainDrawingFragment extends MasterFragment {
     private View view;
     private CanvasView canvas = null;
-    Button btn_write_text,btn_draw,btn_pallete,btn_undo,btn_save,btn_load_image;
+    Button btn_write_text, btn_draw, btn_pallete, btn_undo, btn_save, btn_load_image;
     private int currentBackgroundColor = 0xffffffff;
-    ImageView back,undo,draw,colorPicker,rubber,save,camera_pick,shapes,text_write;
+    ImageView back, undo, draw, colorPicker, rubber, save, camera_pick, shapes, text_write;
     boolean bottom_sheet = false;
-    FrameLayout canvas_frame,main_frame;
+    FrameLayout canvas_frame, main_frame;
 
     private BottomSheetBehavior bottomSheetBehavior;
 
@@ -83,7 +86,7 @@ public class MainDrawingFragment extends MasterFragment {
             back.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   // finish();
+                    // finish();
                     userProfileActivity.onBackPressed();
                 }
             });
@@ -156,8 +159,6 @@ public class MainDrawingFragment extends MasterFragment {
             });
 
 
-
-
             camera_pick.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -166,24 +167,22 @@ public class MainDrawingFragment extends MasterFragment {
             });
 
 
-
-
             shapes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    if(!bottom_sheet) {
+                    if (!bottom_sheet) {
                         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                        TextView view_set_basicshapes = (TextView)view.findViewById(R.id.view_set_basicshapes);
+                        TextView view_set_basicshapes = (TextView) view.findViewById(R.id.view_set_basicshapes);
                         view_set_basicshapes.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                LinearLayout View_Accessories = (LinearLayout)view.findViewById(R.id.View_Accessories);
+                                LinearLayout View_Accessories = (LinearLayout) view.findViewById(R.id.View_Accessories);
                                 View_Accessories.setVisibility(View.INVISIBLE);
-                                LinearLayout View_BasicShapes = (LinearLayout)view.findViewById(R.id.View_BasicShapes);
+                                LinearLayout View_BasicShapes = (LinearLayout) view.findViewById(R.id.View_BasicShapes);
                                 View_BasicShapes.setVisibility(View.VISIBLE);
 
-                                ImageView draw_circle = (ImageView)view.findViewById(R.id.draw_circle);
+                                ImageView draw_circle = (ImageView) view.findViewById(R.id.draw_circle);
                                 draw_circle.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
@@ -194,7 +193,7 @@ public class MainDrawingFragment extends MasterFragment {
                                     }
                                 });
 
-                                ImageView draw_square = (ImageView)view.findViewById(R.id.draw_square);
+                                ImageView draw_square = (ImageView) view.findViewById(R.id.draw_square);
                                 draw_square.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
@@ -206,7 +205,7 @@ public class MainDrawingFragment extends MasterFragment {
                                 });
 
 
-                                ImageView draw_triangle = (ImageView)view.findViewById(R.id.draw_triangle);
+                                ImageView draw_triangle = (ImageView) view.findViewById(R.id.draw_triangle);
                                 draw_triangle.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
@@ -219,13 +218,13 @@ public class MainDrawingFragment extends MasterFragment {
 
                             }
                         });
-                        TextView view_set_accessorries = (TextView)view.findViewById(R.id.view_set_accessorries);
+                        TextView view_set_accessorries = (TextView) view.findViewById(R.id.view_set_accessorries);
                         view_set_accessorries.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                LinearLayout View_Accessories = (LinearLayout)view.findViewById(R.id.View_Accessories);
+                                LinearLayout View_Accessories = (LinearLayout) view.findViewById(R.id.View_Accessories);
                                 View_Accessories.setVisibility(View.VISIBLE);
-                                LinearLayout View_BasicShapes = (LinearLayout)view.findViewById(R.id.View_BasicShapes);
+                                LinearLayout View_BasicShapes = (LinearLayout) view.findViewById(R.id.View_BasicShapes);
                                 View_BasicShapes.setVisibility(View.INVISIBLE);
                             }
                         });
@@ -234,32 +233,30 @@ public class MainDrawingFragment extends MasterFragment {
                         ArrayList<mygallarylist> smartToolsList;
                         MygallaryAdapter_Grid mygallaryAdapter;
                         smartToolsList = new ArrayList<>();
-                        rv_list_gallary = (RecyclerView)view.findViewById(R.id.rv_listview_mygallary);
+                        rv_list_gallary = (RecyclerView) view.findViewById(R.id.rv_listview_mygallary);
                         rv_list_gallary.addItemDecoration(new MyGallaryITemDecor(getActivity()));
 
                         smartToolsList = prepareListData();
-                        mygallaryAdapter = new MygallaryAdapter_Grid(getActivity(),smartToolsList);
+                        mygallaryAdapter = new MygallaryAdapter_Grid(getActivity(), smartToolsList);
                         rv_list_gallary.setAdapter(mygallaryAdapter);
 
                         mygallaryAdapter.setOnItemClickListener(new OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                Toast.makeText(getActivity(),""+position,Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "" + position, Toast.LENGTH_LONG).show();
                             }
                         });
                         lLayout = new GridLayoutManager(getActivity(), 4);
                         rv_list_gallary.setHasFixedSize(true);
                         rv_list_gallary.setLayoutManager(lLayout);
 
-                    }else{
+                    } else {
                         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                         bottom_sheet = false;
                     }
 
                 }
             });
-
-
 
 
         } else {
@@ -275,20 +272,20 @@ public class MainDrawingFragment extends MasterFragment {
         super.initUI();
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.bottomSheetLayout));
 
-        canvas = (CanvasView)view.findViewById(R.id.canvas);
+        canvas = (CanvasView) view.findViewById(R.id.canvas);
 
-        canvas_frame = (FrameLayout)view.findViewById(R.id.frame_main);
+        canvas_frame = (FrameLayout) view.findViewById(R.id.frame_main);
 
-        main_frame = (FrameLayout)view.findViewById(R.id.main_frame);
-        back = (ImageView)view.findViewById(R.id.back);
-        draw = (ImageView)view.findViewById(R.id.draw);
-        colorPicker = (ImageView)view.findViewById(R.id.colorPicker);
-        rubber = (ImageView)view.findViewById(R.id.rubber);
-        save = (ImageView)view.findViewById(R.id.save);
-        camera_pick = (ImageView)view.findViewById(R.id.camera_pick);
-        shapes = (ImageView)view.findViewById(R.id.shapes);
+        main_frame = (FrameLayout) view.findViewById(R.id.main_frame);
+        back = (ImageView) view.findViewById(R.id.back);
+        draw = (ImageView) view.findViewById(R.id.draw);
+        colorPicker = (ImageView) view.findViewById(R.id.colorPicker);
+        rubber = (ImageView) view.findViewById(R.id.rubber);
+        save = (ImageView) view.findViewById(R.id.save);
+        camera_pick = (ImageView) view.findViewById(R.id.camera_pick);
+        shapes = (ImageView) view.findViewById(R.id.shapes);
 
-        undo = (ImageView)view.findViewById(R.id.undo);
+        undo = (ImageView) view.findViewById(R.id.undo);
 
     }
 
@@ -343,9 +340,9 @@ public class MainDrawingFragment extends MasterFragment {
     }
 
 
+    String imageMain, imageName;
+    String encodedImage, encodedImage2;
 
-    String imageMain,imageName;
-    String encodedImage,encodedImage2;
     public void showAttachmentSave() {
         final Dialog addImageDialog;
         // popup..
@@ -377,7 +374,7 @@ public class MainDrawingFragment extends MasterFragment {
                 canvas_frame.setDrawingCacheEnabled(true);
                 canvas_frame.buildDrawingCache();
                 Bitmap bm = canvas_frame.getDrawingCache();
-                byte[]  bytess= canvas.getBitmapAsByteArray(Bitmap.CompressFormat.PNG, 100);
+                byte[] bytess = canvas.getBitmapAsByteArray(Bitmap.CompressFormat.PNG, 100);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] bytes = stream.toByteArray();
@@ -390,13 +387,13 @@ public class MainDrawingFragment extends MasterFragment {
                 byte[] bytesain = streambmMain.toByteArray();
                 encodedImage = Base64.encodeToString(bytesain, Base64.DEFAULT);
                 // byte[] bytes = canvas.getBitmapAsByteArray(Bitmap.CompressFormat.PNG, 100);
-                File file = new File(android.os.Environment.getExternalStorageDirectory()+"/","PiggyLandShare");
+                File file = new File(android.os.Environment.getExternalStorageDirectory() + "/", "PiggyLandShare");
                 File f = null;
-                if(!file.exists()) {
+                if (!file.exists()) {
                     file.mkdirs();
                     f = new File(file + "/", imageMain + ".jpg");
                     imageName = f.getName();
-                }else{
+                } else {
                     f = new File(file + "/", imageMain + ".jpg");
                     imageName = f.getName();
                 }
@@ -406,7 +403,7 @@ public class MainDrawingFragment extends MasterFragment {
                     fos.write(bytesain);
                     fos.flush();
                     fos.close();
-                    Toast.makeText(getActivity(),"File Saved",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "File Saved", Toast.LENGTH_SHORT).show();
                     main_frame.destroyDrawingCache();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -418,13 +415,13 @@ public class MainDrawingFragment extends MasterFragment {
 //                i.putExtra("fileDir","shareToPublic");
 //                startActivityForResult(i, 3);
 
-                Bundle bundle=new Bundle();
-                bundle.putString("fileName",f.getAbsolutePath());
-                bundle.putString("fileDir","shareToPublic");
-                bundle.putString("imagename",imageName);
-                ShareYourDrawing fragobj=new ShareYourDrawing();
+                Bundle bundle = new Bundle();
+                bundle.putString("fileName", f.getAbsolutePath());
+                bundle.putString("fileDir", "shareToPublic");
+                bundle.putString("imagename", imageName);
+                ShareYourDrawing fragobj = new ShareYourDrawing();
                 fragobj.setArguments(bundle);
-                setTargetFragment(fragobj,3);
+                setTargetFragment(fragobj, 3);
                 userProfileActivity.replaceFragmnet(fragobj, R.id.frameLayout, true);
 
             }
@@ -440,7 +437,7 @@ public class MainDrawingFragment extends MasterFragment {
                 canvas_frame.setDrawingCacheEnabled(true);
                 canvas_frame.buildDrawingCache();
                 Bitmap bm = canvas_frame.getDrawingCache();
-                byte[]  bytess= canvas.getBitmapAsByteArray(Bitmap.CompressFormat.PNG, 100);
+                byte[] bytess = canvas.getBitmapAsByteArray(Bitmap.CompressFormat.PNG, 100);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] bytes = stream.toByteArray();
@@ -454,15 +451,15 @@ public class MainDrawingFragment extends MasterFragment {
 
                 encodedImage2 = Base64.encodeToString(bytesain, Base64.DEFAULT);
 
-                byte[] combined = ArrayUtils.addAll(bytess,bytes);
+                byte[] combined = ArrayUtils.addAll(bytess, bytes);
 
-                File file = new File(android.os.Environment.getExternalStorageDirectory()+"/","PiggyLand");
+                File file = new File(android.os.Environment.getExternalStorageDirectory() + "/", "PiggyLand");
                 File f = null;
-                if(!file.exists()) {
+                if (!file.exists()) {
                     file.mkdirs();
                     f = new File(file + "/", imageMain + ".jpg");
                     imageName = f.getName();
-                }else{
+                } else {
                     f = new File(file + "/", imageMain + ".jpg");
                     imageName = f.getName();
                     main_frame.destroyDrawingCache();
@@ -475,7 +472,7 @@ public class MainDrawingFragment extends MasterFragment {
                     fos.flush();
                     fos.close();
 
-                    Toast.makeText(getActivity(),"File Saved",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "File Saved", Toast.LENGTH_SHORT).show();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -486,10 +483,10 @@ public class MainDrawingFragment extends MasterFragment {
 //                i.putExtra("fileDir","saveToGallery");
 //                startActivityForResult(i, 4);
 
-                Bundle bundle=new Bundle();
-                bundle.putString("fileName",f.getAbsolutePath());
-                bundle.putString("fileDir","saveToGallery");
-                ShareYourDrawing fragobj=new ShareYourDrawing();
+                Bundle bundle = new Bundle();
+                bundle.putString("fileName", f.getAbsolutePath());
+                bundle.putString("fileDir", "saveToGallery");
+                ShareYourDrawing fragobj = new ShareYourDrawing();
                 fragobj.setArguments(bundle);
 //setTargetFragment(fragobj,4);
                 userProfileActivity.replaceFragmnet(fragobj, R.id.frameLayout, true);
@@ -503,21 +500,20 @@ public class MainDrawingFragment extends MasterFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(Defines.is_shareToPublic){
-         //   Defines.is_shareToPublic = false;
+        if (Defines.is_shareToPublic) {
+            //   Defines.is_shareToPublic = false;
 
             ShareActvityResult();
 
-        }else if (Defines.is_saveToGallery) {
+        } else if (Defines.is_saveToGallery) {
             SaveToGalleryActivityResult();
         }
-
 
 
     }
 
 
-    private void ResetShareDefines(){
+    private void ResetShareDefines() {
 
         Defines.is_shareToPublic = false;
         Defines.is_saveToGallery = false;
@@ -527,76 +523,13 @@ public class MainDrawingFragment extends MasterFragment {
     }
 
 
-
-    private void ShareActvityResult(){
-        Toast.makeText(getActivity(),"got result",Toast.LENGTH_SHORT).show();
-if (GlobalUtils.isConnected(getActivity(),true)){
-return;
-}
-
-            if(!Defines.is_shareToPublic)
-            {
-
-            }else {
-                String imageTitle = Defines.Share_title;
-                String Description = Defines.Share_description;
-                String FullPath = imageName;//bundle.getString("FullPath");
+    private void ShareActvityResult() {
+        // Toast.makeText(getActivity(),"got result",Toast.LENGTH_SHORT).show();
 
 
-                try {
-                    ApiInterface apiService =
-                            ApiClient.getClient().create(ApiInterface.class);
-                           /* *//*Login task = new Login("fazila", "fazila", "123444");*//*
-                            Gson gson = new Gson();
-                            gson.toJson(task);*/
+        if (!Defines.is_shareToPublic) {
 
-
-
-                    Call<SaveToGalleryResponse> call = apiService.saveImageToServer(encodedImage,FullPath,Description,imageTitle,"1");
-
-                    call.enqueue(new Callback<SaveToGalleryResponse>() {
-                        @Override
-                        public void onResponse(Call<SaveToGalleryResponse> call, Response<SaveToGalleryResponse> response) {
-                            SaveToGalleryResponse statusCode = response.body();//code();
-                            if(statusCode.getStatus().contentEquals("Success"))
-                            {
-
-                                Toast.makeText(getActivity(),"image send",Toast.LENGTH_LONG).show();
-                                //startActivity(new Intent(LoginActivity.this, StartActivity.class));
-                            }else{
-                                // Toast.makeText(Drawing2Activity.this,"UserName/Password Incorrect",Toast.LENGTH_SHORT).show();
-                            }
-
-                            //recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
-                        }
-
-                        @Override
-                        public void onFailure(Call<SaveToGalleryResponse> call, Throwable t) {
-                            // Log error here since request failed
-                            Log.e("", t.toString());
-                        }
-                    });
-                } catch (Exception e) {
-                    e.getLocalizedMessage();
-                }
-
-
-          //  userProfileActivity.onBackPressed();
-        }
-
-        ResetShareDefines();
-    }
-
-private void SaveToGalleryActivityResult(){
-    if (GlobalUtils.isConnected(getActivity(),true)){
-        return;
-    }
-
-
-        if(!Defines.is_saveToGallery)
-        {
-
-        }else {
+        } else {
             String imageTitle = Defines.Share_title;
             String Description = Defines.Share_description;
             String FullPath = imageName;//bundle.getString("FullPath");
@@ -605,22 +538,64 @@ private void SaveToGalleryActivityResult(){
             try {
                 ApiInterface apiService =
                         ApiClient.getClient().create(ApiInterface.class);
-                           /* *//*Login task = new Login("fazila", "fazila", "123444");*//*
-                            Gson gson = new Gson();
-                            gson.toJson(task);*/
-
-
-
-                Call<SaveToGalleryResponse> call = apiService.saveImageToServer(encodedImage2,FullPath,Description,imageTitle,"1");
+                Call<SaveToGalleryResponse> call = apiService.saveImageToServer(encodedImage, FullPath, Description, imageTitle, "1");
 
                 call.enqueue(new Callback<SaveToGalleryResponse>() {
                     @Override
                     public void onResponse(Call<SaveToGalleryResponse> call, Response<SaveToGalleryResponse> response) {
                         SaveToGalleryResponse statusCode = response.body();//code();
-                        if(statusCode.getStatus().contentEquals("Success"))
-                        {
+                        if (statusCode.getStatus().contentEquals("Success")) {
+
+                            Toast.makeText(getActivity(), "image send", Toast.LENGTH_LONG).show();
                             //startActivity(new Intent(LoginActivity.this, StartActivity.class));
-                        }else{
+                        } else {
+                            // Toast.makeText(Drawing2Activity.this,"UserName/Password Incorrect",Toast.LENGTH_SHORT).show();
+                        }
+
+                        //recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<SaveToGalleryResponse> call, Throwable t) {
+                        // Log error here since request failed
+                        Log.e("", t.toString());
+                    }
+                });
+            } catch (Exception e) {
+                e.getLocalizedMessage();
+            }
+
+
+            //  userProfileActivity.onBackPressed();
+        }
+
+        ResetShareDefines();
+    }
+
+    private void SaveToGalleryActivityResult() {
+
+
+        if (!Defines.is_saveToGallery) {
+
+        } else {
+            String imageTitle = Defines.Share_title;
+            String Description = Defines.Share_description;
+            String FullPath = imageName;//bundle.getString("FullPath");
+
+
+            try {
+                ApiInterface apiService =
+                        ApiClient.getClient().create(ApiInterface.class);
+                Call<SaveToGalleryResponse> call = apiService.saveImageToServer(encodedImage2, FullPath, Description, imageTitle, "1");
+
+                call.enqueue(new Callback<SaveToGalleryResponse>() {
+                    @Override
+                    public void onResponse(Call<SaveToGalleryResponse> call, Response<SaveToGalleryResponse> response) {
+                        SaveToGalleryResponse statusCode = response.body();//code();
+                        if (statusCode.getStatus().contentEquals("Success")) {
+                            Toast.makeText(getActivity(), "File send tp server", Toast.LENGTH_SHORT).show();
+                            //startActivity(new Intent(LoginActivity.this, StartActivity.class));
+                        } else {
                             // Toast.makeText(Drawing2Activity.this,"UserName/Password Incorrect",Toast.LENGTH_SHORT).show();
                         }
 
@@ -638,15 +613,12 @@ private void SaveToGalleryActivityResult(){
             }
         }
 
-       // userProfileActivity.onBackPressed();
+        // userProfileActivity.onBackPressed();
 
-    ResetShareDefines();
-
-
+        ResetShareDefines();
 
 
-}
-
+    }
 
 
     public void showAttachmentDialog() {
@@ -685,7 +657,7 @@ private void SaveToGalleryActivityResult(){
                 // startCameraOrGallery("gallery");
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto , 1);//one can be replaced with any action code
+                startActivityForResult(pickPhoto, 1);//one can be replaced with any action code
 
             }
         });
@@ -694,6 +666,7 @@ private void SaveToGalleryActivityResult(){
 
     String imgPath;
     String selectedImagePath;
+
     public Uri setImageUri() {
         // Store image in dcim
         File file = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "image" + new Date().getTime() + ".png");
@@ -705,5 +678,69 @@ private void SaveToGalleryActivityResult(){
 
     public String getImagePath() {
         return imgPath;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 0:
+                if (resultCode == Activity.RESULT_OK) {
+                    // Uri selectedImage = imageReturnedIntent.getData();
+                    //try {
+                    selectedImagePath = getImagePath();
+                    //imgUser.setImageBitmap(decodeFile(selectedImagePath));
+                   /* BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                    Bitmap bitmap = BitmapFactory.decodeFile(selectedImagePath, bmOptions);
+                    // Bitmap bitmap = null;//MediaStore.Images.Media.getBitmap(this.getContentResolver(),selectedImage);
+                    this.canvas.drawBitmap(bitmap);*/
+                    SimpleTarget target2 = new SimpleTarget<Bitmap>( canvas.getWidth(), canvas.getHeight() ) {
+                        @Override
+                        public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
+                            //imageView2.setImageBitmap( bitmap );
+                            canvas.drawBitmap(bitmap);
+                        }
+                    };
+                    Glide
+                            .with( getActivity() ) // safer!
+                            .load( selectedImagePath )
+                            .asBitmap()
+                            .into( target2 );
+
+
+                }
+                //imageview.setImageURI(selectedImage);
+
+
+                break;
+            case 1:
+                if (resultCode == Activity.RESULT_OK) {
+                    Uri selectedImage = data.getData();
+                    //imageview.setImageURI(selectedImage);
+                    SimpleTarget target2 = new SimpleTarget<Bitmap>( canvas.getWidth(), canvas.getHeight() ) {
+                        @Override
+                        public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
+                            //imageView2.setImageBitmap( bitmap );
+                            canvas.drawBitmap(bitmap);
+                        }
+                    };
+                    Glide
+                            .with( getActivity() ) // safer!
+                            .load( selectedImage )
+                            .asBitmap()
+                            .into( target2 );
+                    /* Bitmap bitmap = null;
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                        this.canvas.drawBitmap(bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }*/
+
+                }
+                break;
+
+
+        }
     }
 }
