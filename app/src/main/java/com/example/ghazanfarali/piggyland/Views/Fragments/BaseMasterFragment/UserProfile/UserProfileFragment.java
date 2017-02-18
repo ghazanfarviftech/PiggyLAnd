@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.example.ghazanfarali.piggyland.EndPoint.ApiClient;
 import com.example.ghazanfarali.piggyland.EndPoint.ApiInterface;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.EditProfileResponse;
+import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.GetUserProfile.GetUserProfileResponse;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.MasterFragment;
 
@@ -50,6 +51,10 @@ public class UserProfileFragment extends MasterFragment  {
             view = inflater.inflate(R.layout.userprofilefragment, container, false);
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
             initUI();
+
+            if(sharedPrefrencesManger.getEmail() != null) {
+                GetUserProfile(sharedPrefrencesManger.getEmail());
+            }
             btn_createnew = (Button) userProfileActivity.findViewById(R.id.btn_createnew);
             btn_createnew.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -74,7 +79,7 @@ public class UserProfileFragment extends MasterFragment  {
         } else {
             if (view != null)
               //  userProfileActivity.hideHeaderLayout();
-            userProfileActivity.setHeaderTitle("Main");
+            userProfileActivity.setHeaderTitle("");
         }
         return view;
 
@@ -92,6 +97,79 @@ public class UserProfileFragment extends MasterFragment  {
       //  ed_username.setFocusable(false);
         tv_email.setFocusable(false);
      //   ed_phone.setFocusable(false);
+
+//        updateProfileData();
+    }
+
+
+
+
+    private void GetUserProfile(String UserEmail){
+
+        if (UserEmail != null) {
+            hideKeyBoard();
+            try {
+                ApiInterface apiService =
+                        ApiClient.getClient().create(ApiInterface.class);
+
+                Call<GetUserProfileResponse> call = apiService.responseprofile(UserEmail);
+                call.enqueue(new Callback<GetUserProfileResponse>() {
+                    @Override
+                    public void onResponse(Call<GetUserProfileResponse> call, Response<GetUserProfileResponse> response) {
+                        GetUserProfileResponse statusCode = response.body();//code();
+                        if (statusCode.getUsers()[0].getEmail().contentEquals(sharedPrefrencesManger.getEmail())) {
+                            updateProfileData(statusCode);
+                            Toast.makeText(getActivity(), "Updated", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetUserProfileResponse> call, Throwable t) {
+                        Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+                });
+            } catch (Exception e) {
+                e.getLocalizedMessage();
+            }
+            //startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+
+        } else {
+            Toast.makeText(getActivity(), "Please Enter username & password", Toast.LENGTH_LONG).show();
+        }
+
+
+
+
+    }
+
+
+
+
+   public void updateProfileData(GetUserProfileResponse getUserProfileResponse){
+
+
+
+
+
+
+       if(getUserProfileResponse.getUsers()[0].getUsername() != null){
+           ed_username.setText(getUserProfileResponse.getUsers()[0].getUsername());
+       }
+       if(getUserProfileResponse.getUsers()[0].getEmail() != null){
+           tv_email.setText(getUserProfileResponse.getUsers()[0].getEmail());
+       }
+
+       if(getUserProfileResponse.getUsers()[0].getContact() != null){
+           ed_phone.setText(getUserProfileResponse.getUsers()[0].getContact());
+       }
+
     }
 
 
@@ -103,6 +181,10 @@ public class UserProfileFragment extends MasterFragment  {
         imgName = "user.jpg";
         contact = ed_phone.getText().toString();
         mac = sharedPrefrencesManger.getuserMac();
+
+
+        sharedPrefrencesManger.setuserName(username);
+        sharedPrefrencesManger.setuserPhoneNumber(contact);
     }
 
 //@Field("username") String username, @Field("email") String email, @Field("image") String image, @Field("imgName") String imgName, @Field("contact") String contact, @Field("mac") String mac
@@ -120,7 +202,7 @@ public class UserProfileFragment extends MasterFragment  {
                     @Override
                     public void onResponse(Call<EditProfileResponse> call, Response<EditProfileResponse> response) {
                         EditProfileResponse statusCode = response.body();//code();
-                        if (statusCode.getStatus().contentEquals("success")) {
+                        if (statusCode.getStatus().contentEquals("Success")) {
 
                             Toast.makeText(getActivity(), "Updated", Toast.LENGTH_SHORT).show();
 

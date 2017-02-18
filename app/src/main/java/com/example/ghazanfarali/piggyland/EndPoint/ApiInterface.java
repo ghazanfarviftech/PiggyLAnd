@@ -7,13 +7,17 @@ package com.example.ghazanfarali.piggyland.EndPoint;
 
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.EditProfileResponse;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.ForgotPsswordResponse;
+import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.GetUserProfile.GetUserProfileResponse;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.LoginResponse;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.SaveToGalleryResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 
 public interface ApiInterface {
@@ -41,4 +45,11 @@ public interface ApiInterface {
     @POST("index.php?menu=forgetPassword")
     Call<ForgotPsswordResponse> forgetPassword(@Field("email") String username);
 
+
+    @GET("index.php?menu=getProfile&email/{email}")
+    Call<GetUserProfileResponse> GetProfile(@Path("email") String email);
+
+
+    @GET("index.php?menu=getProfile")
+    Call<GetUserProfileResponse> responseprofile(@Query("email") String pid);
 }

@@ -154,6 +154,14 @@ public void setuserID(String userid) {
         return sharedPrefs.getString(ConstantUtils.profileMac, "");
     }
 
+    public void setuserPhoneNumber(String PhoneNumber) {
+        prefsEditor.putString(ConstantUtils.ProfileUserNumber, PhoneNumber);
+        prefsEditor.commit();
+    }
+
+    public String getuserPhoneNumber() {
+        return sharedPrefs.getString(ConstantUtils.ProfileUserNumber, "");
+    }
 
 
 

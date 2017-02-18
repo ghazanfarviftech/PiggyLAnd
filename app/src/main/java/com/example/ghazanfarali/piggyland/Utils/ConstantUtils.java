@@ -27,5 +27,6 @@ public interface ConstantUtils {
     String profileMac = "USERID";
     String profileUserName = "PASSWORD";
     String ProfileUserImage = "AUTH";
+    String ProfileUserNumber = "NUMBER";
 
 }
