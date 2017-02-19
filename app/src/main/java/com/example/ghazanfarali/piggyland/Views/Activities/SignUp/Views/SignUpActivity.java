@@ -82,7 +82,7 @@ public class SignUpActivity extends MasterActivity {
                                     LoginResponse statusCode = response.body();//code();
                                     if(statusCode.getStatus().contentEquals("success"))
                                     {
-
+                                        sharedPrefrencesManger.setuserLogin("true");
                                         Log.e("Sign up response",response.body().getStatus());
                                         Intent in = new Intent(SignUpActivity.this, UserProfileActivity.class);
                                         in.putExtra("fragmentIndex","0");

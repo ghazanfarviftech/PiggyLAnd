@@ -14,6 +14,7 @@ import android.view.Window;
 import com.example.ghazanfarali.piggyland.Controls.OnItemClickListener;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.beans.mygallarylist;
+import com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity;
 import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.MasterFragment;
 import com.example.ghazanfarali.piggyland.Views.Fragments.MessageforYou.adapter.messageForYouAdapter;
 import com.example.ghazanfarali.piggyland.Views.Fragments.MessageforYou.adapter.messagesDetailsAdapter;
@@ -46,6 +47,7 @@ public class MessageforyouFragment extends MasterFragment {
         if (view == null) {
             view = inflater.inflate(R.layout.messageforyou_fragment, container, false);
            // mContext.getApplicationContext();
+
             initUI();
 
 //            startService();
@@ -57,6 +59,7 @@ public class MessageforyouFragment extends MasterFragment {
         return view;
 
     }
+
 
     @Override
     public void initUI() {
@@ -75,6 +78,7 @@ public class MessageforyouFragment extends MasterFragment {
             public void onItemClick(View view, int position) {
                 //Toast.makeText(getActivity(),""+position,Toast.LENGTH_LONG).show();
                // showRelatedDocumentsDialog();
+                UserProfileActivity.fragmentType = "103";
                 userProfileActivity.replaceFragmnet(new Message_Comments_fragment(), R.id.frameLayout, true);
             }
 
@@ -83,6 +87,7 @@ public class MessageforyouFragment extends MasterFragment {
     @Override
     public void onResume() {
         super.onResume();
+        UserProfileActivity.fragmentType = "5";
         lLayout = new LinearLayoutManager(getActivity());
         rv_list_gallary.setHasFixedSize(true);
         rv_list_gallary.setLayoutManager(lLayout);

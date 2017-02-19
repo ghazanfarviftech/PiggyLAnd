@@ -22,9 +22,9 @@ import android.widget.TextView;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Utils.SharedPrefrencesManger;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
+import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.Views.AllSharedActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.Login.LoginActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.MyGallery;
-import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.Views.MyGalleryMultiSelect;
 import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.UserProfile.UserProfileFragment;
 import com.example.ghazanfarali.piggyland.Views.Fragments.MessageforYou.MessageforyouFragment;
 import com.example.ghazanfarali.piggyland.Views.Fragments.PeopleInPiggyLand.PeopleInPiggyLandFragment;
@@ -57,10 +57,18 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.userprofile_activity);
         sharedPrefrencesManger = new SharedPrefrencesManger(this);
         if(sharedPrefrencesManger.getuserLogin().contentEquals("true")){
 
+            Bundle extra = getIntent().getExtras();
+            if (extra != null) {
+                fragmentType = getIntent().getExtras().getString("fragmentIndex");
+                getIntent().removeExtra("fragmentIndex");
+            }else {
+                fragmentType = "1";
+            }
         }else {
             this.finish();
             startActivity(new Intent(this, LoginActivity.class));
@@ -102,34 +110,71 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
 
                 if (id == R.id.new_drawing) {
                     clickEventSlide();
+                    setVisibilities(1);
+                    showHeaderLayout();
                     fragmentType = "1";
+                    clearBackStack();
+                    replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
+                    drawer.closeDrawer(GravityCompat.START);
+                   // replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
+                   // displayNextFragment();
 
-                    displayNextFragment();
-//                    fragmentType = "4";
-//                    displayNextFragment();
-//                    headerLayoutID.setBackgroundColor( getResources().getColor(R.color.colorPrimaryDark));
-//                    Toast.makeText(UserProfileActivity.this,"this",Toast.LENGTH_LONG).show();
-                    // Handle the camera action
                 } else if (id == R.id.gallery) {
                     //titleTxt.setText("My Gallary");
+
+                    setVisibilities(1);
                     fragmentType = "2";
-                    displayNextFragment();
-                    // Toast.makeText(UserProfileActivity.this,"this",Toast.LENGTH_LONG).show();
+                    hideHeaderLayout();
+                    replaceFragmnet(new MyGallery(), R.id.frameLayout, false);
+                    drawer.closeDrawer(GravityCompat.START);
                 } else if (id == R.id.order) {
                     //  Toast.makeText(UserProfileActivity.this,"this",Toast.LENGTH_LONG).show();
                 } else if (id == R.id.memebers) {
+                   // setVisibilities(4);
+                    showHeaderLayout();
                     fragmentType = "3";
-                    displayNextFragment();
+                    setVisibilities(4);
+                    replaceFragmnet(new PeopleInPiggyLandFragment(), R.id.frameLayout, false);
+                    drawer.closeDrawer(GravityCompat.START);
                 } else if (id == R.id.message) {
+                    showHeaderLayout();
+                    setVisibilities(5);
                     fragmentType = "5";
-                    displayNextFragment();
+
+                    replaceFragmnet(new MessageforyouFragment(), R.id.frameLayout, false);
+                    drawer.closeDrawer(GravityCompat.START);
                 } else if (id == R.id.profile) {
                    // hideHeaderLayout();
+                    showHeaderLayout();
+                    setVisibilities(6);
+
+                  //  fragmentType = "6";
+                    // hideHeaderLayout();
                     fragmentType = "6";
-                    displayNextFragment();
+                    replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, false);
+                    drawer.closeDrawer(GravityCompat.START);
                 } else if (id == R.id.Logout) {
+                    //showHeaderLayout();
                     fragmentType = "7";
-                    displayNextFragment();
+                    finish();
+                    drawer.closeDrawer(GravityCompat.START);
+                    if(sharedPrefrencesManger.getuserLoginTwitter()){
+                        logoutTwitter();
+                        sharedPrefrencesManger.setuserLoginTwitter(false);
+                        sharedPrefrencesManger.clearSharedTwitterSession();
+                        startActivity(new Intent(UserProfileActivity.this, LoginActivity.class));
+                    }else {
+                        sharedPrefrencesManger.setuserLogin("false");
+                        startActivity(new Intent(UserProfileActivity.this, LoginActivity.class));
+                    }
+                }else if (id == R.id.ArtWork){
+                    showHeaderLayout();
+                    setVisibilities(1);
+                   // showHeaderLayout();
+                    fragmentType = "8";
+                    replaceFragmnet(new AllSharedActivity(), R.id.frameLayout, false);
+                    drawer.closeDrawer(GravityCompat.START);
+                  //  displayNextFragment();
                 }
                 return true;
             }
@@ -171,12 +216,6 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
     private void displayNextFragment() {
         Log.v("fragmentIndex", fragmentType + " ");
 
-        Bundle extra = getIntent().getExtras();
-        if (extra != null) {
-            fragmentType = getIntent().getExtras().getString("fragmentIndex");
-            getIntent().removeExtra("fragmentIndex");
-        }
-
 
         if (fragmentType != null) {
             switch (fragmentType) {
@@ -189,6 +228,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     break;
                 case "1":
                     setVisibilities(1);
+
                     clearBackStack();
                     replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
                     break;
@@ -212,7 +252,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     replaceFragmnet(new MessageforyouFragment(), R.id.frameLayout, true);
                     break;
                 case "6":
-                    setVisibilities(2);
+                    setVisibilities(6);
                    // hideHeaderLayout();
                     fragmentType = "6";
                     replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, true);
@@ -228,18 +268,22 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                         sharedPrefrencesManger.setuserLogin("false");
                         startActivity(new Intent(this, LoginActivity.class));
                     }
-
                     break;
-
+                case "8":
+                    setVisibilities(1);
+                    // hideHeaderLayout();
+                    fragmentType = "8";
+                    replaceFragmnet(new AllSharedActivity(), R.id.frameLayout, true);
+                    break;
                 default:
-                    setVisibilities(2);
-                    replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, false);
+                   // setVisibilities(2);
+                    replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
                     break;
 
             }
         } else {
-            nav_logo_img.setVisibility(View.VISIBLE);
-            replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
+//            nav_logo_img.setVisibility(View.VISIBLE);
+//            replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -258,21 +302,21 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
             case 1: {
                 headerLayoutID.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 nav_logo_img.setVisibility(View.VISIBLE);
-                text_title.setVisibility(View.GONE);
-                btn_createnew.setVisibility(View.GONE);
+                text_title.setVisibility(View.INVISIBLE);
+                btn_createnew.setVisibility(View.INVISIBLE);
             }
             break;
             case 2: {
                 headerLayoutID.setBackgroundColor(Color.TRANSPARENT);
-                nav_logo_img.setVisibility(View.GONE);
-                text_title.setVisibility(View.GONE);
+                nav_logo_img.setVisibility(View.INVISIBLE);
+                text_title.setVisibility(View.INVISIBLE);
                 btn_createnew.setVisibility(View.VISIBLE);
             }
             break;
 
             case 4: {
                 headerLayoutID.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                nav_logo_img.setVisibility(View.GONE);
+                nav_logo_img.setVisibility(View.INVISIBLE);
                 text_title.setVisibility(View.VISIBLE);
                 text_title.setText("Members of PiggyLand");
                 btn_createnew.setVisibility(View.VISIBLE);
@@ -282,11 +326,19 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
 
             case 5: {
                 headerLayoutID.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                nav_logo_img.setVisibility(View.GONE);
+                nav_logo_img.setVisibility(View.INVISIBLE);
                 text_title.setVisibility(View.VISIBLE);
                 text_title.setText("Message for you");
                 btn_createnew.setVisibility(View.VISIBLE);
                 btn_createnew.setBackgroundResource(R.drawable.ic_action_search);
+            }
+            break;
+            case 6: {
+                headerLayoutID.setBackgroundColor(Color.TRANSPARENT);
+                nav_logo_img.setVisibility(View.INVISIBLE);
+                text_title.setVisibility(View.INVISIBLE);
+                btn_createnew.setVisibility(View.VISIBLE);
+                btn_createnew.setBackgroundResource(R.drawable.ic_action_edit);
             }
             break;
 
@@ -294,8 +346,8 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
             default: {
                 headerLayoutID.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 nav_logo_img.setVisibility(View.VISIBLE);
-                text_title.setVisibility(View.GONE);
-                btn_createnew.setVisibility(View.GONE);
+                text_title.setVisibility(View.INVISIBLE);
+                btn_createnew.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -329,7 +381,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
     }
 
     public void hideHeaderLayout() {
-        headerLayoutID.setVisibility(View.GONE);
+        headerLayoutID.setVisibility(View.INVISIBLE);
     }
 
     public void setHeaderTitle(String title) {
@@ -367,17 +419,17 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.new_drawing) {
-
-            //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
-            // Handle the camera action
-        } else if (id == R.id.gallery) {
-            //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
-        } else if (id == R.id.order) {
-            //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
-        }
+//        int id = item.getItemId();
+//
+//        if (id == R.id.new_drawing) {
+//
+//            //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
+//            // Handle the camera action
+//        } else if (id == R.id.gallery) {
+//            //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
+//        } else if (id == R.id.order) {
+//            //  Toast.makeText(this, "this", Toast.LENGTH_LONG).show();
+//        }
 
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        drawer.closeDrawer(GravityCompat.START);
@@ -387,13 +439,34 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        if(fragmentType == "2"){
+//            showHeaderLayout();
+//            setVisibilities(1);
+//            clearBackStack();
+//            replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
+        }
+        if(fragmentType == "8"){
+            setVisibilities(1);
+        }
+        if(fragmentType == "5"){
+            showHeaderLayout();
+            setVisibilities(1);
+//            clearBackStack();
+//            replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
+        }
+
         if (fragmentType == "102") {
             showHeaderLayout();
             if(MyGallery.is_in_action_mode){
-
+                MyGallery.clearActionM();
+                return;
             }else{
 
             }
+        }
+
+        if(fragmentType == "103"){
+            setVisibilities(5);
         }
 
         if (fragmentType == "4") {

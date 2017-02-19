@@ -92,6 +92,7 @@ public class MainDrawingFragment extends MasterFragment {
     GridLayoutManager lLayout;
     StickerAdapter mygallaryAdapter;
     ArrayList<StickerImg> smartToolsList;
+    public static float brush_eraser_stroke_width;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -394,9 +395,55 @@ public class MainDrawingFragment extends MasterFragment {
             rubber.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    canvas.setOpacity(255);
+                    canvas.setBlur(0F);
                     canvas.setMode(CanvasView.Mode.ERASER);
 
 
+                }
+            });
+            rubber.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+
+
+                    LayoutInflater inflater = LayoutInflater.from(getActivity());
+                    final View views = inflater.inflate(R.layout.dialog_stroke_width_change,null);
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+                    builder.setTitle("Set Eraser Width");
+                    builder.setView(views);
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                       /* CrystalSeekbar seekbar = (CrystalSeekbar)views.findViewById(R.id.rangeSeekbar1);
+                        seekbar.setOnSeekbarFinalValueListener(new OnSeekbarFinalValueListener() {
+                            @Override
+                            public void finalValue(Number value) {
+                                brush_fourth_stroke_width = value.floatValue();//intValue();
+                            }
+                        });*/
+                            dialogInterface.dismiss();
+                        }
+                    });
+
+                    CrystalSeekbar seekbar = (CrystalSeekbar)views.findViewById(R.id.rangeSeekbar1);
+                    seekbar.setMinStartValue(brush_eraser_stroke_width);
+                    seekbar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+                        @Override
+                        public void valueChanged(Number value) {
+                            brush_eraser_stroke_width = value.floatValue();
+
+                            canvas.setOpacity(255);
+                            canvas.setBlur(0F);
+
+                            canvas.setMode(CanvasView.Mode.ERASER);
+                        }
+                    });
+                    builder.create();
+                    builder.show();
+
+
+                    return true;
                 }
             });
 
@@ -863,6 +910,7 @@ public class MainDrawingFragment extends MasterFragment {
     @Override
     public void onResume() {
         super.onResume();
+        userProfileActivity.fragmentType = "100";
         if (Defines.is_shareToPublic) {
             //   Defines.is_shareToPublic = false;
 
@@ -888,7 +936,7 @@ public class MainDrawingFragment extends MasterFragment {
 
     private void ShareActvityResult() {
         // Toast.makeText(getActivity(),"got result",Toast.LENGTH_SHORT).show();
-
+userProfileActivity.hideKeyBoard();
 
         if (!Defines.is_shareToPublic) {
 
@@ -901,7 +949,7 @@ public class MainDrawingFragment extends MasterFragment {
             try {
                 ApiInterface apiService =
                         ApiClient.getClient().create(ApiInterface.class);
-                Call<SaveToGalleryResponse> call = apiService.saveImageToServer(encodedImage, FullPath, Description, imageTitle, "1");
+                Call<SaveToGalleryResponse> call = apiService.saveImageToServershareGallery(encodedImage, FullPath, Description, imageTitle, "1");
 
                 call.enqueue(new Callback<SaveToGalleryResponse>() {
                     @Override
@@ -937,7 +985,7 @@ public class MainDrawingFragment extends MasterFragment {
     }
 
     private void SaveToGalleryActivityResult() {
-
+        userProfileActivity.hideKeyBoard();
 
         if (!Defines.is_saveToGallery) {
 
@@ -950,7 +998,7 @@ public class MainDrawingFragment extends MasterFragment {
             try {
                 ApiInterface apiService =
                         ApiClient.getClient().create(ApiInterface.class);
-                Call<SaveToGalleryResponse> call = apiService.saveImageToServer(encodedImage2, FullPath, Description, imageTitle, "1");
+                Call<SaveToGalleryResponse> call = apiService.saveImageToServersaveGallery(encodedImage2, FullPath, Description, imageTitle, "1");
 
                 call.enqueue(new Callback<SaveToGalleryResponse>() {
                     @Override

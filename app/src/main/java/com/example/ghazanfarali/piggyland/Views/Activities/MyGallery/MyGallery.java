@@ -43,18 +43,20 @@ import static android.view.View.inflate;
  * Created by Amir.jehangir on 1/11/2017.
  */
 public class MyGallery extends MasterFragment {
-    TextView counterTextView, tv_no_data_smart_tools;
+    static TextView counterTextView;
+    TextView tv_no_data_smart_tools;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    MygallaryAdapter adapter;
+    static MygallaryAdapter adapter;
 
     ArrayList<MyGallaryMultiSelectITems> photosList = new ArrayList<MyGallaryMultiSelectITems>();
-    ArrayList<MyGallaryMultiSelectITems> selectionList = new ArrayList<MyGallaryMultiSelectITems>();
+    static ArrayList<MyGallaryMultiSelectITems> selectionList = new ArrayList<MyGallaryMultiSelectITems>();
     private GridLayoutManager lLayout;
-    int counter = 0;
+    static int counter = 0;
     MasterFragment mContext;
     public static boolean is_in_action_mode = false;
-    Button btn_menuimg,btn_menuBack;
+    static Button btn_menuimg;
+    static Button btn_menuBack;
     ImageView btnSelectedImgSend;
 
     //    @Override
@@ -128,7 +130,7 @@ public class MyGallery extends MasterFragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        userProfileActivity.fragmentType = "102";
         //   layoutManager = new LinearLayoutManager(this);
 
     }
@@ -152,7 +154,7 @@ public class MyGallery extends MasterFragment {
                     counterTextView.setVisibility(View.VISIBLE);
                     btn_menuimg.setVisibility(View.GONE);
                     btn_menuBack.setVisibility(View.VISIBLE);
-                    counterTextView.setText("0 " + R.string.itemSelectedMYGallary);
+                    counterTextView.setText("0 " + "item selected");
                     adapter.notifyDataSetChanged();
                 }
 
@@ -366,7 +368,7 @@ if(selectionList.size() >0){
         //  startActivity(new Intent(this, PrintOrderActivity.class));
     }
 
-    public void clearActionM() {
+    public static void clearActionM() {
         is_in_action_mode = false;
         btn_menuimg.setVisibility(View.VISIBLE);
         btn_menuBack.setVisibility(View.GONE);

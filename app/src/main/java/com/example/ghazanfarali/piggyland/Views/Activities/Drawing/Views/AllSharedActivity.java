@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ghazanfarali.piggyland.Controls.MultiClickListner;
+import com.example.ghazanfarali.piggyland.EndPoint.ApiClient;
+import com.example.ghazanfarali.piggyland.EndPoint.ApiInterface;
 import com.example.ghazanfarali.piggyland.R;
+import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.Bean.MyPojo;
+import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.Bean.Post;
 import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.Bean.ShareArtWork;
 import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.adapters.ShareArtWorkAdapter;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter.MyGallaryITemDecor;
@@ -26,6 +31,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Created by Amir.jehangir on 2/5/2017.
@@ -49,29 +57,10 @@ public class AllSharedActivity extends MasterFragment {
         if (view == null) {
             view = inflater.inflate(R.layout.activity_all_shared2, container, false);
             // mContext.getApplicationContext();
-            loadPhotosObjects();
+            getPost();
+            // loadPhotosObjects();
             initUI();
-        shareArtWorkAdapter = new ShareArtWorkAdapter(getActivity(),photosList);
-        rv_listview_shareArtWork.setAdapter(shareArtWorkAdapter);
-        shareArtWorkAdapter.setonMulticlickListener(new MultiClickListner() {
-            @Override
-            public void onLikeItemClick( int position) {
-                counter_likes =(TextView) view.findViewById(R.id.counter_likes);
-                a++;
-                counter_likes.setText(""+a );
-            }
 
-            @Override
-            public void onCommentItemClick(View view, int position) {
-                userProfileActivity.replaceFragmnet(new SharedComment_Fragment(), R.id.frameLayout, true);
-
-            }
-
-            @Override
-            public void onShareItemClick(View view, int position) {
-
-            }
-        });
 //            startService();
         } else {
             if (view != null)
@@ -86,7 +75,7 @@ public class AllSharedActivity extends MasterFragment {
     public void initUI() {
         super.initUI();
 
-         counter_likes =(TextView) view.findViewById(R.id.counter_likes);
+        counter_likes =(TextView) view.findViewById(R.id.counter_likes);
         tv_like =(TextView) view.findViewById(R.id.tv_like);
         counter_comments=(TextView) view.findViewById(R.id.counter_comments);
         comments=(TextView)view.findViewById(R.id.comments);
@@ -218,5 +207,57 @@ public class AllSharedActivity extends MasterFragment {
         //mMultiChoiceRecyclerView.setAdapter(adapter);
     }
 
+    Post[] post;
+    public void getPost()
+    {
+        try {
+            ApiInterface apiService =
+                    ApiClient.getClient().create(ApiInterface.class);
+
+
+
+            Call<MyPojo> call = apiService.getPost();//getLogin(tie_username.getText().toString(), tei_password.getText().toString(), address);
+            call.enqueue(new retrofit2.Callback<MyPojo>() {
+                @Override
+                public void onResponse(Call<MyPojo> call, Response<MyPojo> response) {
+
+                    MyPojo statusCode = response.body();//code();
+                    post = statusCode.getPost();
+                    shareArtWorkAdapter = new ShareArtWorkAdapter(getActivity(),post);
+                    rv_listview_shareArtWork.setAdapter(shareArtWorkAdapter);
+                    shareArtWorkAdapter.setonMulticlickListener(new MultiClickListner() {
+                        @Override
+                        public void onLikeItemClick(View v, int position) {
+                            counter_likes =(TextView) v.findViewById(R.id.counter_likes);
+                            a++;
+                            counter_likes.setText(""+a );
+                            a--;
+                        }
+
+                        @Override
+                        public void onCommentItemClick(View view, int position) {
+                            userProfileActivity.replaceFragmnet(new SharedComment_Fragment(), R.id.frameLayout, true);
+
+                        }
+
+                        @Override
+                        public void onShareItemClick(View view, int position) {
+
+                        }
+                    });
+                    //Profile profile = response.body().getProfile();
+                    //recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
+                }
+
+                @Override
+                public void onFailure(Call<MyPojo> call, Throwable t) {
+                    // Log error here since request failed
+                    Log.e("", t.toString());
+                }
+            });
+        } catch (Exception e) {
+            e.getLocalizedMessage();
+        }
+    }
 }
 

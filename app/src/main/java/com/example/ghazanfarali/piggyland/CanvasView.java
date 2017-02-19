@@ -4,28 +4,26 @@ package com.example.ghazanfarali.piggyland;
  * Created by ghazanfarali on 25/12/2016.
  */
 
-import java.io.ByteArrayOutputStream;
-import java.util.List;
-import java.util.ArrayList;
-
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.PorterDuff;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.MotionEvent;
-import android.widget.Button;
+import android.view.View;
 
 import com.example.ghazanfarali.piggyland.CustomViews.GetterAndSetter;
+import com.example.ghazanfarali.piggyland.Views.Fragments.DrawingFragment.MainDrawingFragment;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 // import android.util.Log;
 // import android.widget.Toast;
 
@@ -176,7 +174,7 @@ public class CanvasView extends View {
             // paint.setColor(this.baseColor);
             // paint.setShadowLayer(this.blur, 0F, 0F, this.baseColor);
             paint.setColor(canvasBackgroundColor);
-            paint.setStrokeWidth(30F);
+            paint.setStrokeWidth(MainDrawingFragment.brush_eraser_stroke_width);
             paint.setShadowLayer(this.blur, 0F, 0F, this.paintStrokeColor);
             paint.setAlpha(this.opacity);
         } else {

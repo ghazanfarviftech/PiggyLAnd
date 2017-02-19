@@ -41,6 +41,7 @@
     <!-- nav drawer  -->
     <string name="new_drawing">New Drawing</string>
     <string name="gallery">Gallery</string>
+    <string name="shareddrawing">Shared Drawing</string>
     <string name="order">order</string>
     <string name="memebers">People In PiggyLand</string>
     <string name="message">Message For Me</string>
