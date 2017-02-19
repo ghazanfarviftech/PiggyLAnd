@@ -91,6 +91,7 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="0441996f5f4022a9113a74a39f74e2efe63f1b8b" />
+        <activity android:name="com.twitter.sdk.android.core.identity.OAuthActivity" />
     </application>
 
 </manifest>

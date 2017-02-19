@@ -60,10 +60,10 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
         setContentView(R.layout.userprofile_activity);
         sharedPrefrencesManger = new SharedPrefrencesManger(this);
         if(sharedPrefrencesManger.getuserLogin().contentEquals("true")){
+
+        }else {
             this.finish();
             startActivity(new Intent(this, LoginActivity.class));
-        }else {
-
         }
 
         initUI();

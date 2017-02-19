@@ -51,6 +51,7 @@ import com.twitter.sdk.android.core.TwitterApiClient;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import com.twitter.sdk.android.core.models.User;
 import com.twitter.sdk.android.core.services.AccountService;
@@ -120,7 +121,7 @@ public class LoginActivity extends MasterActivity implements
 
             @Override
             public void failure(TwitterException exception) {
-
+//                Log.d(TAG, "twitter fail:" + exception);
             }
         });
         initUI();
@@ -284,7 +285,13 @@ private void OpenMainActivity(){
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        twitterLoginButton.onActivityResult(requestCode, resultCode, data);
+        // handle cancelled Twitter login (resets TwitterCore.*AuthHandler.AuthState)
+        final TwitterAuthClient twitterAuthClient = new TwitterAuthClient();
+        if(twitterAuthClient.getRequestCode()==requestCode) {
+           // twitterLoginWasCanceled = (resultCode == RESULT_CANCELED);
+            twitterAuthClient.onActivityResult(requestCode, resultCode, data);
+        }
+       // twitterLoginButton.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
