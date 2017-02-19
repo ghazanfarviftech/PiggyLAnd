@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import com.example.ghazanfarali.piggyland.Utils.SharedPrefrencesManger;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
+import com.example.ghazanfarali.piggyland.Views.Activities.Login.LoginActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity;
 
 public class SplashActivity extends MasterActivity {
@@ -34,7 +35,7 @@ public class SplashActivity extends MasterActivity {
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
                 Intent mainIntent = new Intent(SplashActivity.this,
-                        UserProfileActivity.class);
+                        LoginActivity.class);
                 //Intent mainIntent = new Intent(SplashActivity.this, Drawing2Activity.class);
                // Intent mainIntent = new Intent(SplashActivity.this, UserProfileActivity.class);
                 SplashActivity.this.startActivity(mainIntent);

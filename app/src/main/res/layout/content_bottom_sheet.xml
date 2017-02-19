@@ -49,10 +49,10 @@
                 android:layout_centerHorizontal="true" />
         </RelativeLayout>
 
-    <View
-    android:layout_width="@dimen/_2sdp"
-    android:layout_height="match_parent"
-        android:background="#ffffff"/>
+        <View
+            android:layout_width="@dimen/_2sdp"
+            android:layout_height="match_parent"
+            android:background="#ffffff"/>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_30sdp"
@@ -123,26 +123,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 >
+
                 <ImageView
                     android:layout_width="@dimen/_50sdp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/_50sdp"
                     android:id="@+id/draw_circle"
-                    android:src="@drawable/circle_myshape"/>
+                    android:src="@drawable/ic_circle_shape_outline_f"/>
 
                 <ImageView
                     android:layout_width="@dimen/_50sdp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/_50sdp"
                     android:id="@+id/draw_square"
-                    android:src="@drawable/square_myimage"/>
+                    android:src="@drawable/ic_blank_check_box_f"/>
 
                 <ImageView
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
                     android:layout_weight="1"
                     android:id="@+id/draw_triangle"
-                    android:src="@drawable/triangle_myimage"/>
+                    android:src="@drawable/ic_bleach_f"/>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -151,7 +152,12 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 />
 
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Polygone"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/_15sdp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
@@ -160,52 +166,26 @@
                 >
                 <ImageView
                     android:layout_width="@dimen/_50sdp"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/_50sdp"
-                    android:id="@+id/draw_ninty"
-                    android:src="@drawable/circle_myshape"/>
-
-                <ImageView
-                    android:layout_width="@dimen/_50sdp"
                     android:layout_weight="1"
-                    android:layout_height="@dimen/_50sdp"
-                    android:id="@+id/draw_fourangle"
-                    android:src="@drawable/square_myimage"/>
+                    android:id="@+id/poly_sec"
+                    android:src="@drawable/ic_polygon_sec"/>
 
                 <ImageView
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
                     android:layout_weight="1"
-                    android:id="@+id/draw_pentagone"
-                    android:src="@drawable/triangle_myimage"/>
+                    android:id="@+id/poly_first"
+                    android:src="@drawable/ic_polygon"/>
 
                 <ImageView
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
                     android:layout_weight="1"
-                    android:id="@+id/draw_sixgone"
-                    android:src="@drawable/triangle_myimage"/>
+                    android:id="@+id/poly_star"
+                    android:src="@drawable/ic_single_star"/>
 
-                <ImageView
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:layout_weight="1"
-                    android:id="@+id/draw_sevengone"
-                    android:src="@drawable/triangle_myimage"/>
 
-                <ImageView
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:layout_weight="1"
-                    android:id="@+id/draw_eightgone"
-                    android:src="@drawable/triangle_myimage"/>
-
-                <ImageView
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:layout_weight="1"
-                    android:id="@+id/draw_ninegone"
-                    android:src="@drawable/triangle_myimage"/>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -215,123 +195,5 @@
                 />
         </LinearLayout>
     </LinearLayout>
-    <!--   <TabHost
-           android:id="@+id/tabHost"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
 
-           android:layout_below="@+id/textView2"
-           android:layout_alignParentLeft="true"
-           android:layout_alignParentStart="true"
-           android:layout_marginTop="5dp">
-
-           <LinearLayout
-               android:layout_width="fill_parent"
-               android:layout_height="fill_parent"
-               android:layout_gravity="center_vertical"
-               android:orientation="vertical" >
-
-               <HorizontalScrollView
-                   android:layout_width="fill_parent"
-                   android:layout_height="wrap_content"
-                   android:fillViewport="true"
-                   android:scrollbars="horizontal" >
-
-                   <TabWidget
-                       android:id="@android:id/tabs"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       />
-               </HorizontalScrollView>
-
-               <FrameLayout
-                   android:id="@android:id/tabcontent"
-                   android:layout_width="fill_parent"
-                   android:layout_height="match_parent" >
-
-                   <LinearLayout
-                       android:id="@+id/tab1_Units"
-                       android:layout_width="match_parent"
-                       android:orientation="vertical"
-                       android:layout_height="match_parent"
-                       android:layout_marginBottom="@dimen/_50sdp"
-                       >
-
-                       <TextView
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content"
-                           android:text="Lines and Basic Shapes"
-                           android:textColor="#ffffff"
-                           android:textSize="@dimen/_15sdp"/>
-                       <LinearLayout
-                           android:layout_width="match_parent"
-                           android:orientation="horizontal"
-                           android:layout_height="wrap_content"
-                           android:layout_marginTop="@dimen/_5sdp"
-                           >
-                           <ImageView
-                               android:layout_width="@dimen/_50sdp"
-                               android:layout_weight="1"
-                               android:layout_height="@dimen/_50sdp"
-                               android:id="@+id/draw_circle"
-                               android:src="@drawable/circle_myshape"/>
-
-                           <ImageView
-                               android:layout_width="@dimen/_50sdp"
-                               android:layout_weight="1"
-                               android:layout_height="@dimen/_50sdp"
-                               android:src="@drawable/square_myimage"/>
-
-                           <ImageView
-                               android:layout_width="@dimen/_50sdp"
-                               android:layout_height="@dimen/_50sdp"
-                               android:layout_weight="1"
-                               android:src="@drawable/triangle_myimage"/>
-                       </LinearLayout>
-
-
-
-
-
-                   </LinearLayout>
-
-                   <RelativeLayout
-                       android:id="@+id/tab2_Map"
-                       android:layout_width="match_parent"
-                       android:layout_height="match_parent"
-                       android:layout_marginBottom="@dimen/_50sdp"
-                       >
-
-
-                       <android.support.v7.widget.RecyclerView
-                           android:id="@+id/rv_listview_mygallary"
-                           android:layout_width="match_parent"
-                           android:layout_height="match_parent"
-                           android:background="@color/gray_home_dashboard_divider"
-                           android:clickable="true"
-                           android:scrollbarStyle="insideOverlay"
-                           android:scrollbars="none" />
-
-
-                   </RelativeLayout>
-               </FrameLayout>
-           </LinearLayout>
-
-       </TabHost>-->
-
-    <!--<TextView
-        android:id="@+id/bottomSheetHeading"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="expand"
-        android:textAppearance="@android:style/TextAppearance.Large" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/bottomSheetHeading"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:text="welcome to bottom sheet"
-        android:textAppearance="@android:style/TextAppearance.Large" />-->
 </RelativeLayout>

@@ -1,23 +1,36 @@
 package com.example.ghazanfarali.piggyland.Views.Fragments.PeopleInPiggyLand;
 
+import android.content.Context;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.ghazanfarali.piggyland.Controls.OnItemClickListener;
+import com.example.ghazanfarali.piggyland.EndPoint.ApiClient;
+import com.example.ghazanfarali.piggyland.EndPoint.ApiInterface;
+import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.LoginResponse;
+import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.Profile;
 import com.example.ghazanfarali.piggyland.R;
+import com.example.ghazanfarali.piggyland.Views.Activities.Login.LoginActivity;
 import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.MasterFragment;
 import com.example.ghazanfarali.piggyland.Views.Fragments.PeopleInPiggyLand.Beans.Contact;
+import com.example.ghazanfarali.piggyland.Views.Fragments.PeopleInPiggyLand.Beans.ResponseUser;
 import com.example.ghazanfarali.piggyland.Views.Fragments.PeopleInPiggyLand.adapters.ContactAdapter;
 import com.gvillani.pinnedlist.GroupListWrapper;
 import com.gvillani.pinnedlist.PinnedListLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Created by Amir.jehangir on 2/5/2017.
@@ -52,6 +65,33 @@ public class PeopleInPiggyLandFragment extends MasterFragment{
     }
 
     private void initLayout() {
+
+        try {
+            ApiInterface apiService =
+                    ApiClient.getClient().create(ApiInterface.class);
+
+
+
+
+            Call<List<ResponseUser>> call = apiService.getUsers();//getLogin(tie_username.getText().toString(), tei_password.getText().toString(), address);
+            call.enqueue(new retrofit2.Callback<List<ResponseUser>>() {
+                @Override
+                public void onResponse(Call<List<ResponseUser>> call, Response<List<ResponseUser>> response) {
+                    List<ResponseUser> statusCode = response.body();
+                }
+
+                @Override
+                public void onFailure(Call<List<ResponseUser>> call, Throwable t) {
+                    // Log error here since request failed
+                    Log.e("", t.toString());
+                }
+            });
+        } catch (Exception e) {
+            e.getLocalizedMessage();
+        }
+
+
+
         mPinnedListLayout = (PinnedListLayout) view.findViewById(R.id.pinned_layout);
         mRecyclerView = mPinnedListLayout.getRecyclerView();
 
