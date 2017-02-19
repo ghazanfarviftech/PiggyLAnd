@@ -45,9 +45,18 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterApiClient;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.core.models.User;
+import com.twitter.sdk.android.core.services.AccountService;
 
+import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 
@@ -69,16 +78,51 @@ public class LoginActivity extends MasterActivity implements
     TextInputLayout til_username, til_password;
     TextInputEditText tie_username, tei_password;
     MarshmallowPermissions mp;
-    public SharedPrefrencesManger sharedPrefrencesManger;
     String UserName = "";
     TextView forgotpassword;
+
+    //This is your KEY and SECRET
+    //And it would be added automatically while the configuration
+    private static final String TWITTER_KEY = "10RB4PJO61CCxnZfWiUMYoPbR";
+    private static final String TWITTER_SECRET = "ttlz9vipR07Dd46ToAqnL9mrXQkkYxmiq3ejDKUMOfuMWvJA0t0";
+
+    //Tags to send the username and image url to next activity using intent
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_PROFILE_IMAGE_URL = "image_url";
+
+    //Twitter Login Button
+    TwitterLoginButton twitterLoginButton;
+
+    public SharedPrefrencesManger sharedPrefrencesManger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Initializing TwitterAuthConfig, these two line will also added automatically while configuration we did
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Twitter(authConfig));
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
+        //Initializing twitter login button
+        sharedPrefrencesManger = new SharedPrefrencesManger(this);
+
+
+
+        twitterLoginButton = (TwitterLoginButton) findViewById(R.id.twitterLogin);
+        //Adding callback to the button
+        twitterLoginButton.setCallback(new com.twitter.sdk.android.core.Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+                login(result);
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+
+            }
+        });
         initUI();
         initListner();
 
@@ -90,7 +134,9 @@ public class LoginActivity extends MasterActivity implements
 
     }
 
-
+private void OpenMainActivity(){
+    startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+}
     @Override
     public void initUI() {
         super.initUI();
@@ -143,71 +189,19 @@ public class LoginActivity extends MasterActivity implements
                 startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
                 finish();
 
-//                if (tie_username.getText().length() > 0 && tei_password.getText().length() > 0) {
-//                    hideKeyBoard();
-//                    try {
-//                        ApiInterface apiService =
-//                                ApiClient.getClient().create(ApiInterface.class);
-////                        Login task = new Login("fazila", "fazila", "123444");
-////                        Gson gson = new Gson();
-////                        gson.toJson(task);
-//
-//                        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-//                        WifiInfo info = manager.getConnectionInfo();
-//                        String address = info.getMacAddress();
-//
-//                       /* Call<LoginResponse> call = apiService.getLogin(
-//                                "test@gmail.com","test","123444");*/
-//                        Call<LoginResponse> call = apiService.getLogin(tie_username.getText().toString(), tei_password.getText().toString(), address);
-//                        call.enqueue(new Callback<LoginResponse>() {
-//                            @Override
-//                            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-//                                LoginResponse statusCode = response.body();//code();
-//                                if (statusCode.getStatus().contentEquals("success")) {
-//                                    userName = tie_username.getText().toString();
-//                                    sharedPrefrencesManger.setEmail(userName);
-//
-//                                    startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
-//                                    finish();
-//                                } else {
-//                                    Toast.makeText(LoginActivity.this, "UserName/Password Incorrect", Toast.LENGTH_SHORT).show();
-//                                }
-//                                Profile profile = response.body().getProfile();
-//                                //recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
-//                            }
-//
-//                            @Override
-//                            public void onFailure(Call<LoginResponse> call, Throwable t) {
-//                                // Log error here since request failed
-//                                Log.e(TAG, t.toString());
-//                            }
-//                        });
-//                    } catch (Exception e) {
-//                        e.getLocalizedMessage();
-//                    }
-                    //startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
-
-//                } else {
-//                    Toast.makeText(LoginActivity.this, "Please Enter username & password", Toast.LENGTH_LONG).show();
-//                }
-
                 if (tie_username.getText().length() > 0 && tei_password.getText().length() > 0) {
                     hideKeyBoard();
                     try {
                         ApiInterface apiService =
                                 ApiClient.getClient().create(ApiInterface.class);
-//                        Login task = new Login("fazila", "fazila", "123444");
-//                        Gson gson = new Gson();
-//                        gson.toJson(task);
+
 
                         WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
                         WifiInfo info = manager.getConnectionInfo();
                         String address = info.getMacAddress();
 
-                       /* Call<LoginResponse> call = apiService.getLogin(
-                                "test@gmail.com","test","123444");*/
                         Call<LoginResponse> call = apiService.getLogin(tie_username.getText().toString(), tei_password.getText().toString(), address);
-                        call.enqueue(new Callback<LoginResponse>() {
+                        call.enqueue(new retrofit2.Callback<LoginResponse>() {
                             @Override
                             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                                 LoginResponse statusCode = response.body();//code();
@@ -218,8 +212,8 @@ public class LoginActivity extends MasterActivity implements
                                     sharedPrefrencesManger.setuserID(response.body().getProfile().getId());
                                     sharedPrefrencesManger.setPassword(userPassword);
                                     sharedPrefrencesManger.setuserAuth(response.body().getAuth());
-
-                                    startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+                                    sharedPrefrencesManger.setuserLogin("true");
+                                    OpenMainActivity();
                                     finish();
                                 } else {
                                     Toast.makeText(LoginActivity.this, "UserName/Password Incorrect", Toast.LENGTH_SHORT).show();
@@ -243,21 +237,6 @@ public class LoginActivity extends MasterActivity implements
                     Toast.makeText(LoginActivity.this, "Please Enter username & password", Toast.LENGTH_LONG).show();
                 }
 
-
-                // startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                //  startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
-//                if (tie_username.getText().toString().contains("admin") || tei_password.getText().toString().contains("admin")) {
-//                    hideKeyBoard();
-//                    startActivity(new Intent(LoginActivity.this, Main2Activity.class));
-//
-//                    finish();
-//
-//                } else {
-//                  //  startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
-//                    Toast.makeText(LoginActivity.this, "Please Enter username & password", Toast.LENGTH_LONG).show();
-//                }
-
-
             }
         });
 
@@ -266,8 +245,7 @@ public class LoginActivity extends MasterActivity implements
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Intent i = new Intent(LoginActivity.this, UserProfileActivity.class);
-                startActivity(i);
+                OpenMainActivity();
             }
 
             @Override
@@ -281,21 +259,6 @@ public class LoginActivity extends MasterActivity implements
             }
         });
 
-
-// google login
-//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestIdToken(LoginActivity.this.getResources().getString(R.string.server_client_id))
-//                .requestEmail()
-//                .build();
-//
-//        mGoogleApiClient = new GoogleApiClient.Builder(this)
-//                //  .enableAutoManage(this, this)
-//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-//                .build();
-
-        // Customizing G+ button
-        //   btnSignIn.setSize(SignInButton.SIZE_STANDARD);
-        // btnSignIn.setScopes(gso.getScopeArray());
 
     }
 
@@ -321,7 +284,7 @@ public class LoginActivity extends MasterActivity implements
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        twitterLoginButton.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -462,5 +425,38 @@ public class LoginActivity extends MasterActivity implements
     public void onConnectionSuspended(int i) {
 
     }
+
+
+    //The login function accepting the result object
+    public void login(Result<TwitterSession> result) {
+        TwitterSession   session = result.data;
+        Twitter          twitter = Twitter.getInstance();
+        TwitterApiClient api     = twitter.core.getApiClient(session);
+        AccountService   service = api.getAccountService();
+        Call<User>       user    = service.verifyCredentials(true, true);
+        user.enqueue(new com.twitter.sdk.android.core.Callback<User>()
+        {
+            @Override
+            public void success(Result<User> userResult)
+            {
+                User user = userResult.data;
+                sharedPrefrencesManger.setEmail(user.email);
+                sharedPrefrencesManger.setuserName(user.name);
+                sharedPrefrencesManger.setUserProfileImage(user.profileImageUrl.replace("_normal", ""));
+
+sharedPrefrencesManger.setuserLoginTwitter(true);
+                OpenMainActivity();
+            }
+
+            @Override
+            public void failure(TwitterException exc)
+            {
+                Log.d("TwitterKit", "Verify Credentials Failure", exc);
+            }
+        });
+    }
+
+
+
 
 }

@@ -1,7 +1,9 @@
 package com.example.ghazanfarali.piggyland.Views.Activities.UserProfile;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,6 +11,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.ghazanfarali.piggyland.R;
+import com.example.ghazanfarali.piggyland.Utils.SharedPrefrencesManger;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.Login.LoginActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.MyGallery;
@@ -24,6 +29,9 @@ import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.Use
 import com.example.ghazanfarali.piggyland.Views.Fragments.MessageforYou.MessageforyouFragment;
 import com.example.ghazanfarali.piggyland.Views.Fragments.PeopleInPiggyLand.PeopleInPiggyLandFragment;
 import com.example.ghazanfarali.piggyland.Views.Fragments.StartMainFragment.StartScreenFragment;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterSession;
 
 /**
  * Created by Amir.jehangir on 1/10/2017.
@@ -44,13 +52,19 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
     public static String fragmentType;
     ImageView nav_logo_img, imageView_nav_main_logo;
     LinearLayout nav_header_main_ll;
-
+    public SharedPrefrencesManger sharedPrefrencesManger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.userprofile_activity);
+        sharedPrefrencesManger = new SharedPrefrencesManger(this);
+        if(sharedPrefrencesManger.getuserLogin().contentEquals("true")){
+            this.finish();
+            startActivity(new Intent(this, LoginActivity.class));
+        }else {
 
+        }
 
         initUI();
         initListner();
@@ -203,7 +217,16 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     break;
                 case "7":
                     finish();
-                    startActivity(new Intent(this, LoginActivity.class));
+                    if(sharedPrefrencesManger.getuserLoginTwitter()){
+                        logoutTwitter();
+                        sharedPrefrencesManger.setuserLoginTwitter(false);
+                        sharedPrefrencesManger.clearSharedTwitterSession();
+                        startActivity(new Intent(this, LoginActivity.class));
+                    }else {
+                        sharedPrefrencesManger.setuserLogin("false");
+                        startActivity(new Intent(this, LoginActivity.class));
+                    }
+
                     break;
 
                 default:
@@ -310,6 +333,33 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
     public void setHeaderTitle(String title) {
         titleTxt.setText(title);
     }
+
+
+
+    public void logoutTwitter() {
+        TwitterSession twitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
+        if (twitterSession != null) {
+            ClearCookies(getApplicationContext());
+            Twitter.getSessionManager().clearActiveSession();
+            Twitter.logOut();
+        }
+    }
+
+    public static void ClearCookies(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            CookieManager.getInstance().removeAllCookies(null);
+            CookieManager.getInstance().flush();
+        } else {
+            CookieSyncManager cookieSyncMngr=CookieSyncManager.createInstance(context);
+            cookieSyncMngr.startSync();
+            CookieManager cookieManager=CookieManager.getInstance();
+            cookieManager.removeAllCookie();
+            cookieManager.removeSessionCookie();
+            cookieSyncMngr.stopSync();
+            cookieSyncMngr.sync();
+        }
+    }
+
 
 
     @Override

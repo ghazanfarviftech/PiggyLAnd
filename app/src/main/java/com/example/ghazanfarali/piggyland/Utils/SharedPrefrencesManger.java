@@ -163,7 +163,34 @@ public void setuserID(String userid) {
         return sharedPrefs.getString(ConstantUtils.ProfileUserNumber, "");
     }
 
+// login sessions
+public void setuserLogin(String userLogin) {
+    prefsEditor.putString(ConstantUtils.userLogin, userLogin);
+    prefsEditor.commit();
+}
 
+    public String  getuserLogin() {
+        return sharedPrefs.getString(ConstantUtils.userLogin,"false");
+    }
+
+    //
+    public void setuserLoginTwitter(boolean userLoginTwitter) {
+        prefsEditor.putBoolean(String.valueOf(ConstantUtils.userLoginTwitter), userLoginTwitter);
+        prefsEditor.commit();
+    }
+
+    public boolean getuserLoginTwitter() {
+        return sharedPrefs.getBoolean(String.valueOf(ConstantUtils.userLoginTwitter), false);
+    }
+
+
+
+    public void clearSharedTwitterSession(){
+        prefsEditor.remove(ConstantUtils.email).commit();
+        prefsEditor.remove(ConstantUtils.userName).commit();
+        prefsEditor.remove(ConstantUtils.userProfileImage).commit();
+
+    }
 
     public void clearSharedPref() {
         prefsEditor.remove(ConstantUtils.fullName).commit();

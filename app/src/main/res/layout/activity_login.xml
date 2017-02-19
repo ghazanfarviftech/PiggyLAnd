@@ -166,6 +166,12 @@
                         android:paddingTop="@dimen/x20"
                         android:text="Log in with Facebook" />
 
+                    <com.twitter.sdk.android.core.identity.TwitterLoginButton
+                        android:id="@+id/twitterLogin"
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/x60"
+                        android:layout_marginTop="@dimen/x20"
+                        android:layout_gravity="center_vertical" />
 
                     <com.example.ghazanfarali.piggyland.CustomViews.CustomButton
                         android:id="@+id/btn_signUp"

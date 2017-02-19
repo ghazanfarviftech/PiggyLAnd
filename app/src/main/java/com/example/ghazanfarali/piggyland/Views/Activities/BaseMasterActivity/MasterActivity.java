@@ -27,6 +27,7 @@ public class MasterActivity extends AppCompatActivity implements BaseInterface {
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState,persistentState);
         //   setContentView(R.layout.activity_main);
+        sharedPrefrencesManger = new SharedPrefrencesManger(this);
         initUI();
     }
 
@@ -82,11 +83,11 @@ public class MasterActivity extends AppCompatActivity implements BaseInterface {
 
     @Override
     public void initUI() {
-        sharedPrefrencesManger = new SharedPrefrencesManger(this);
-        userName = sharedPrefrencesManger.getuserName();
-        userPassword = sharedPrefrencesManger.getPassword();
-        email = sharedPrefrencesManger.getEmail();
-        deviceId = sharedPrefrencesManger.getDeviceId();
+
+//        userName = sharedPrefrencesManger.getuserName();
+//        userPassword = sharedPrefrencesManger.getPassword();
+//        email = sharedPrefrencesManger.getEmail();
+//        deviceId = sharedPrefrencesManger.getDeviceId();
         Log.v("deviceID", deviceId + " ");
 
     }

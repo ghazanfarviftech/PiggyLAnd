@@ -6,15 +6,22 @@ import android.os.Handler;
 
 import com.example.ghazanfarali.piggyland.Utils.SharedPrefrencesManger;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
-import com.example.ghazanfarali.piggyland.Views.Activities.Login.LoginActivity;
+import com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity;
 
 public class SplashActivity extends MasterActivity {
+
+//    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+//    private static final String TWITTER_KEY = "	10RB4PJO61CCxnZfWiUMYoPbR";
+//    private static final String TWITTER_SECRET = "tlz9vipR07Dd46ToAqnL9mrXQkkYxmiq3ejDKUMOfuMWvJA0t0";
+
 
     private final int SPLASH_DISPLAY_LENGTH = 1000;
     public SharedPrefrencesManger sharedPrefrencesManger;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+//        Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_splash);
         initUI();
     }
@@ -26,7 +33,8 @@ public class SplashActivity extends MasterActivity {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
+                Intent mainIntent = new Intent(SplashActivity.this,
+                        UserProfileActivity.class);
                 //Intent mainIntent = new Intent(SplashActivity.this, Drawing2Activity.class);
                // Intent mainIntent = new Intent(SplashActivity.this, UserProfileActivity.class);
                 SplashActivity.this.startActivity(mainIntent);

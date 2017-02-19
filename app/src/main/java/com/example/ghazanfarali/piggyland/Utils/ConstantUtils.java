@@ -29,4 +29,9 @@ public interface ConstantUtils {
     String ProfileUserImage = "AUTH";
     String ProfileUserNumber = "NUMBER";
 
+    String userLogin = "LOGIN";
+
+    // twitter login
+    boolean userLoginTwitter = false;
+
 }
