@@ -17,6 +17,7 @@ import com.example.ghazanfarali.piggyland.EndPoint.ApiClient;
 import com.example.ghazanfarali.piggyland.EndPoint.ApiInterface;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.LoginResponse;
 import com.example.ghazanfarali.piggyland.R;
+import com.example.ghazanfarali.piggyland.Utils.SharedPrefrencesManger;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity;
 
@@ -30,10 +31,12 @@ public class SignUpActivity extends MasterActivity {
     TextInputLayout til_username, til_password,ed_email,ed_contact;
     TextInputEditText tie_username, tei_password,tei_email,tei_contact;
     private static final String TAG = SignUpActivity.class.getSimpleName();
+    public SharedPrefrencesManger sharedPrefrencesManger;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        sharedPrefrencesManger = new SharedPrefrencesManger(this);
        // til_username = (TextInputLayout) findViewById(R.id.ed_username);
         til_password = (TextInputLayout) findViewById(R.id.ed_password);
        // tie_username= (TextInputEditText)findViewById(R.id.tie_username);

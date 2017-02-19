@@ -141,7 +141,7 @@ public abstract class StickerView extends FrameLayout {
         this.addView(iv_border, iv_border_params);
         this.addView(iv_scale, iv_scale_params);
         this.addView(iv_delete, iv_delete_params);
-        this.addView(iv_flip, iv_flip_params);
+        //this.addView(iv_flip, iv_flip_params);
 //        this.addView(iv_set, iv_set_params);
         this.setOnTouchListener(mTouchListener);
         this.iv_scale.setOnTouchListener(mTouchListener);
@@ -154,16 +154,16 @@ public abstract class StickerView extends FrameLayout {
                 }
             }
         });
-        this.iv_flip.setOnClickListener(new OnClickListener(){
+      /*  this.iv_flip.setOnClickListener(new OnClickListener(){
 
             @Override
             public void onClick(View view) {
                 Log.v(TAG, "flip the view");
 
-                /*View mainView = getMainView();
+                *//*View mainView = getMainView();
                 mainView.setRotationY(mainView.getRotationY() == -180f? 0f: -180f);
                 mainView.invalidate();
-                requestLayout();*/
+                requestLayout();*//*
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 final View views = inflater.inflate(R.layout.dialog_change_text,null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -187,7 +187,7 @@ public abstract class StickerView extends FrameLayout {
                 builder.show();
             }
         });
-
+*/
         /*this.iv_set.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -264,7 +264,7 @@ public abstract class StickerView extends FrameLayout {
         });
 
 
-
+        int i=10,j=20;
         @Override
         public boolean onTouch(View view, MotionEvent event) {
 
@@ -326,6 +326,23 @@ public abstract class StickerView extends FrameLayout {
                     case MotionEvent.ACTION_MOVE:
                         Log.v(TAG, "iv_scale action move");
 
+                       /* CricleShap shap = (CricleShap) getMainView();
+                        shap.paint.setColor(Color.CYAN);
+                        shap.myCanvas.*/
+                        /*double distanceX = 10+i;
+
+
+                        double distanceY = 10+i;
+                        double radius    = 20+j;
+                        */
+
+
+
+
+                        //shap.x =(int) distanceX;
+                        //shap.y =(int)distanceY;
+                        //shap.ra =(float)radius;
+
                         rotate_newX = event.getRawX();
                         rotate_newY = event.getRawY();
 
@@ -350,6 +367,9 @@ public abstract class StickerView extends FrameLayout {
                             StickerView.this.getLayoutParams().width += offset;
                             StickerView.this.getLayoutParams().height += offset;
                             onScaling(true);
+
+                          /*  shap.x = StickerView.this.getLayoutParams().width-5;
+                            shap.y = StickerView.this.getLayoutParams().height-5;*/
                             //DraggableViewGroup.this.setX((float) (getX() - offset / 2));
                             //DraggableViewGroup.this.setY((float) (getY() - offset / 2));
                         }else if(length2 < length1
@@ -364,13 +384,16 @@ public abstract class StickerView extends FrameLayout {
                             StickerView.this.getLayoutParams().width -= offset;
                             StickerView.this.getLayoutParams().height -= offset;
                             onScaling(false);
+
+                          /*  shap.x = StickerView.this.getLayoutParams().width-5;
+                            shap.y = StickerView.this.getLayoutParams().height-5;*/
                         }
 
                         //rotate
 
                         double angle = Math.atan2(event.getRawY() - centerY, event.getRawX() - centerX) * 180 / Math.PI;
                         Log.v(TAG, "log angle: " + angle);
-
+                       /* shap.ra =(float)angle;*/
                         //setRotation((float) angle - 45);
                         setRotation((float) angle - 45);
                         Log.v(TAG, "getRotation(): " + getRotation());
@@ -383,6 +406,18 @@ public abstract class StickerView extends FrameLayout {
                         scale_orgX = event.getRawX();
                         scale_orgY = event.getRawY();
 
+
+                        /*
+
+                        i+=1;
+                        j+=2;
+                        // Set a pixels value to padding around the circle
+                        int padding = 5;
+
+                        //canvas.drawCircle(this_orgX, this_orgY, (float)radius, shap.paint);
+                        //shap.myCanvas.drawCircle(100, 100, (float)50, shap.paint);
+                        //shap.draw(canvas);
+                        *//*shap.invalidate();*/
                         postInvalidate();
                         requestLayout();
                         break;
@@ -424,12 +459,12 @@ public abstract class StickerView extends FrameLayout {
             iv_border.setVisibility(View.INVISIBLE);
             iv_scale.setVisibility(View.INVISIBLE);
             iv_delete.setVisibility(View.INVISIBLE);
-            iv_flip.setVisibility(View.INVISIBLE);
+            //iv_flip.setVisibility(View.INVISIBLE);
         }else{
             iv_border.setVisibility(View.VISIBLE);
             iv_scale.setVisibility(View.VISIBLE);
             iv_delete.setVisibility(View.VISIBLE);
-            iv_flip.setVisibility(View.VISIBLE);
+            //iv_flip.setVisibility(View.VISIBLE);
         }
     }
 
@@ -439,12 +474,12 @@ public abstract class StickerView extends FrameLayout {
             iv_border.setVisibility(View.INVISIBLE);
             iv_scale.setVisibility(View.INVISIBLE);
             iv_delete.setVisibility(View.INVISIBLE);
-            iv_flip.setVisibility(View.INVISIBLE);
+            // iv_flip.setVisibility(View.INVISIBLE);
         }else{
             iv_border.setVisibility(View.VISIBLE);
             iv_scale.setVisibility(View.VISIBLE);
             iv_delete.setVisibility(View.VISIBLE);
-            iv_flip.setVisibility(View.INVISIBLE);
+            // iv_flip.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -508,12 +543,12 @@ public abstract class StickerView extends FrameLayout {
         if(!isVisible) {
             iv_border.setVisibility(View.GONE);
             iv_delete.setVisibility(View.GONE);
-            iv_flip.setVisibility(View.GONE);
+            //iv_flip.setVisibility(View.GONE);
             iv_scale.setVisibility(View.GONE);
         }else{
             iv_border.setVisibility(View.VISIBLE);
             iv_delete.setVisibility(View.VISIBLE);
-            iv_flip.setVisibility(View.VISIBLE);
+            // iv_flip.setVisibility(View.VISIBLE);
             iv_scale.setVisibility(View.VISIBLE);
         }
 

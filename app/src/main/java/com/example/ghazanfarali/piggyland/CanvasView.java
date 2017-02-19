@@ -24,6 +24,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.MotionEvent;
 import android.widget.Button;
+
+import com.example.ghazanfarali.piggyland.CustomViews.GetterAndSetter;
 // import android.util.Log;
 // import android.widget.Toast;
 
@@ -48,6 +50,8 @@ public class CanvasView extends View {
         ELLIPSE,
         QUADRATIC_BEZIER,
         TRIANGLE,
+        NINTY,
+        OCTAGONE,
         QUBIC_BEZIER;
     }
 
@@ -251,7 +255,7 @@ public class CanvasView extends View {
     ArrayList<String> multitext = new ArrayList<>();
     ArrayList<Float> textXs = new ArrayList<>();
     ArrayList<Float> textYs = new ArrayList<>();
-  //  float[] textYs = new float[1000] ;
+    //  float[] textYs = new float[1000] ;
     View views;
     public static boolean settingnewtxt = false;
     public static boolean settingfortextmode = false;
@@ -280,35 +284,6 @@ public class CanvasView extends View {
                 settingfortextmode = true;
             }
 
-           /* for(int i=0;i<multitext.size();i++)
-            {
-                float textX = textXs.get(i);//this.textX;
-                float textY = textYs.get(i);//this.textY;
-
-                Paint paintForMeasureText = new Paint();
-
-                // Line break automatically
-                float textLength   = paintForMeasureText.measureText(multitext.get(i));
-                float lengthOfChar = textLength / (float)multitext.get(i).length();
-                float restWidth    = this.canvas.getWidth() - textX;  // text-align : right
-                int numChars       = (lengthOfChar <= 0) ? 1 : (int)Math.floor((double)(restWidth / lengthOfChar));  // The number of characters at 1 line
-                int modNumChars    = (numChars < 1) ? 1 : numChars;
-                float y            = textY;
-
-                for (int k = 0, len = multitext.get(i).length(); k < len; k += modNumChars) {
-                    String substring = "";
-
-                    if ((k + modNumChars) < len) {
-                        substring = multitext.get(i).substring(k, (k + modNumChars));
-                    } else {
-                        substring = multitext.get(i).substring(k, len);
-                    }
-
-                    y += this.fontSize;
-
-                    canvas.drawText(substring, textX, y, this.textPaint);
-                }
-            }*/
         }
 
 
@@ -349,64 +324,11 @@ public class CanvasView extends View {
 
 
 
-        /*if(settingnewtxt) {
-            float textX = this.textX;
-            float textY = this.textY;
 
-            Paint paintForMeasureText = new Paint();
-
-            // Line break automatically
-            float textLength = paintForMeasureText.measureText(this.text);
-            float lengthOfChar = textLength / (float) this.text.length();
-            float restWidth = this.canvas.getWidth() - textX;  // text-align : right
-            int numChars = (lengthOfChar <= 0) ? 1 : (int) Math.floor((double) (restWidth / lengthOfChar));  // The number of characters at 1 line
-            int modNumChars = (numChars < 1) ? 1 : numChars;
-            float y = textY;
-
-            for (int i = 0, len = this.text.length(); i < len; i += modNumChars) {
-                String substring = "";
-
-                if ((i + modNumChars) < len) {
-                    substring = this.text.substring(i, (i + modNumChars));
-                } else {
-                    substring = this.text.substring(i, len);
-                }
-
-                y += this.fontSize;
-
-                canvas.drawText(substring, textX, y, this.textPaint);
-            }
-
-        }*/
-
-       /* float textX = this.textX;
-        float textY = this.textY;
-
-        Paint paintForMeasureText = new Paint();
-
-        // Line break automatically
-        float textLength   = paintForMeasureText.measureText(this.text);
-        float lengthOfChar = textLength / (float)this.text.length();
-        float restWidth    = this.canvas.getWidth() - textX;  // text-align : right
-        int numChars       = (lengthOfChar <= 0) ? 1 : (int)Math.floor((double)(restWidth / lengthOfChar));  // The number of characters at 1 line
-        int modNumChars    = (numChars < 1) ? 1 : numChars;
-        float y            = textY;
-
-        for (int i = 0, len = this.text.length(); i < len; i += modNumChars) {
-            String substring = "";
-
-            if ((i + modNumChars) < len) {
-                substring = this.text.substring(i, (i + modNumChars));
-            } else {
-                substring = this.text.substring(i, len);
-            }
-
-            y += this.fontSize;
-
-            canvas.drawText(substring, textX, y, this.textPaint);
-        }*/
     }
 
+
+    ArrayList<GetterAndSetter> myPAthForSmooth;
     /**
      * This method defines processes on MotionEvent.ACTION_DOWN
      *
@@ -420,6 +342,7 @@ public class CanvasView extends View {
             case DRAW   :
             case ERASER :
                 System.out.println("in switch case mode DRAW ERASER "+this.mode);
+                myPAthForSmooth =  new ArrayList<>();
                 if ((this.drawer != Drawer.QUADRATIC_BEZIER) && (this.drawer != Drawer.QUBIC_BEZIER)) {
 
                     System.out.println("this.drawer != Drawer.QUADRATIC_BEZIER this.isDown = true");
@@ -428,6 +351,11 @@ public class CanvasView extends View {
                     // Oherwise
                     this.updateHistory(this.createPath(event));
                     this.isDown = true;
+                    GetterAndSetter getterAndSetter = new GetterAndSetter();
+                    getterAndSetter.setX(event.getX());
+                    getterAndSetter.setY(event.getY());
+
+                    myPAthForSmooth.add(getterAndSetter);
                 } else {
                     System.out.println("Bezier ");
                     // Bezier
@@ -494,10 +422,17 @@ public class CanvasView extends View {
                     Path path = this.getCurrentPath();
                     System.out.println("path "+path+" isDown "+isDown);
 
-
+                    Double halfWidth;
+                    int i;
                     switch (this.drawer) {
                         case PEN :
                             path.lineTo(x, y);
+
+                            GetterAndSetter getterAndSetter = new GetterAndSetter();
+                            getterAndSetter.setX(x);
+                            getterAndSetter.setY(y);
+
+                            myPAthForSmooth.add(getterAndSetter);
 
                             System.out.println("PEN path.lineTo(x, y);"+x+" "+y);
                             break;
@@ -555,11 +490,11 @@ public class CanvasView extends View {
                             double distanceYT = Math.abs((double)(this.startY - y));
 
                             System.out.println("CIRCLE  distanceY "+distanceYT+ " Math.abs((double)(this.startX - y) "+this.startX+" "+y);
-                            Double halfWidth    = Math.sqrt(Math.pow(distanceXT, 2.0) + Math.pow(distanceYT, 2.0));
+                            halfWidth    = Math.sqrt(Math.pow(distanceXT, 2.0) + Math.pow(distanceYT, 2.0));
                           /*  int halfWidth = */
-                            int i = Integer.valueOf(halfWidth.intValue());//100 / 2;
+                            i = Integer.valueOf(halfWidth.intValue());//100 / 2;
                             path.reset();
-                            path.moveTo(this.startX, this.startY - i); // Top
+                            path.moveTo(this.startX, this.startX); // Top
                             path.lineTo(x - i, y + i); // Bottom left
                             path.lineTo(x + i, y + i); // Bottom right
                             path.lineTo(x, y - i); // Back to Top
@@ -573,6 +508,45 @@ public class CanvasView extends View {
                             paint.setStrokeJoin(Paint.Join.MITER);*/
                             path.addPath(path);//drawPath(path,paint);
 
+                            break;
+                        case NINTY:
+                            double distanceXNIN = Math.abs((double)(this.startX - x));
+                            System.out.println("CIRCLE  distanceX "+distanceXNIN+ " Math.abs((double)(this.startX - x) "+this.startX+" "+x);
+
+                            double distanceYNIN = Math.abs((double)(this.startY - y));
+
+                            System.out.println("CIRCLE  distanceY "+distanceYNIN+ " Math.abs((double)(this.startX - y) "+this.startX+" "+y);
+                            halfWidth    = Math.sqrt(Math.pow(distanceXNIN, 2.0) + Math.pow(distanceYNIN, 2.0));
+                          /*  int halfWidth = */
+                            i = Integer.valueOf(halfWidth.intValue());//100 / 2;
+                            path.reset();
+                            path.moveTo(this.startX, this.startY); // Top
+                            path.lineTo(x - i, y + i); // Bottom left
+                            path.lineTo(x + i, y + i); // Bottom right
+                            path.lineTo(x, y - i); // Back to Top
+                            path.close();
+
+                            path.addPath(path);
+                            break;
+
+                        case OCTAGONE:
+                            double distanceXOCT = Math.abs((double)(this.startX - x));
+                            System.out.println("CIRCLE  distanceX "+distanceXOCT+ " Math.abs((double)(this.startX - x) "+this.startX+" "+x);
+
+                            double distanceYOCT = Math.abs((double)(this.startY - y));
+
+                            System.out.println("CIRCLE  distanceY "+distanceYOCT+ " Math.abs((double)(this.startX - y) "+this.startX+" "+y);
+                            halfWidth    = Math.sqrt(Math.pow(distanceXOCT, 2.0) + Math.pow(distanceYOCT, 2.0));
+                          /*  int halfWidth = */
+                            i = Integer.valueOf(halfWidth.intValue());//100 / 2;
+                            path.reset();
+                            path.moveTo(this.startX, this.startY); // Top
+                            path.lineTo(this.startX, y + i); // Bottom left
+                            path.lineTo(x + i, y + i); // Bottom right
+                            path.lineTo(x, y - i); // Back to Top
+                            path.close();
+
+                            path.addPath(path);
                             break;
                         default :
                             break;
@@ -620,6 +594,19 @@ public class CanvasView extends View {
             this.startX = 0F;
             this.startY = 0F;
             this.isDown = false;
+            Path path = new Path();
+            for(int i=0;i< myPAthForSmooth.size();i++)
+            {
+                if(i==0)
+                {
+                    System.out.println(" onActionUp ifi==0 ");
+                    path.moveTo(myPAthForSmooth.get(i).getX(),myPAthForSmooth.get(i).getY());
+
+                }else{
+                    System.out.println(" onActionUp if else ");
+                    path.lineTo(myPAthForSmooth.get(i).getX(),myPAthForSmooth.get(i).getY());
+                }
+            }
         }
     }
 

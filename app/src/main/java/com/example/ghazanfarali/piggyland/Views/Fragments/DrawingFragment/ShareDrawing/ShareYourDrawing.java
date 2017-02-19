@@ -37,7 +37,7 @@ public class ShareYourDrawing extends MasterFragment {
             initUI();
             userProfileActivity.fragmentType = "101";
 
-userProfileActivity.showHeaderLayout();
+            userProfileActivity.showHeaderLayout();
             share_to_public.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

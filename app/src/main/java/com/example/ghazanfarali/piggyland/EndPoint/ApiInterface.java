@@ -10,6 +10,9 @@ import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.ForgotPsswordRes
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.GetUserProfile.GetUserProfileResponse;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.LoginResponse;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.SaveToGalleryResponse;
+import com.example.ghazanfarali.piggyland.Views.Fragments.PeopleInPiggyLand.Beans.ResponseUser;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -52,4 +55,7 @@ public interface ApiInterface {
 
     @GET("index.php?menu=getProfile")
     Call<GetUserProfileResponse> responseprofile(@Query("email") String pid);
+
+    @GET("index.php?menu=getUser")
+    Call<List<ResponseUser>> getUsers();
 }

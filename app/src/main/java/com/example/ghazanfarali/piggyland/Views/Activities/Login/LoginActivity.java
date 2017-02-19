@@ -187,8 +187,8 @@ private void OpenMainActivity(){
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
-                finish();
+               /* startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+                finish();*/
 
                 if (tie_username.getText().length() > 0 && tei_password.getText().length() > 0) {
                     hideKeyBoard();
@@ -451,7 +451,7 @@ private void OpenMainActivity(){
                 sharedPrefrencesManger.setuserName(user.name);
                 sharedPrefrencesManger.setUserProfileImage(user.profileImageUrl.replace("_normal", ""));
 
-sharedPrefrencesManger.setuserLoginTwitter(true);
+                sharedPrefrencesManger.setuserLoginTwitter(true);
                 OpenMainActivity();
             }
 

@@ -195,7 +195,9 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                 case "2":
                     setVisibilities(1);
                     //   replaceFragmnet(new MyGallery(), R.id.frameLayout, false);
-                    startActivity(new Intent(this, MyGalleryMultiSelect.class));
+                    //startActivity(new Intent(this, MyGalleryMultiSelect.class));
+                    hideHeaderLayout();
+                    replaceFragmnet(new MyGallery(), R.id.frameLayout, true);
                     break;
                 case "3":
                     setVisibilities(4);

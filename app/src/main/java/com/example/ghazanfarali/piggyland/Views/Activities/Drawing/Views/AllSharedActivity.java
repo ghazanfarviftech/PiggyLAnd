@@ -207,7 +207,7 @@ public class AllSharedActivity extends MasterFragment {
             getActivity().finish();
         }else {
             photosList = new ArrayList<>();
-            for (int i = 0; i < files.size(); i++) {
+            for (int i = files.size()-1; i >= 0; i--) {
                 ShareArtWork photo1 = new ShareArtWork();
                 photo1.setmygallaryImageURL(files.get(i));
                 photo1.setmygallaryTitle("Android");

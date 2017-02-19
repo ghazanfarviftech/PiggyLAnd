@@ -286,7 +286,7 @@ public class MyGallery extends MasterFragment {
             getActivity().finish();
         } else {
             photosList = new ArrayList<>();
-            for (int i = 0; i < files.size(); i++) {
+            for (int i = files.size()-1; i >= 0; i--) {
                 MyGallaryMultiSelectITems photo1 = new MyGallaryMultiSelectITems();
                 photo1.setmygallaryImageURL(files.get(i).toString());
                 photo1.setmygallaryTitle("Android");
