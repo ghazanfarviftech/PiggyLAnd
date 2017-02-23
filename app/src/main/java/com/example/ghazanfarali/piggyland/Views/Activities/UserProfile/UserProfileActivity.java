@@ -33,6 +33,8 @@ import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterSession;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 /**
  * Created by Amir.jehangir on 1/10/2017.
  */
@@ -60,16 +62,16 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
 
         setContentView(R.layout.userprofile_activity);
         sharedPrefrencesManger = new SharedPrefrencesManger(this);
-        if(sharedPrefrencesManger.getuserLogin().contentEquals("true")){
+        if (sharedPrefrencesManger.getuserLogin().contentEquals("true")) {
 
             Bundle extra = getIntent().getExtras();
             if (extra != null) {
                 fragmentType = getIntent().getExtras().getString("fragmentIndex");
                 getIntent().removeExtra("fragmentIndex");
-            }else {
+            } else {
                 fragmentType = "1";
             }
-        }else {
+        } else {
             this.finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
@@ -114,10 +116,10 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     showHeaderLayout();
                     fragmentType = "1";
                     clearBackStack();
-                    replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
+                    AddFragment(new StartScreenFragment(), R.id.frameLayout, false);
                     drawer.closeDrawer(GravityCompat.START);
-                   // replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
-                   // displayNextFragment();
+                    // replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
+                    // displayNextFragment();
 
                 } else if (id == R.id.gallery) {
                     //titleTxt.setText("My Gallary");
@@ -125,56 +127,81 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     setVisibilities(1);
                     fragmentType = "2";
                     hideHeaderLayout();
-                    replaceFragmnet(new MyGallery(), R.id.frameLayout, false);
+                    replaceFragmnet(new MyGallery(), R.id.frameLayout, true);
                     drawer.closeDrawer(GravityCompat.START);
                 } else if (id == R.id.order) {
                     //  Toast.makeText(UserProfileActivity.this,"this",Toast.LENGTH_LONG).show();
                 } else if (id == R.id.memebers) {
-                   // setVisibilities(4);
+                    // setVisibilities(4);
                     showHeaderLayout();
                     fragmentType = "3";
                     setVisibilities(4);
-                    replaceFragmnet(new PeopleInPiggyLandFragment(), R.id.frameLayout, false);
+                    replaceFragmnet(new PeopleInPiggyLandFragment(), R.id.frameLayout, true);
                     drawer.closeDrawer(GravityCompat.START);
                 } else if (id == R.id.message) {
                     showHeaderLayout();
                     setVisibilities(5);
                     fragmentType = "5";
 
-                    replaceFragmnet(new MessageforyouFragment(), R.id.frameLayout, false);
+                    replaceFragmnet(new MessageforyouFragment(), R.id.frameLayout, true);
                     drawer.closeDrawer(GravityCompat.START);
                 } else if (id == R.id.profile) {
-                   // hideHeaderLayout();
+                    // hideHeaderLayout();
                     showHeaderLayout();
                     setVisibilities(6);
 
-                  //  fragmentType = "6";
+                    //  fragmentType = "6";
                     // hideHeaderLayout();
                     fragmentType = "6";
-                    replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, false);
+                    replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, true);
                     drawer.closeDrawer(GravityCompat.START);
                 } else if (id == R.id.Logout) {
                     //showHeaderLayout();
                     fragmentType = "7";
                     finish();
                     drawer.closeDrawer(GravityCompat.START);
-                    if(sharedPrefrencesManger.getuserLoginTwitter()){
+                    if (sharedPrefrencesManger.getuserLoginTwitter()) {
                         logoutTwitter();
                         sharedPrefrencesManger.setuserLoginTwitter(false);
                         sharedPrefrencesManger.clearSharedTwitterSession();
                         startActivity(new Intent(UserProfileActivity.this, LoginActivity.class));
-                    }else {
-                        sharedPrefrencesManger.setuserLogin("false");
-                        startActivity(new Intent(UserProfileActivity.this, LoginActivity.class));
+                    } else {
+                        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(UserProfileActivity.this, SweetAlertDialog.NORMAL_TYPE);
+                        sweetAlertDialog.setCancelText("Cancel")
+                                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        sweetAlertDialog.dismiss();
+//                            ptrHome.setRefreshing(false);
+//                            loading = false;
+
+                                    }
+                                })
+                                .setTitleText("Are you sure?")
+                                .setContentText("Won't be Logout")
+                                .setConfirmText("Yes,Logout it!")
+                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        sweetAlertDialog.cancel();
+                                        sharedPrefrencesManger.setuserLogin("false");
+                                        startActivity(new Intent(UserProfileActivity.this, LoginActivity.class));
+                                        finish();
+
+                                    }
+                                });
+                        sweetAlertDialog.show();
+
+
                     }
-                }else if (id == R.id.ArtWork){
+                } else if (id == R.id.ArtWork) {
                     showHeaderLayout();
                     setVisibilities(1);
-                   // showHeaderLayout();
+                    // showHeaderLayout();
                     fragmentType = "8";
-                    replaceFragmnet(new AllSharedActivity(), R.id.frameLayout, false);
+                    replaceFragmnet(new AllSharedActivity(), R.id.frameLayout, true);
                     drawer.closeDrawer(GravityCompat.START);
-                  //  displayNextFragment();
+                    //  displayNextFragment();
                 }
                 return true;
             }
@@ -221,7 +248,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
             switch (fragmentType) {
                 case "0":
                     setVisibilities(2);
-                    replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, false);
+                    AddFragment(new UserProfileFragment(), R.id.frameLayout, false);
                     break;
                 case "-1":
                     replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, false);
@@ -230,7 +257,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     setVisibilities(1);
 
                     clearBackStack();
-                    replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
+                    AddFragment(new StartScreenFragment(), R.id.frameLayout, false);
                     break;
                 case "2":
                     setVisibilities(1);
@@ -253,18 +280,18 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     break;
                 case "6":
                     setVisibilities(6);
-                   // hideHeaderLayout();
+                    // hideHeaderLayout();
                     fragmentType = "6";
                     replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, true);
                     break;
                 case "7":
                     finish();
-                    if(sharedPrefrencesManger.getuserLoginTwitter()){
+                    if (sharedPrefrencesManger.getuserLoginTwitter()) {
                         logoutTwitter();
                         sharedPrefrencesManger.setuserLoginTwitter(false);
                         sharedPrefrencesManger.clearSharedTwitterSession();
                         startActivity(new Intent(this, LoginActivity.class));
-                    }else {
+                    } else {
                         sharedPrefrencesManger.setuserLogin("false");
                         startActivity(new Intent(this, LoginActivity.class));
                     }
@@ -276,7 +303,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     replaceFragmnet(new AllSharedActivity(), R.id.frameLayout, true);
                     break;
                 default:
-                   // setVisibilities(2);
+                    // setVisibilities(2);
                     replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
                     break;
 
@@ -389,7 +416,6 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
     }
 
 
-
     public void logoutTwitter() {
         TwitterSession twitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
         if (twitterSession != null) {
@@ -404,16 +430,15 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
             CookieManager.getInstance().removeAllCookies(null);
             CookieManager.getInstance().flush();
         } else {
-            CookieSyncManager cookieSyncMngr=CookieSyncManager.createInstance(context);
+            CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(context);
             cookieSyncMngr.startSync();
-            CookieManager cookieManager=CookieManager.getInstance();
+            CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.removeAllCookie();
             cookieManager.removeSessionCookie();
             cookieSyncMngr.stopSync();
             cookieSyncMngr.sync();
         }
     }
-
 
 
     @Override
@@ -439,16 +464,46 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(fragmentType == "2"){
+
+        if (fragmentType == "1") {
+
+//            SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE);
+//            sweetAlertDialog.setCancelText("Cancel")
+//                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                        @Override
+//                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                            sweetAlertDialog.dismiss();
+////                            ptrHome.setRefreshing(false);
+////                            loading = false;
+//
+//                        }
+//                    })
+//                    .setTitleText("Are you sure?")
+//                    .setContentText("Won't be Exit")
+//                    .setConfirmText("Yes,Exit it!")
+//                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                        @Override
+//                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                            sweetAlertDialog.cancel();
+//                            finish();
+//
+//                        }
+//                    });
+//            sweetAlertDialog.show();
+
+        }
+
+
+        if (fragmentType == "2") {
 //            showHeaderLayout();
 //            setVisibilities(1);
 //            clearBackStack();
 //            replaceFragmnet(new StartScreenFragment(), R.id.frameLayout, false);
         }
-        if(fragmentType == "8"){
+        if (fragmentType == "8") {
             setVisibilities(1);
         }
-        if(fragmentType == "5"){
+        if (fragmentType == "5") {
             showHeaderLayout();
             setVisibilities(1);
 //            clearBackStack();
@@ -457,15 +512,15 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
 
         if (fragmentType == "102") {
             showHeaderLayout();
-            if(MyGallery.is_in_action_mode){
+            if (MyGallery.is_in_action_mode) {
                 MyGallery.clearActionM();
                 return;
-            }else{
+            } else {
 
             }
         }
 
-        if(fragmentType == "103"){
+        if (fragmentType == "103") {
             setVisibilities(5);
         }
 
@@ -474,9 +529,9 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
         } else {
             //  finish();
         }
-        if(fragmentType == "6"){
+        if (fragmentType == "6") {
             setVisibilities(1);
-        }else{
+        } else {
 
         }
         if (fragmentType == "100") {
@@ -497,8 +552,6 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
 
         }
     }
-
-
 
 
 }

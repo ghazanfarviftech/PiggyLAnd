@@ -8,13 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.ghazanfarali.piggyland.Helper.ValidationUtils;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Utils.Defines;
 import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.MasterFragment;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by Amir.jehangir on 2/17/2017.
@@ -46,12 +47,40 @@ public class ShareYourDrawing extends MasterFragment {
                     // title_enter.getText().toString();
                     if(title_enter.getText().length() ==0)
                     {
-                        Toast.makeText(getActivity(),"Enter the title please",Toast.LENGTH_SHORT).show();
+                        new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                                .setTitleText("Alert")
+                                .setContentText("Enter the title please")
+                                .setConfirmText("Ok")
+                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sDialog) {
+                                        title_enter.requestFocus();
+                                        sDialog.dismissWithAnimation();
+                                    }
+                                })
+                                .show();
+                        return;
+//                        Toast.makeText(getActivity(),"Enter the title please",Toast.LENGTH_SHORT).show();
+//                        title_enter.requestFocus();
                         // return false;
                     }
                     if(img_description.getText().length() == 0)
                     {
-                        Toast.makeText(getActivity(),"Enter image description",Toast.LENGTH_SHORT).show();
+                        new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Alert")
+                            .setContentText("Enter image description")
+                            .setConfirmText("Ok")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    img_description.requestFocus();
+                                    sDialog.dismissWithAnimation();
+                                }
+                            })
+                            .show();
+                        return;
+//                        Toast.makeText(getActivity(),"Enter image description",Toast.LENGTH_SHORT).show();
+//                        img_description.requestFocus();
                         //return false;
                     }
                     else{

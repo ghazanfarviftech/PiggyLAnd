@@ -45,11 +45,8 @@ import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.SaveToGalleryRes
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Utils.Defines;
 import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.Bean.StickerImg;
-import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.Drawing2Activity;
-import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.adapters.MygallaryAdapter_Grid;
 import com.example.ghazanfarali.piggyland.Views.Activities.Drawing.adapters.StickerAdapter;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter.MyGallaryITemDecor;
-import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.beans.mygallarylist;
 import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.MasterFragment;
 import com.example.ghazanfarali.piggyland.Views.Fragments.DrawingFragment.ShareDrawing.ShareYourDrawing;
 import com.flask.colorpicker.ColorPickerView;
@@ -67,6 +64,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -711,6 +709,7 @@ public class MainDrawingFragment extends MasterFragment {
     }
 
 
+
     private ArrayList<StickerImg>  prepareListData() {
 
         ArrayList<StickerImg> temp = new ArrayList<>();
@@ -910,7 +909,8 @@ public class MainDrawingFragment extends MasterFragment {
     @Override
     public void onResume() {
         super.onResume();
-        userProfileActivity.fragmentType = "100";
+        userProfileActivity.hideHeaderLayout();
+     //   userProfileActivity.fragmentType = "100";
         if (Defines.is_shareToPublic) {
             //   Defines.is_shareToPublic = false;
 
@@ -918,6 +918,7 @@ public class MainDrawingFragment extends MasterFragment {
 
         } else if (Defines.is_saveToGallery) {
             SaveToGalleryActivityResult();
+
         }
 
 
@@ -936,7 +937,7 @@ public class MainDrawingFragment extends MasterFragment {
 
     private void ShareActvityResult() {
         // Toast.makeText(getActivity(),"got result",Toast.LENGTH_SHORT).show();
-userProfileActivity.hideKeyBoard();
+
 
         if (!Defines.is_shareToPublic) {
 
@@ -944,7 +945,8 @@ userProfileActivity.hideKeyBoard();
             String imageTitle = Defines.Share_title;
             String Description = Defines.Share_description;
             String FullPath = imageName;//bundle.getString("FullPath");
-
+ShowProgress(getActivity());
+            StartProgressLoading();
 
             try {
                 ApiInterface apiService =
@@ -955,10 +957,23 @@ userProfileActivity.hideKeyBoard();
                     @Override
                     public void onResponse(Call<SaveToGalleryResponse> call, Response<SaveToGalleryResponse> response) {
                         SaveToGalleryResponse statusCode = response.body();//code();
+                        StopProgressLoading();
                         if (statusCode.getStatus().contentEquals("Success")) {
+                            new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText("Good Job!")
+                                    .setContentText("Image Send Successfully")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sDialog) {
 
-                            Toast.makeText(getActivity(), "image send", Toast.LENGTH_LONG).show();
-                            userProfileActivity.onBackPressed();
+                                            sDialog.dismissWithAnimation();
+                                         //   userProfileActivity.hideHeaderLayout();
+                                            userProfileActivity.onBackPressed();
+                                        }
+                                    })
+                                    .show();
+//                            Toast.makeText(getActivity(), "image send", Toast.LENGTH_LONG).show();
+//                            userProfileActivity.onBackPressed();
                             //startActivity(new Intent(LoginActivity.this, StartActivity.class));
                         } else {
                             // Toast.makeText(Drawing2Activity.this,"UserName/Password Incorrect",Toast.LENGTH_SHORT).show();
@@ -970,10 +985,12 @@ userProfileActivity.hideKeyBoard();
                     @Override
                     public void onFailure(Call<SaveToGalleryResponse> call, Throwable t) {
                         // Log error here since request failed
+                        StopProgressLoading();
                         Log.e("", t.toString());
                     }
                 });
             } catch (Exception e) {
+                StopProgressLoading();
                 e.getLocalizedMessage();
             }
 
@@ -994,7 +1011,8 @@ userProfileActivity.hideKeyBoard();
             String Description = Defines.Share_description;
             String FullPath = imageName;//bundle.getString("FullPath");
 
-
+ShowProgress(getActivity());
+            StartProgressLoading();
             try {
                 ApiInterface apiService =
                         ApiClient.getClient().create(ApiInterface.class);
@@ -1004,6 +1022,7 @@ userProfileActivity.hideKeyBoard();
                     @Override
                     public void onResponse(Call<SaveToGalleryResponse> call, Response<SaveToGalleryResponse> response) {
                         SaveToGalleryResponse statusCode = response.body();//code();
+                        StopProgressLoading();
                         if (statusCode.getStatus().contentEquals("Success")) {
                             Toast.makeText(getActivity(), "image send", Toast.LENGTH_SHORT).show();
                             userProfileActivity.onBackPressed();
@@ -1018,10 +1037,12 @@ userProfileActivity.hideKeyBoard();
                     @Override
                     public void onFailure(Call<SaveToGalleryResponse> call, Throwable t) {
                         // Log error here since request failed
+                        StopProgressLoading();
                         Log.e("", t.toString());
                     }
                 });
             } catch (Exception e) {
+                StopProgressLoading();
                 e.getLocalizedMessage();
             }
         }

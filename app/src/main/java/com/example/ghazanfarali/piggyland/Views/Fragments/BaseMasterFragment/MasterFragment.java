@@ -1,6 +1,8 @@
 package com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -17,6 +19,8 @@ import com.example.ghazanfarali.piggyland.Utils.SharedPrefrencesManger;
 import com.example.ghazanfarali.piggyland.Utils.ValidationHelper;
 import com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 /**
  * Created by Amir.jehangir on 1/12/2017.
  */
@@ -25,6 +29,7 @@ public class MasterFragment extends Fragment implements BaseInterface {
     public SharedPrefrencesManger sharedPrefrencesManger;
    // private RetrofitErrorHandeler retrofitErrorHandeler;
     public ValidationHelper validationHelper;
+    public SweetAlertDialog pDialog;
     public static MasterFragment newInstance() {
 
         return new MasterFragment();
@@ -45,6 +50,19 @@ public class MasterFragment extends Fragment implements BaseInterface {
 
     }
 
+    public void ShowProgress(Activity activity){
+        pDialog = new SweetAlertDialog(activity, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#5FAE08"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+    }
+
+    public void StartProgressLoading(){
+        pDialog.show();
+    }
+    public void StopProgressLoading(){
+        pDialog.dismiss();
+    }
 
     public void HideMainHeader(){
         userProfileActivity.hideHeaderLayout();

@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import com.example.ghazanfarali.piggyland.Controls.GallaryClickListner;
 import com.example.ghazanfarali.piggyland.R;
-import com.example.ghazanfarali.piggyland.Utils.GlobalUtils;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter.MyGallaryITemDecor;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.adapter.MygallaryAdapter;
 import com.example.ghazanfarali.piggyland.Views.Activities.MyGallery.beans.MyGallaryMultiSelectITems;
@@ -36,6 +35,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static android.view.View.inflate;
 
@@ -362,7 +363,11 @@ if(selectionList.size() >0){
     startActivity(i);
     clearActionM();
 }else {
-    GlobalUtils.showErrorDialog(getActivity(),"Please Select Image","Alert");
+    new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+            .setTitleText("Alert")
+            .setContentText("Please Select Image")
+            .show();
+  //  GlobalUtils.showErrorDialog(getActivity(),"Please Select Image","Alert");
 }
 
         //  startActivity(new Intent(this, PrintOrderActivity.class));

@@ -210,6 +210,9 @@ public class AllSharedActivity extends MasterFragment {
     Post[] post;
     public void getPost()
     {
+        ShowProgress(getActivity());
+        StartProgressLoading();
+
         try {
             ApiInterface apiService =
                     ApiClient.getClient().create(ApiInterface.class);
@@ -220,7 +223,7 @@ public class AllSharedActivity extends MasterFragment {
             call.enqueue(new retrofit2.Callback<MyPojo>() {
                 @Override
                 public void onResponse(Call<MyPojo> call, Response<MyPojo> response) {
-
+StopProgressLoading();
                     MyPojo statusCode = response.body();//code();
                     post = statusCode.getPost();
                     shareArtWorkAdapter = new ShareArtWorkAdapter(getActivity(),post);
@@ -252,10 +255,12 @@ public class AllSharedActivity extends MasterFragment {
                 @Override
                 public void onFailure(Call<MyPojo> call, Throwable t) {
                     // Log error here since request failed
+                    StopProgressLoading();
                     Log.e("", t.toString());
                 }
             });
         } catch (Exception e) {
+            StopProgressLoading();
             e.getLocalizedMessage();
         }
     }

@@ -64,7 +64,8 @@ public class PeopleInPiggyLandFragment extends MasterFragment {
 
     private void initLayout() {
 
-
+ShowProgress(getActivity());
+        StartProgressLoading();
 
         try {
             ApiInterface apiService =
@@ -74,6 +75,7 @@ public class PeopleInPiggyLandFragment extends MasterFragment {
             call.enqueue(new retrofit2.Callback<GetUsersResponse>() {
                 @Override
                 public void onResponse(Call<GetUsersResponse> call, Response<GetUsersResponse> response) {
+                    StopProgressLoading();
                     GetUsersResponse statusCode = response.body();
                     UserList(response.body());
                 }
@@ -81,10 +83,12 @@ public class PeopleInPiggyLandFragment extends MasterFragment {
                 @Override
                 public void onFailure(Call<GetUsersResponse> call, Throwable t) {
                     // Log error here since request failed
+                    StopProgressLoading();
                     Log.e("", t.toString());
                 }
             });
         } catch (Exception e) {
+            StopProgressLoading();
             e.getLocalizedMessage();
         }
 

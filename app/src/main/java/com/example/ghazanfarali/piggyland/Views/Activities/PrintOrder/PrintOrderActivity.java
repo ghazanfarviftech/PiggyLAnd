@@ -13,10 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.ghazanfarali.piggyland.Controls.OnItemClickListener;
 import com.example.ghazanfarali.piggyland.CustomViews.CustomEditText;
@@ -30,6 +28,8 @@ import com.example.ghazanfarali.piggyland.Views.Activities.PrintOrder.beans.Atta
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by Amir.jehangir on 1/23/2017.
@@ -149,7 +149,11 @@ public class PrintOrderActivity extends MasterActivity implements OnItemClickLis
 
                 }
             }else{
-                Toast.makeText(PrintOrderActivity.this, "Please Update the Subject", Toast.LENGTH_SHORT).show();
+                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Alert")
+                        .setContentText("Please Update the Subject")
+                        .show();
+              //  Toast.makeText(PrintOrderActivity.this, "Please Update the Subject", Toast.LENGTH_SHORT).show();
             }
 
 //            Intent emailIntent;

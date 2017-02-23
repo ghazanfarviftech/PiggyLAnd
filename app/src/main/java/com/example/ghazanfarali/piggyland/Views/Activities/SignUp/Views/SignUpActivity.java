@@ -21,6 +21,7 @@ import com.example.ghazanfarali.piggyland.Utils.SharedPrefrencesManger;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,6 +62,8 @@ public class SignUpActivity extends MasterActivity {
                     if(confrm.contentEquals(password))
                     {
                         hideKeyBoard();
+                        ShowProgress(SignUpActivity.this);
+                        pDialog.show();
                         try {
                             ApiInterface apiService =
                                     ApiClient.getClient().create(ApiInterface.class);
@@ -80,6 +83,7 @@ public class SignUpActivity extends MasterActivity {
                                 @Override
                                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                                     LoginResponse statusCode = response.body();//code();
+                                    pDialog.dismiss();
                                     if(statusCode.getStatus().contentEquals("success"))
                                     {
                                         sharedPrefrencesManger.setuserLogin("true");
@@ -99,19 +103,29 @@ public class SignUpActivity extends MasterActivity {
                                 @Override
                                 public void onFailure(Call<LoginResponse> call, Throwable t) {
                                     // Log error here since request failed
+                                    pDialog.dismiss();
                                     Log.e(TAG, t.toString());
                                 }
                             });
                         } catch (Exception e) {
+                            pDialog.dismiss();
                             e.getLocalizedMessage();
                         }
                     }else{
-                        Toast.makeText(SignUpActivity.this,"Password Does Not Matched",Toast.LENGTH_SHORT).show();
+                        pDialog.show();
+                        new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Alert")
+                                .setContentText("Password Does Not Matched")
+                                .show();
+                       // Toast.makeText(SignUpActivity.this,"Password Does Not Matched",Toast.LENGTH_SHORT).show();
                     }
 
                 }else{
-
-                    Toast.makeText(SignUpActivity.this,"Please Fill the fields",Toast.LENGTH_LONG).show();
+                    new SweetAlertDialog(SignUpActivity.this, SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Alert")
+                            .setContentText("Please Fill the fields")
+                            .show();
+                 //   Toast.makeText(SignUpActivity.this,"Please Fill the fields",Toast.LENGTH_LONG).show();
                 }
             }
         });

@@ -13,7 +13,9 @@ import com.example.ghazanfarali.piggyland.EndPoint.ApiInterface;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.ForgotPsswordResponse;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
+import com.example.ghazanfarali.piggyland.Views.Activities.SignUp.Views.SignUpActivity;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,6 +40,8 @@ public class Forget_PassActivity extends MasterActivity {
             public void onClick(View v) {
                 if (tie_email.getText().length() > 0 && tie_email.getText().length() > 0) {
                     hideKeyBoard();
+                    ShowProgress(Forget_PassActivity.this);
+                    pDialog.show();
                     try {
                         ApiInterface apiService =
                                 ApiClient.getClient().create(ApiInterface.class);
@@ -47,6 +51,7 @@ public class Forget_PassActivity extends MasterActivity {
                             @Override
                             public void onResponse(Call<ForgotPsswordResponse> call, Response<ForgotPsswordResponse> response) {
                                 ForgotPsswordResponse statusCode = response.body();//code();
+                                pDialog.dismiss();
                                 if (statusCode.getStatus().contentEquals("success")) {
 
                                     Toast.makeText(Forget_PassActivity.this, "Email send", Toast.LENGTH_SHORT).show();
@@ -60,19 +65,25 @@ public class Forget_PassActivity extends MasterActivity {
 
                             @Override
                             public void onFailure(Call<ForgotPsswordResponse> call, Throwable t) {
-
+                                pDialog.dismiss();
                                 Log.e(TAG,t.toString());
                             }
 
 
                         });
                     } catch (Exception e) {
+                        pDialog.dismiss();
                         e.getLocalizedMessage();
                     }
                     //startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
 
                 } else {
-                    Toast.makeText(Forget_PassActivity.this, "Please Enter username & password", Toast.LENGTH_LONG).show();
+                    pDialog.dismiss();
+                    new SweetAlertDialog(Forget_PassActivity.this, SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Alert")
+                            .setContentText("Please Enter username & password")
+                            .show();
+                  //  Toast.makeText(Forget_PassActivity.this, "Please Enter username & password", Toast.LENGTH_LONG).show();
                 }
             }
         });

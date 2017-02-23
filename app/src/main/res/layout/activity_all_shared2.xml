@@ -4,6 +4,7 @@
     android:id="@+id/activity_all_shared2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorwhite"
 android:layout_marginTop="?attr/actionBarSize"
     >
     <!--<include layout="@layout/toolbar_layout_multiselect"></include>-->

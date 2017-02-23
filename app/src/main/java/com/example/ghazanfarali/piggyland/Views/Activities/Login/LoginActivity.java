@@ -107,7 +107,7 @@ public class LoginActivity extends MasterActivity implements
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
         //Initializing twitter login button
-        sharedPrefrencesManger = new SharedPrefrencesManger(this);
+
 
 
 
@@ -192,6 +192,8 @@ private void OpenMainActivity(){
 
                 if (tie_username.getText().length() > 0 && tei_password.getText().length() > 0) {
                     hideKeyBoard();
+                    ShowProgress(LoginActivity.this);
+                    pDialog.show();
                     try {
                         ApiInterface apiService =
                                 ApiClient.getClient().create(ApiInterface.class);
@@ -205,6 +207,7 @@ private void OpenMainActivity(){
                         call.enqueue(new retrofit2.Callback<LoginResponse>() {
                             @Override
                             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                                pDialog.dismiss();
                                 LoginResponse statusCode = response.body();//code();
                                 if (statusCode.getStatus().contentEquals("success")) {
                                     userName = tie_username.getText().toString();
@@ -217,6 +220,7 @@ private void OpenMainActivity(){
                                     OpenMainActivity();
                                     finish();
                                 } else {
+                                    pDialog.dismiss();
                                     Toast.makeText(LoginActivity.this, "UserName/Password Incorrect", Toast.LENGTH_SHORT).show();
                                 }
                                 Profile profile = response.body().getProfile();
@@ -227,14 +231,17 @@ private void OpenMainActivity(){
                             public void onFailure(Call<LoginResponse> call, Throwable t) {
                                 // Log error here since request failed
                                 Log.e(TAG, t.toString());
+                                pDialog.dismiss();
                             }
                         });
                     } catch (Exception e) {
+                        pDialog.dismiss();
                         e.getLocalizedMessage();
                     }
                     //startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
 
                 } else {
+                    pDialog.dismiss();
                     Toast.makeText(LoginActivity.this, "Please Enter username & password", Toast.LENGTH_LONG).show();
                 }
 

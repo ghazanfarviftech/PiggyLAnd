@@ -43,7 +43,11 @@ public class StartScreenFragment extends MasterFragment {
 
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        userProfileActivity.showHeaderLayout();
+    }
 
     public void Listner(){
 

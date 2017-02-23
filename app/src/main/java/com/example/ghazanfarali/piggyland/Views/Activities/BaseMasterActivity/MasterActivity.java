@@ -1,18 +1,21 @@
 package com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.ghazanfarali.piggyland.Controls.BaseInterface;
 import com.example.ghazanfarali.piggyland.Utils.SharedPrefrencesManger;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by Amir.jehangir on 1/10/2017.
@@ -22,15 +25,25 @@ public class MasterActivity extends AppCompatActivity implements BaseInterface {
     public SharedPrefrencesManger sharedPrefrencesManger;
     public String userName,userPassword,email,deviceId ;
     private FragmentTransaction transaction;
+    public SweetAlertDialog pDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState,persistentState);
         //   setContentView(R.layout.activity_main);
         sharedPrefrencesManger = new SharedPrefrencesManger(this);
+
+
         initUI();
     }
 
+
+    public void ShowProgress(Activity activity){
+        pDialog = new SweetAlertDialog(activity, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#5FAE08"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+    }
 
 
     public void clearBackStack() {
@@ -38,6 +51,22 @@ public class MasterActivity extends AppCompatActivity implements BaseInterface {
         if (manager.getBackStackEntryCount() > 0) {
             FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(0);
             manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+    }
+
+
+
+
+
+    public void AddFragment(Fragment fragment, int container, boolean addTobackStack) {
+
+        transaction = getSupportFragmentManager().beginTransaction();
+        if (!addTobackStack) {   // if fragment must add to back stack
+            transaction.add(container, fragment,
+                    "").commit();
+        } else {
+            transaction.add(container, fragment,
+                    "").addToBackStack(null).commit();
         }
     }
 
@@ -88,7 +117,7 @@ public class MasterActivity extends AppCompatActivity implements BaseInterface {
 //        userPassword = sharedPrefrencesManger.getPassword();
 //        email = sharedPrefrencesManger.getEmail();
 //        deviceId = sharedPrefrencesManger.getDeviceId();
-        Log.v("deviceID", deviceId + " ");
+//        Log.v("deviceID", deviceId + " ");
 
     }
 }

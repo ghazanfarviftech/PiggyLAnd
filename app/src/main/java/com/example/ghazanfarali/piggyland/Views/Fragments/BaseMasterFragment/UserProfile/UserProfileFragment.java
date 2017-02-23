@@ -24,6 +24,7 @@ import com.example.ghazanfarali.piggyland.EndPoint.ApiInterface;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.EditProfileResponse;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.GetUserProfile.GetUserProfileResponse;
 import com.example.ghazanfarali.piggyland.R;
+import com.example.ghazanfarali.piggyland.Utils.GlobalUtils;
 import com.example.ghazanfarali.piggyland.Views.Fragments.BaseMasterFragment.MasterFragment;
 
 import java.io.File;
@@ -101,13 +102,19 @@ public class UserProfileFragment extends MasterFragment  {
 //        updateProfileData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
-
+      //  GetUserProfile(sharedPrefrencesManger.getEmail());
+    }
 
     private void GetUserProfile(String UserEmail){
 
         if (UserEmail != null) {
             hideKeyBoard();
+            ShowProgress(getActivity());
+            StartProgressLoading();
             try {
                 ApiInterface apiService =
                         ApiClient.getClient().create(ApiInterface.class);
@@ -117,8 +124,10 @@ public class UserProfileFragment extends MasterFragment  {
                     @Override
                     public void onResponse(Call<GetUserProfileResponse> call, Response<GetUserProfileResponse> response) {
                         GetUserProfileResponse statusCode = response.body();//code();
+                        StopProgressLoading();
                         if (statusCode.getUsers()[0].getEmail().contentEquals(sharedPrefrencesManger.getEmail())) {
                             updateProfileData(statusCode);
+                            GlobalUtils.showToast(getActivity(),"Updated");
                             Toast.makeText(getActivity(), "Updated", Toast.LENGTH_SHORT).show();
 
                         } else {
@@ -129,6 +138,7 @@ public class UserProfileFragment extends MasterFragment  {
 
                     @Override
                     public void onFailure(Call<GetUserProfileResponse> call, Throwable t) {
+                        StopProgressLoading();
                         Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
                     }
 
@@ -136,11 +146,13 @@ public class UserProfileFragment extends MasterFragment  {
 
                 });
             } catch (Exception e) {
+                StopProgressLoading();
                 e.getLocalizedMessage();
             }
             //startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
 
         } else {
+            StopProgressLoading();
             Toast.makeText(getActivity(), "Please Enter username & password", Toast.LENGTH_LONG).show();
         }
 
