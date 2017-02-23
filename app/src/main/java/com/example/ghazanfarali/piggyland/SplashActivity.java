@@ -7,8 +7,16 @@ import android.os.Handler;
 import com.example.ghazanfarali.piggyland.Utils.SharedPrefrencesManger;
 import com.example.ghazanfarali.piggyland.Views.Activities.BaseMasterActivity.MasterActivity;
 import com.example.ghazanfarali.piggyland.Views.Activities.UserProfile.UserProfileActivity;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import io.fabric.sdk.android.Fabric;
 
 public class SplashActivity extends MasterActivity {
+
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "ZM2jLUD5L040PVUkgcI8FtlaS";
+    private static final String TWITTER_SECRET = "nzNPMepl5rpIdtZ7nSJt9I7sF7UbjpbNIceDXzM7nEK7NrxCbr";
+
 
 //    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
 //    private static final String TWITTER_KEY = "	10RB4PJO61CCxnZfWiUMYoPbR";
@@ -20,6 +28,8 @@ public class SplashActivity extends MasterActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Twitter(authConfig));
 //        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
 //        Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_splash);

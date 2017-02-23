@@ -91,7 +91,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="0441996f5f4022a9113a74a39f74e2efe63f1b8b" />
+            android:value="cae7e8da597a52cf05e19b764c358e6f7c36c135" />
         <activity android:name="com.twitter.sdk.android.core.identity.OAuthActivity" />
     </application>
 

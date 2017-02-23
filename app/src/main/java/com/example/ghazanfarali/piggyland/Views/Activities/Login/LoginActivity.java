@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.example.ghazanfarali.piggyland.EndPoint.ApiClient;
 import com.example.ghazanfarali.piggyland.EndPoint.ApiInterface;
 import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.LoginResponse;
-import com.example.ghazanfarali.piggyland.EndPoint.DataResponse.Profile;
 import com.example.ghazanfarali.piggyland.MainActivity;
 import com.example.ghazanfarali.piggyland.R;
 import com.example.ghazanfarali.piggyland.Utils.MarshmallowPermissions;
@@ -116,6 +115,9 @@ public class LoginActivity extends MasterActivity implements
         twitterLoginButton.setCallback(new com.twitter.sdk.android.core.Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
+                disableComponents();
+                ShowProgress(LoginActivity.this);
+                pDialog.show();
                 login(result);
             }
 
@@ -136,7 +138,10 @@ public class LoginActivity extends MasterActivity implements
     }
 
 private void OpenMainActivity(){
-    startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+   // startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+    Intent startMain = new Intent(LoginActivity.this, UserProfileActivity.class);
+    startMain.putExtra("fragmentIndex","1");
+    startActivity(startMain);
 }
     @Override
     public void initUI() {
@@ -165,6 +170,16 @@ private void OpenMainActivity(){
         //  btnSignOut.setOnClickListener(this);
     }
 
+    public void disableComponents(){
+
+        til_username.setEnabled(false);
+                til_password.setEnabled(false);
+        tie_username.setEnabled(false);
+                tei_password.setEnabled(false);
+        forgotpassword.setEnabled(false);
+
+
+    }
 
     public void initListner() {
 
@@ -183,13 +198,14 @@ private void OpenMainActivity(){
         });
 
 
+
         btn_userlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                /* startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
                 finish();*/
-
+                disableComponents();
                 if (tie_username.getText().length() > 0 && tei_password.getText().length() > 0) {
                     hideKeyBoard();
                     ShowProgress(LoginActivity.this);
@@ -223,7 +239,7 @@ private void OpenMainActivity(){
                                     pDialog.dismiss();
                                     Toast.makeText(LoginActivity.this, "UserName/Password Incorrect", Toast.LENGTH_SHORT).show();
                                 }
-                                Profile profile = response.body().getProfile();
+                             //   Profile profile = response.body().getProfile();
                                 //recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
                             }
 
@@ -253,6 +269,7 @@ private void OpenMainActivity(){
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+
                 OpenMainActivity();
             }
 
@@ -459,6 +476,7 @@ private void OpenMainActivity(){
                 sharedPrefrencesManger.setUserProfileImage(user.profileImageUrl.replace("_normal", ""));
 
                 sharedPrefrencesManger.setuserLoginTwitter(true);
+                pDialog.dismiss();
                 OpenMainActivity();
             }
 

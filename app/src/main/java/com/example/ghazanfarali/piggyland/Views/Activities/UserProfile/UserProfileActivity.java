@@ -33,8 +33,6 @@ import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterSession;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
 /**
  * Created by Amir.jehangir on 1/10/2017.
  */
@@ -62,7 +60,7 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
 
         setContentView(R.layout.userprofile_activity);
         sharedPrefrencesManger = new SharedPrefrencesManger(this);
-        if (sharedPrefrencesManger.getuserLogin().contentEquals("true")) {
+        if (sharedPrefrencesManger.getuserLogin().contentEquals("true") || sharedPrefrencesManger.getuserLoginTwitter() == true) {
 
             Bundle extra = getIntent().getExtras();
             if (extra != null) {
@@ -166,31 +164,33 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                         sharedPrefrencesManger.clearSharedTwitterSession();
                         startActivity(new Intent(UserProfileActivity.this, LoginActivity.class));
                     } else {
-                        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(UserProfileActivity.this, SweetAlertDialog.NORMAL_TYPE);
-                        sweetAlertDialog.setCancelText("Cancel")
-                                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                        sweetAlertDialog.dismiss();
-//                            ptrHome.setRefreshing(false);
-//                            loading = false;
 
-                                    }
-                                })
-                                .setTitleText("Are you sure?")
-                                .setContentText("Won't be Logout")
-                                .setConfirmText("Yes,Logout it!")
-                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                        sweetAlertDialog.cancel();
-                                        sharedPrefrencesManger.setuserLogin("false");
-                                        startActivity(new Intent(UserProfileActivity.this, LoginActivity.class));
-                                        finish();
-
-                                    }
-                                });
-                        sweetAlertDialog.show();
+                        sharedPrefrencesManger.setuserLogin("false");
+                        startActivity(new Intent(UserProfileActivity.this, LoginActivity.class));
+                        finish();
+//                        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(UserProfileActivity.this, SweetAlertDialog.NORMAL_TYPE);
+//                        sweetAlertDialog.setCancelText("Cancel")
+//                                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                    @Override
+//                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                                        sweetAlertDialog.dismiss();
+////                            ptrHome.setRefreshing(false);
+////                            loading = false;
+//
+//                                    }
+//                                })
+//                                .setTitleText("Are you sure?")
+//                                .setContentText("Won't be Logout")
+//                                .setConfirmText("Yes,Logout it!")
+//                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                    @Override
+//                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                                        sweetAlertDialog.cancel();
+//
+//
+//                                    }
+//                                });
+//                        sweetAlertDialog.show();
 
 
                     }
@@ -285,15 +285,17 @@ public class UserProfileActivity extends MasterActivity implements NavigationVie
                     replaceFragmnet(new UserProfileFragment(), R.id.frameLayout, true);
                     break;
                 case "7":
-                    finish();
+
                     if (sharedPrefrencesManger.getuserLoginTwitter()) {
                         logoutTwitter();
                         sharedPrefrencesManger.setuserLoginTwitter(false);
                         sharedPrefrencesManger.clearSharedTwitterSession();
                         startActivity(new Intent(this, LoginActivity.class));
+                        finish();
                     } else {
                         sharedPrefrencesManger.setuserLogin("false");
                         startActivity(new Intent(this, LoginActivity.class));
+                        finish();
                     }
                     break;
                 case "8":
